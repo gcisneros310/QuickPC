@@ -1,4 +1,4 @@
-# quick_pc
+# Quick PC
 
 Quick PC for finding PC Components
 
