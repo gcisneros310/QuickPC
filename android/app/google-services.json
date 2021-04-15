@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "239868622142",
+    "project_id": "quickpc-3b32e",
+    "storage_bucket": "quickpc-3b32e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239868622142:android:df2b92b341280d0ad1e86f",
+        "android_client_info": {
+          "package_name": "com.example.quick_pc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239868622142-na6vvn75fhkh27i7mlfig4d97edntcco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG3Bp9kjWGizxIzLmquwz3jyzbETzCafc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239868622142-na6vvn75fhkh27i7mlfig4d97edntcco.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
