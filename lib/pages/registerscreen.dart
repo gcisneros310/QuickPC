@@ -11,6 +11,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final Color logoColor = Color(0xff66C290);
 
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -46,11 +47,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   height: 50,
                 ),
-                _buildTextField(
-                    nameController, Icons.account_circle, 'Username'),
+                _buildNameEmailField(emailController, Icons.email, 'Email'),
                 SizedBox(height: 20),
-                _buildTextField(passwordController, Icons.lock, 'Password'),
-                SizedBox(height: 30),
+                _buildNameEmailField(nameController, Icons.account_circle, 'Username'),
+                SizedBox(height: 20),
+                _buildPassField(passwordController, Icons.lock, 'Password'),
+                SizedBox(height: 40),
                 MaterialButton(
                   elevation: 0,
                   minWidth: double.maxFinite,
@@ -71,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ));
   }
 
-  _buildTextField(
+  _buildPassField(
       TextEditingController controller, IconData icon, String labelText) {
     bool _secureText = true;
     return Container(
@@ -92,6 +94,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
             // prefix: Icon(icon),
             border: InputBorder.none),
         obscureText: _secureText,
+      ),
+    );
+  }
+
+  _buildNameEmailField(
+      TextEditingController controller, IconData icon, String labelText) {
+    bool _secureText = true;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+          color: logoColor, border: Border.all(color: Colors.blue)),
+      child: TextField(
+        controller: controller,
+        style: GoogleFonts.exo2(color: Colors.white),
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(horizontal: 10),
+            labelText: labelText,
+            labelStyle: GoogleFonts.exo2(color: Colors.white),
+            icon: Icon(
+              icon,
+              color: Colors.white,
+            ),
+            // prefix: Icon(icon),
+            border: InputBorder.none),
       ),
     );
   }
