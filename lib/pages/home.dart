@@ -6,6 +6,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  final Color logoColor = Color(0xff66c290);
+
   @override
   Widget build(BuildContext context) {
 
@@ -14,7 +17,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.grey[850],
       appBar: AppBar(
-        backgroundColor: Colors.green[800],
+        backgroundColor: logoColor,
         title: Text(title),
       ),
 
@@ -36,7 +39,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.search),
             label: Text('Search For Parts'),
             style: ElevatedButton.styleFrom(
-              primary: Colors.green[800]
+              primary: logoColor
             )
           ),
 
@@ -48,7 +51,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.build),
             label: Text('Build PC'),
             style: ElevatedButton.styleFrom(
-                primary: Colors.green[800]
+                primary: logoColor
             )
           ),
 
@@ -60,7 +63,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.desktop_windows_rounded),
             label: Text('Suggest PC'),
             style: ElevatedButton.styleFrom(
-                primary: Colors.green[800]
+                primary: logoColor
             )
           ),
 
@@ -72,7 +75,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.file_copy_outlined),
             label: Text('Build Guides'),
             style: ElevatedButton.styleFrom(
-                primary: Colors.green[800]
+                primary: logoColor
             )
           ),
 
@@ -84,7 +87,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.account_circle_outlined),
             label: Text('Account'),
             style: ElevatedButton.styleFrom(
-                primary: Colors.green[800]
+                primary: logoColor
             )
           ),
 
@@ -96,7 +99,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.email_outlined),
             label: Text('Contact Us'),
             style: ElevatedButton.styleFrom(
-                primary: Colors.green[800]
+                primary: logoColor
             )
           ),
 
@@ -108,7 +111,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.info_outline),
             label: Text('About Us'),
             style: ElevatedButton.styleFrom(
-                primary: Colors.green[800]
+                primary: logoColor
             )
           ),
         ]

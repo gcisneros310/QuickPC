@@ -7,6 +7,8 @@ class PickSearch extends StatefulWidget {
 
 class _PickSearchState extends State<PickSearch> {
 
+  final Color logoColor = Color(0xff66c290);
+
   @override
   void initState() {
     super.initState();
@@ -18,7 +20,7 @@ class _PickSearchState extends State<PickSearch> {
     return Scaffold(
       backgroundColor: Colors.grey[850],
       appBar: AppBar(
-        backgroundColor: Colors.green[800],
+        backgroundColor: logoColor,
         title: Text('Seach for component'),
           elevation: 0,
       ),
@@ -39,7 +41,7 @@ class _PickSearchState extends State<PickSearch> {
               icon: Icon(Icons.memory_sharp),
               label: Text('CPU'),
               style: ElevatedButton.styleFrom(
-                  primary: Colors.green[800]
+                  primary: logoColor
               )
             ),
 
@@ -51,7 +53,7 @@ class _PickSearchState extends State<PickSearch> {
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Memory'),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green[800]
+                    primary: logoColor
                 )
             ),
 
@@ -63,7 +65,7 @@ class _PickSearchState extends State<PickSearch> {
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Storage'),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green[800]
+                    primary: logoColor
                 )
             ),
 
@@ -75,7 +77,7 @@ class _PickSearchState extends State<PickSearch> {
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Motherboard'),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green[800]
+                    primary: logoColor
                 )
             ),
 
@@ -87,7 +89,7 @@ class _PickSearchState extends State<PickSearch> {
                 icon: Icon(Icons.memory_sharp),
                 label: Text('GPU'),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green[800]
+                    primary: logoColor
                 )
             ),
 
@@ -99,7 +101,7 @@ class _PickSearchState extends State<PickSearch> {
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Power Supply'),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green[800]
+                    primary: logoColor
                 )
             ),
 
@@ -111,7 +113,7 @@ class _PickSearchState extends State<PickSearch> {
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Case'),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green[800]
+                    primary: logoColor
                 )
             ),
 
@@ -123,7 +125,7 @@ class _PickSearchState extends State<PickSearch> {
                 icon: Icon(Icons.memory_sharp),
                 label: Text('CPU Cooler'),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green[800]
+                    primary: logoColor
                 )
             ),
 
