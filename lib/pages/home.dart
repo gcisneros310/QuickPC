@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
               Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.search),
-            label: Text('Search Parts'),
+            label: Text('Search For Parts'),
             style: ElevatedButton.styleFrom(
               primary: logoColor
             )
