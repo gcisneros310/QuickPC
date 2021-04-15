@@ -1,6 +1,6 @@
 # Quick PC
 
-Quick PC for finding PC Components
+Quick PC is a dedicated mobile application/webapp for finding PC Components and making price lists
 
 ## Getting Started
 
