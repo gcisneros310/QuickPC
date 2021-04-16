@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/services/auth.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,6 +9,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   final Color logoColor = Color(0xff66c290);
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,19 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: logoColor,
         title: Text(title),
+        elevation: 0.0,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person, color: Colors.white),
+            label: Text(
+              "Logout",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+            onPressed: () async{
+              await _auth.signOut();
+            },
+          )
+        ],
       ),
 
 
