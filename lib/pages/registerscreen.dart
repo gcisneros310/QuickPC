@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/services/auth.dart';
-
+import 'package:quick_pc/shared/loading.dart';
 import 'loginscreen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -17,6 +17,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // key used to identify form
   final _formkey = GlobalKey<FormState>();
 
+  bool loading = false;
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -26,7 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -69,9 +71,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () async{
                       // evaluates true or false for registering
                       if(_formkey.currentState.validate()){
+                        setState(() => loading = true);
                         dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                         if(result == null){
-                          setState(() => error = 'Please supply a valid email');
+                          setState(() {
+                            error = 'Please supply a valid email';
+                            loading = false;
+                          });
                         }
                         //Navigator.push(context,
                             //MaterialPageRoute(builder: (_) => LoginScreen()));
@@ -85,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(height: 20),
                 Text (
                     error,
-                    style: GoogleFonts.exo2(color: Colors.white, fontSize: 16)
+                    style: GoogleFonts.exo2(color: Colors.red[600], fontSize: 16)
                 ),
                 ],
               ),

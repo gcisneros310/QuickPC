@@ -24,8 +24,11 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Logout"),
+            icon: Icon(Icons.person, color: Colors.white),
+            label: Text(
+              "Logout",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
             onPressed: () async{
               await _auth.signOut();
             },

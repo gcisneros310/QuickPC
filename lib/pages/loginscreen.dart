@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/pages/registerscreen.dart';
 import 'file:///C:/Users/Osman/AndroidStudioProjects/QuickPC/lib/pages/home/home.dart';
 import 'package:quick_pc/services/auth.dart';
+import 'package:quick_pc/shared/loading.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -17,6 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   // key used to identify form
   final _formkey = GlobalKey<FormState>();
 
+  // loading icon
+  bool loading = false;
+
   final Color logoColor = Color(0xff66C290);
 
   final TextEditingController nameController = TextEditingController();
@@ -29,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ?  Loading() : Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -71,9 +75,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 50,
                     onPressed: () async{
                       if(_formkey.currentState.validate()){
+                        setState(() => loading = true);
                         dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                        if(result == null){
-                        setState(() => error = 'Could not Sign In With Those Credentials');
+                        setState(() {
+                          error = 'Could not Sign In With Those Credentials';
+                          loading = false;
+                        });
                         }
                         //Navigator.push(context,
                             //MaterialPageRoute(builder: (_) => Home()));
@@ -87,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 20),
                   Text (
                       error,
-                      style: GoogleFonts.exo2(color: Colors.white, fontSize: 16)
+                      style: GoogleFonts.exo2(color: Colors.red[600], fontSize: 16)
                   ),
                   SizedBox(height: 20),
                   Row(
