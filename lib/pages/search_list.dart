@@ -8,6 +8,7 @@ class _SearchListState extends State<SearchList> {
 
   final Color logoColor = Color(0xff66c290);
 
+  //temp
   List listOfParts = List<String>.generate(10000, (i) => "Item $i");
 
   @override
@@ -39,7 +40,7 @@ class _SearchListState extends State<SearchList> {
           body: TabBarView(
             children: [
 
-              //First Tab Contents
+              //Search list Tab Contents
               ListView.builder(
                 itemCount: listOfParts.length,
                 itemBuilder: (context, index) {
@@ -55,10 +56,10 @@ class _SearchListState extends State<SearchList> {
                 },
               ),
 
-              //Second Tab Contents
+              //Filter Tab Contents
               Icon(Icons.filter_alt),
 
-              //Third Tab Contents
+              //Compare Tab Contents
               Icon(Icons.compare_arrows),
             ],
           ),

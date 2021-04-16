@@ -10,6 +10,7 @@ class _PartInfoState extends State<PartInfo> {
 
   final Color logoColor = Color(0xff66c290);
 
+  //temp
   List listOfParts = List<String>.generate(10000, (i) => "Spec $i");
 
   @override
@@ -41,7 +42,7 @@ class _PartInfoState extends State<PartInfo> {
           ),
           body: TabBarView(
             children: [
-              //First Tab Contents
+              //Info tab Contents
               ListView.builder(
                 itemCount: listOfParts.length,
                 itemBuilder: (context, index) {
@@ -55,10 +56,10 @@ class _PartInfoState extends State<PartInfo> {
                 },
               ),
 
-              //Second Tab Contents
+              //Buy Tab Contents
               Icon(Icons.shopping_cart),
 
-              //Third Tab Contents
+              //Reviews Tab Contents
               Icon(Icons.rate_review),
             ],
           ),
