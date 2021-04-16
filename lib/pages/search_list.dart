@@ -59,7 +59,7 @@ class _SearchListState extends State<SearchList> {
               //Filter Tab Contents
               Icon(Icons.filter_alt),
 
-              //Compare Tab Contents
+              //Compar Tab Contents
               Icon(Icons.compare_arrows),
             ],
           ),
