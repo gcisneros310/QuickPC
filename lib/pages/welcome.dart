@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/pages/loginscreen.dart';
-import 'package:quick_pc/pages/registerscreen.dart';
 
 class Welcome extends StatefulWidget {
   @override

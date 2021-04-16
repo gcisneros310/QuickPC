@@ -21,7 +21,7 @@ class _PickSearchState extends State<PickSearch> {
       backgroundColor: Colors.grey[850],
       appBar: AppBar(
         backgroundColor: logoColor,
-        title: Text('Seach for component'),
+        title: Text('Search for component'),
           elevation: 0,
       ),
       body: GridView.count(
@@ -36,7 +36,7 @@ class _PickSearchState extends State<PickSearch> {
             //CPU
             ElevatedButton.icon(
               onPressed: (){
-                //Navigator.pushNamed(context, '/pick_search');
+                Navigator.pushNamed(context, '/search_list');
               },
               icon: Icon(Icons.memory_sharp),
               label: Text('CPU'),
@@ -48,7 +48,7 @@ class _PickSearchState extends State<PickSearch> {
             //Memory
             ElevatedButton.icon(
                 onPressed: (){
-                  //Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/search_list');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Memory'),
@@ -60,7 +60,7 @@ class _PickSearchState extends State<PickSearch> {
             //STORAGE
             ElevatedButton.icon(
                 onPressed: (){
-                  //Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/search_list');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Storage'),
@@ -72,7 +72,7 @@ class _PickSearchState extends State<PickSearch> {
             //MOTHERBOARD
             ElevatedButton.icon(
                 onPressed: (){
-                  //Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/search_list');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Motherboard'),
@@ -84,7 +84,7 @@ class _PickSearchState extends State<PickSearch> {
             //GPU
             ElevatedButton.icon(
                 onPressed: (){
-                  //Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/search_list');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('GPU'),
@@ -96,7 +96,7 @@ class _PickSearchState extends State<PickSearch> {
             //POWER SUPPLY
             ElevatedButton.icon(
                 onPressed: (){
-                  //Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/search_list');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Power Supply'),
@@ -108,7 +108,7 @@ class _PickSearchState extends State<PickSearch> {
             //CASE
             ElevatedButton.icon(
                 onPressed: (){
-                  //Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/search_list');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Case'),
@@ -120,7 +120,7 @@ class _PickSearchState extends State<PickSearch> {
             //CPU COOLER
             ElevatedButton.icon(
                 onPressed: (){
-                  //Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/search_list');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('CPU Cooler'),
