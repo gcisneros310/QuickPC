@@ -8,6 +8,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+
   final Color logoColor = Color(0xff66c290);
   final AuthService _auth = AuthService();
 
