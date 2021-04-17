@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/pages/loginscreen.dart';
+import 'package:quick_pc/pages/authenticate/authenticate.dart';
+import 'package:quick_pc/pages/wrapper.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -48,8 +50,11 @@ class _WelcomeState extends State<Welcome> {
               elevation: 0,
               height: 50,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => LoginScreen()));
+
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (BuildContext context) => Wrapper()));
+                //Navigator.push(context,
+                   // MaterialPageRoute(builder: (_) => Wrapper()));
               },
 
               color: logoColor,

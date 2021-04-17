@@ -14,6 +14,9 @@ import 'package:quick_pc/models/users.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
+  final bool firstTime = false;
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
@@ -21,10 +24,11 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
 
-        home: Wrapper(),
+        home: firstTime ? Welcome() : Wrapper(),
+        //home: Wrapper(),
 
         routes: {
-        //'/welcome': (context) => Welcome(),
+        '/welcome': (context) => Welcome(),
         '/loginscreen': (context) => LoginScreen(),
         '/registerscreen': (context) => RegisterScreen(),
         '/home': (context) => Home(),
