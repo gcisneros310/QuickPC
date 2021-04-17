@@ -5,7 +5,6 @@ class PartInfo extends StatefulWidget {
   _PartInfoState createState() => _PartInfoState();
 }
 
-
 class _PartInfoState extends State<PartInfo> {
 
   final Color logoColor = Color(0xff66c290);
