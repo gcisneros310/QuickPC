@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/pages/loginscreen.dart';
 import 'package:quick_pc/pages/pick_search.dart';
-import 'package:quick_pc/pages/search_list.dart';
+import 'package:quick_pc/pages/search.dart';
 import 'package:quick_pc/pages/part_info.dart';
 import 'package:quick_pc/pages/registerscreen.dart';
 import 'package:quick_pc/pages/welcome.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/registerscreen': (context) => RegisterScreen(),
         '/home': (context) => Home(),
         '/pick_search': (context) => PickSearch(),
-        '/search_list': (context) => SearchList(),
+        '/search': (context) => Search(),
         '/part_info': (context) => PartInfo(),
         },
       ),

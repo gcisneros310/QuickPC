@@ -8,6 +8,7 @@ class PickSearch extends StatefulWidget {
 class _PickSearchState extends State<PickSearch> {
 
   final Color logoColor = Color(0xff66c290);
+  final Color greyout = Colors.grey;
 
   @override
   void initState() {
@@ -36,7 +37,7 @@ class _PickSearchState extends State<PickSearch> {
             //CPU
             ElevatedButton.icon(
               onPressed: (){
-                Navigator.pushNamed(context, '/search_list');
+                Navigator.pushNamed(context, '/search');
               },
               icon: Icon(Icons.memory_sharp),
               label: Text('CPU'),
@@ -48,84 +49,84 @@ class _PickSearchState extends State<PickSearch> {
             //Memory
             ElevatedButton.icon(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/search_list');
+                  //Navigator.pushNamed(context, '/search');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Memory'),
                 style: ElevatedButton.styleFrom(
-                    primary: logoColor
+                    primary: greyout
                 )
             ),
 
             //STORAGE
             ElevatedButton.icon(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/search_list');
+                  //Navigator.pushNamed(context, '/search');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Storage'),
                 style: ElevatedButton.styleFrom(
-                    primary: logoColor
+                    primary: greyout
                 )
             ),
 
             //MOTHERBOARD
             ElevatedButton.icon(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/search_list');
+                  //Navigator.pushNamed(context, '/search');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Motherboard'),
                 style: ElevatedButton.styleFrom(
-                    primary: logoColor
+                    primary: greyout
                 )
             ),
 
             //GPU
             ElevatedButton.icon(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/search_list');
+                  //Navigator.pushNamed(context, '/search');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('GPU'),
                 style: ElevatedButton.styleFrom(
-                    primary: logoColor
+                    primary: greyout
                 )
             ),
 
             //POWER SUPPLY
             ElevatedButton.icon(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/search_list');
+                  //Navigator.pushNamed(context, '/search');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Power Supply'),
                 style: ElevatedButton.styleFrom(
-                    primary: logoColor
+                    primary: greyout
                 )
             ),
 
             //CASE
             ElevatedButton.icon(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/search_list');
+                  //Navigator.pushNamed(context, '/search');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('Case'),
                 style: ElevatedButton.styleFrom(
-                    primary: logoColor
+                    primary: greyout
                 )
             ),
 
             //CPU COOLER
             ElevatedButton.icon(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/search_list');
+                  //Navigator.pushNamed(context, '/search');
                 },
                 icon: Icon(Icons.memory_sharp),
                 label: Text('CPU Cooler'),
                 style: ElevatedButton.styleFrom(
-                    primary: logoColor
+                    primary: greyout
                 )
             ),
 
