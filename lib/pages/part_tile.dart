@@ -16,7 +16,8 @@ class PartTile extends StatelessWidget {
           title: Text(cpu.name),
           subtitle: Text('\$${cpu.price}  Core Clock: ${cpu.coreClock}'),
           onTap: (){
-            Navigator.pushNamed(context, '/part_info');
+            Navigator.pushNamed(context, '/part_info',
+                arguments: cpu);
           },
         )
       )

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/models/cpu.dart';
 
 class PartInfo extends StatefulWidget {
+  final CPU cpu;
+
+  PartInfo({this.cpu});
   @override
   _PartInfoState createState() => _PartInfoState();
 }
@@ -12,8 +16,10 @@ class _PartInfoState extends State<PartInfo> {
   //temp
   List listOfParts = List<String>.generate(10000, (i) => "Spec $i");
 
+
   @override
   Widget build(BuildContext context) {
+    //print(widget.cpu.name);
     return Scaffold(
       body: DefaultTabController(
 
@@ -37,7 +43,7 @@ class _PartInfoState extends State<PartInfo> {
                     icon: Icon(Icons.rate_review)),
               ],
             ),
-            title: Text('Component Name '),
+            title: Text('${widget.cpu.name}'),
           ),
           body: TabBarView(
             children: [

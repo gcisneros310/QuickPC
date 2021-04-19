@@ -15,9 +15,6 @@ class _SearchState extends State<Search> {
 
   final Color logoColor = Color(0xff66c290);
 
-  //temp
-  List listOfParts = List<String>.generate(10000, (i) => "Item $i");
-
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<CPU>>.value(
