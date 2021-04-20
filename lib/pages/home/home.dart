@@ -10,6 +10,7 @@ class _HomeState extends State<Home> {
 
 
   final Color logoColor = Color(0xff66c290);
+  final Color greyout = Colors.grey;
   final AuthService _auth = AuthService();
 
   @override
@@ -62,72 +63,72 @@ class _HomeState extends State<Home> {
           //BUILD PC
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.pushNamed(context, '/pick_search');
+              //Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.build),
             label: Text('Build PC'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
 
           //Suggest PC
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.pushNamed(context, '/pick_search');
+              //Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.desktop_windows_rounded),
             label: Text('Suggest PC'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
 
           //BUILD GUIDES
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.pushNamed(context, '/pick_search');
+              //Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.file_copy_outlined),
             label: Text('Build Guides'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
 
           //Account
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.pushNamed(context, '/pick_search');
+             // Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.account_circle_outlined),
             label: Text('Account'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
 
           //CONTACT US
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.pushNamed(context, '/pick_search');
+             // Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.email_outlined),
             label: Text('Contact Us'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
 
           //ABOUT US
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.pushNamed(context, '/pick_search');
+             // Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.info_outline),
             label: Text('About Us'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
         ]

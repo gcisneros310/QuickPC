@@ -10,7 +10,8 @@ class DatabaseService{
       return CPU(
         name: doc.data['name'] ?? '',
         price: doc.data['price'] ?? 0,
-        coreClock: doc.data['coreClock'] ?? 0
+        coreClock: doc.data['coreClock'] ?? 0,
+        features: doc.data
       );
     }).toList();
   }

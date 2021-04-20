@@ -20,10 +20,7 @@ class _PartInfoState extends State<PartInfo> {
 
   @override
   Widget build(BuildContext context) {
-    //print(widget.cpu.name);
-
-
-
+    List features = widget.cpu.features.keys.toList();
     return Scaffold(
       body: DefaultTabController(
 
@@ -53,14 +50,12 @@ class _PartInfoState extends State<PartInfo> {
             children: [
               //Info tab Contents
               ListView.builder(
-                itemCount: listOfParts.length,
+                itemCount: widget.cpu.features.length,
                 itemBuilder: (context, index) {
+                  String key = widget.cpu.features.keys.elementAt(index);
                   return ListTile(
-                    title: Text('${listOfParts[index]}'),
+                    title: Text('${key} : ${widget.cpu.features[key].toString()}'),
                     tileColor: Colors.white,
-                    onTap: (){
-
-                    },
                   );
                 },
               ),
