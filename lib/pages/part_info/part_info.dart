@@ -20,7 +20,6 @@ class _PartInfoState extends State<PartInfo> {
 
   @override
   Widget build(BuildContext context) {
-    List features = widget.cpu.features.keys.toList();
     return Scaffold(
       body: DefaultTabController(
 
