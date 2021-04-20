@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/cpu.dart';
-import 'package:quick_pc/pages/part_info.dart';
+import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/part_info/part_info.dart';
 
 class PartTile extends StatelessWidget {
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_pc/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:quick_pc/pages/parts_list.dart';
+import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/search/parts_list.dart';
 import 'package:quick_pc/models/cpu.dart';
 
 class Search extends StatefulWidget {
@@ -17,6 +17,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+
     return StreamProvider<List<CPU>>.value(
       value: DatabaseService().cpus,
       child: Scaffold(

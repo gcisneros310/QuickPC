@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_pc/models/cpu.dart';
-import 'package:quick_pc/pages/part_tile.dart';
+import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/search/part_tile.dart';
 
 class PartsList extends StatefulWidget {
   @override

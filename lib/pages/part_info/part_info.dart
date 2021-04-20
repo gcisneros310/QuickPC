@@ -21,6 +21,9 @@ class _PartInfoState extends State<PartInfo> {
   @override
   Widget build(BuildContext context) {
     //print(widget.cpu.name);
+
+
+
     return Scaffold(
       body: DefaultTabController(
 
