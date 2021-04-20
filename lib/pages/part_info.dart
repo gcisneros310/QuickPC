@@ -4,7 +4,8 @@ import 'package:quick_pc/models/cpu.dart';
 class PartInfo extends StatefulWidget {
   final CPU cpu;
 
-  PartInfo({this.cpu});
+  PartInfo({Key key, @required this.cpu}) : super(key:key);
+
   @override
   _PartInfoState createState() => _PartInfoState();
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/cpu.dart';
+import 'package:quick_pc/pages/part_info.dart';
 
 class PartTile extends StatelessWidget {
 
@@ -16,8 +17,14 @@ class PartTile extends StatelessWidget {
           title: Text(cpu.name),
           subtitle: Text('\$${cpu.price}  Core Clock: ${cpu.coreClock}'),
           onTap: (){
-            Navigator.pushNamed(context, '/part_info',
-                arguments: cpu);
+            // Navigator.pushNamed(context, '/part_info',
+            //     arguments: cpu);
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PartInfo(cpu: cpu),
+                ));
           },
         )
       )
