@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_pc/pages/home/home.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/authenticate/loginscreen.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/search/pick_search.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/search/search.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/part_info/part_info.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/authenticate/registerscreen.dart';
+import 'package:quick_pc/pages/authenticate/loginscreen.dart';
+import 'package:quick_pc/pages/search/pick_search.dart';
+import 'package:quick_pc/pages/search/search.dart';
+import 'package:quick_pc/pages/part_info/part_info.dart';
+import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/welcome.dart';
 import 'package:quick_pc/pages/wrapper.dart';
 import 'package:quick_pc/services/auth.dart';

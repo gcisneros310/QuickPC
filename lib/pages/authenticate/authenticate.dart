@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/authenticate/loginscreen.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/authenticate/registerscreen.dart';
+import 'package:quick_pc/pages/authenticate/loginscreen.dart';
+import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 
 class Authenticate extends StatefulWidget {
   @override

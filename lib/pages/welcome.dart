@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/authenticate/loginscreen.dart';
+import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/authenticate/authenticate.dart';
 import 'package:quick_pc/pages/wrapper.dart';
 

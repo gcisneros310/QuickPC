@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_pc/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'file:///C:/Users/Yord/AndroidStudioProjects/QuickPCLogin/lib/pages/search/parts_list.dart';
+import 'package:quick_pc/pages/search/parts_list.dart';
 import 'package:quick_pc/models/cpu.dart';
 
 class Search extends StatefulWidget {
