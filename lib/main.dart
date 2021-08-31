@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quick_pc/pages/home/home.dart';
+import 'package:quick_pc/models/users.dart';
 import 'package:quick_pc/pages/authenticate/loginscreen.dart';
+import 'package:quick_pc/pages/authenticate/registerscreen.dart';
+import 'package:quick_pc/pages/home/home.dart';
+import 'package:quick_pc/pages/part_info/part_info.dart';
 import 'package:quick_pc/pages/search/pick_search.dart';
 import 'package:quick_pc/pages/search/search.dart';
-import 'package:quick_pc/pages/part_info/part_info.dart';
-import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/welcome.dart';
 import 'package:quick_pc/pages/wrapper.dart';
 import 'package:quick_pc/services/auth.dart';
-import 'package:quick_pc/models/users.dart';
+
+import 'pages/wrapper.dart';
 
 void main() => runApp(MyApp());
 
