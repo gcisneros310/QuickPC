@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_pc/pages/build_guide/build_guide.dart';
+import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/services/auth.dart';
 
 class Home extends StatefulWidget {
@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BuildGuide()),
+                MaterialPageRoute(builder: (context) => BuildGuideIntro()),
               );
             },
             icon: Icon(Icons.file_copy_outlined),
