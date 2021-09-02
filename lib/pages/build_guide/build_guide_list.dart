@@ -20,12 +20,11 @@ class _BuildGuideList extends State<BuildGuideList> {
         elevation: 0.0,
       ),
         body: ListView.builder(
+          itemCount: stepsListTitles.length,
             itemBuilder: (context, index){
-              return Card(
-                child: ListTile(
-                  onTap: (){},
-                  title: Text(stepsListTitles[index])
-                ),
+              return ListTile(
+                onTap: (){},
+                title: Text(stepsListTitles[index])
               );
             }
             )
