@@ -1,4 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_0.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_1.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_10.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_2.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_3.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_4.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_5.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_6.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_7.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_8.dart';
+import 'package:quick_pc/pages/build_guide/page_files/step_9.dart';
 import 'package:quick_pc/services/auth.dart';
 
 class BuildGuideList extends StatefulWidget {
@@ -20,6 +31,20 @@ class _BuildGuideList extends State<BuildGuideList> {
     "Step 9: Review All Connections",
     "Step 10: Power on your Computer!"
 
+  ];
+
+  var stepListPageIndexes = [
+    ["Step 0: Assemble your Parts", Step0_PSU()],
+    ["Step 1: Assemble your Parts", Step1_PSU()],
+    ["Step 2: Assemble your Parts", Step2_PSU()],
+    ["Step 3: Assemble your Parts", Step3_PSU()],
+    ["Step 4: Assemble your Parts", Step4_PSU()],
+    ["Step 5: Assemble your Parts", Step5_PSU()],
+    ["Step 6: Assemble your Parts", Step6_PSU()],
+    ["Step 7: Assemble your Parts", Step7_PSU()],
+    ["Step 8: Assemble your Parts", Step8_PSU()],
+    ["Step 9: Assemble your Parts", Step9_PSU()],
+    ["Step 10: Assemble your Parts", Step10_PSU()],
   ];
   @override
   Widget build(BuildContext context) {
@@ -65,7 +90,12 @@ class _BuildGuideList extends State<BuildGuideList> {
                           ),
                           child:ListTile(
                             tileColor: Colors.greenAccent,
-                            onTap : (){},
+                            onTap : (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => stepListPageIndexes[index][1])
+                              );
+                            },
                             title: (Text(stepsListTitles[index])),
                           )
 

@@ -26,7 +26,7 @@ class _BuildGuideIntro extends State<BuildGuideIntro> {
         elevation: 0.0,
       ),
       body: Container (
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+        padding: EdgeInsets.fromLTRB(16,16,16,16),
           margin: EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
@@ -39,13 +39,12 @@ class _BuildGuideIntro extends State<BuildGuideIntro> {
                     ,
                 style: TextStyle(
                     fontSize: 14.5,
-                    fontWeight: FontWeight.bold,
                     letterSpacing: 2.0,
                     color: Colors.white
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.fromLTRB(15,15,15,15),
                   child: Image(
                       image: AssetImage('assets/buildguideintropc.png')
                   )
