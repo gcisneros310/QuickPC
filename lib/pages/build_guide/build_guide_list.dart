@@ -12,6 +12,8 @@ import 'package:quick_pc/pages/build_guide/page_files/step_8.dart';
 import 'package:quick_pc/pages/build_guide/page_files/step_9.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/pages/build_guide/step.dart';
+import 'package:quick_pc/presentation/app_icons_icons.dart';
+
 class BuildGuideList extends StatefulWidget {
   @override
   _BuildGuideList createState() => _BuildGuideList();
@@ -47,6 +49,20 @@ class _BuildGuideList extends State<BuildGuideList> {
   ];
   var stepInfo = [];
 
+  var iconsList = [
+  AppIcons.question_mark,
+    AppIcons.power_supply,
+    AppIcons.processor,
+    AppIcons.ram,
+    AppIcons.motherboard,
+    AppIcons.cooler,
+    AppIcons.gpu,
+    AppIcons.gpu,
+    AppIcons.slave_hard_drive,
+    AppIcons.power_plug,
+    AppIcons.power_button,
+  ];
+
   List getLessons() {
     for (var i = 0; i <stepListPageIndexes.length; i++) {
         StepCardInfo temp = StepCardInfo(
@@ -70,7 +86,11 @@ class _BuildGuideList extends State<BuildGuideList> {
         decoration: new BoxDecoration(
             border: new Border(
                 right: new BorderSide(width: 1.0, color: Colors.white24))),
-        child: Icon(Icons.autorenew, color: Colors.white),
+        child: Icon(
+            iconsList[listIndex],
+            color: Colors.white,
+          size: 48,
+        ),
       ),
       title: Text(
         lesson.title,
