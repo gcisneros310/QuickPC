@@ -52,53 +52,49 @@ class _Step7_PSUState extends State<Step7_PSU> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                     child: Text(
-                      'Installing your Power Supply Unit (PSU)',
+                      'Installing Optional Devices',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 15),
                     child: Text(
-                      'The first component to make its way into the case should be the power supply (PSU). It is typically located at the rear of the case, usually in the bottom or top corner.\n\nWhen in doubt, the slot is easily located by searching for a square opening with screw holes in at least two corners. The PSU sits in this opening with its power switch and a female socket facing out from the case’s back panel. Consult your case’s manual if you have trouble finding the proper location.\n\nYou can install the power supply with the fan facing up or down. In most computer cases, pointing the fan down is ideal. All you need to do is look at your case. If there’s space between the bottom and floor (and preferably a dust filter in between), install your power supply with the fan facing down. Most modern cases are built for this type of installation. If your case manual says something different, however, we recommend following that.',
+                      'This step is only necessary if you bought another PCIE device that is not a GPU.'
+                          'If you do not have any optional devices, skip to step 8.\n\n',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 15),
                     child: Text(
-                      'Types of PSUs',
+                      'Graphics cards aren’t the only components that use PCIe slots. '
+                          'Other add-in cards include wireless networking, sound, video capture, and even storage. '
+                          'Their installation is no different than adding a discrete GPU.\n\n'
+                      'First, remove the metal bracket in the back of the case that corresponds with the PCIe or other expansion slot playing host to your add-in card. '
+                          'Keep the bracket screw handy so you can use it to secure your new card.\n\n'
+                          'PCIe slots have a small switch at the interior end, which you push down and outward to open the slot. '
+                          'After that, line up the row of contacts on the card with the slot and firmly push down. '
+                          'Once you properly seat the card, the switch flips up. Securing the card in place is as simple as screwing it into the back of the case and attaching any necessary PCIe ports.'
+                          'There are a few different types of PCIe slots. '
+                          'Many expansion cards use the “PCIe 4x” slot, which is much shorter than the full PCIe slot used by video cards. A quick check of your motherboard’s connectivity, and the size of the connector on your card, will make it obvious which slot is appropriate. '
+                          'If in doubt, refer to the expansion card’s manual.',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
+                          fontSize: 15,
                       ),
                     ),
                   ),
-                  Text(
-                    'There are two main power supply variants: Standard and modular. There’s a hybrid semi-modular type too, but we don’t need to worry about that for now.\n\nModular PSUs have cables that detach from the main unit to avoid clutter. They’re ideal for smaller cases and neat freaks. If you have a modular PSU, it’s best to leave the cables out for now and run them as you install each additional component.\n\nIf the PSU’s cables don’t detach, carefully bundle them so they’re hanging out the case’s open side panel. This temporarily keeps them out of the way while we install the remaining components.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 16,
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                      child: YoutubePlayerIFrame(
-                        controller: _controller,
-                        aspectRatio: 16/9,
-                      )
-
-
-
-                  )
                 ],
               ),
             ),

@@ -46,7 +46,7 @@ class _BuildGuideIntro extends State<BuildGuideIntro> {
               Container(
                 padding: EdgeInsets.fromLTRB(15,15,15,15),
                   child: Image(
-                      image: AssetImage('assets/buildguideintropc.png')
+                      image: AssetImage('assets/images/buildguideintropc.png')
                   )
               )
 

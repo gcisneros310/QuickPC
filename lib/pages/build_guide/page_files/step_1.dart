@@ -57,6 +57,7 @@ class _Step1_PSUState extends State<Step1_PSU> {
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -95,9 +96,6 @@ class _Step1_PSUState extends State<Step1_PSU> {
                       controller: _controller,
                       aspectRatio: 16/9,
                     )
-
-
-
                   )
                 ],
               ),
