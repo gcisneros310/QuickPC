@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/services/auth.dart';
 
 class Home extends StatefulWidget {
@@ -86,14 +87,18 @@ class _HomeState extends State<Home> {
 
           //BUILD GUIDES
           ElevatedButton.icon(
-            onPressed: (){
-              //Navigator.pushNamed(context, '/pick_search');
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BuildGuideIntro()),
+              );
             },
             icon: Icon(Icons.file_copy_outlined),
-            label: Text('Build Guides'),
+            label: Text('Build Guide'),
             style: ElevatedButton.styleFrom(
-                primary: greyout
-            )
+                primary: logoColor
+            ),
+
           ),
 
           //Account

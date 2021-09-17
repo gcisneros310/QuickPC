@@ -4,6 +4,9 @@ import 'package:quick_pc/models/users.dart';
 import 'package:quick_pc/pages/authenticate/authenticate.dart';
 import 'package:quick_pc/pages/home/home.dart';
 
+import 'authenticate/authenticate.dart';
+import 'home/home.dart';
+
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
