@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
+import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/services/auth.dart';
 
 class Home extends StatefulWidget {
@@ -116,12 +117,15 @@ class _HomeState extends State<Home> {
           //CONTACT US
           ElevatedButton.icon(
             onPressed: (){
-             // Navigator.pushNamed(context, '/pick_search');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ContactUs()),
+              );
             },
             icon: Icon(Icons.email_outlined),
             label: Text('Contact Us'),
             style: ElevatedButton.styleFrom(
-                primary: greyout
+                primary: logoColor
             )
           ),
 
