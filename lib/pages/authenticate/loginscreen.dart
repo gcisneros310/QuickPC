@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quick_pc/pages/authenticate/passwordreset.dart';
 import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/services/auth.dart';
@@ -86,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         //Navigator.push(context,
                             //MaterialPageRoute(builder: (_) => Home()));
                       }
+                      print(loading);
                     },
                     color: logoColor,
                     child: Text('Login',
@@ -97,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       error,
                       style: GoogleFonts.exo2(color: Colors.red[600], fontSize: 16)
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -110,6 +112,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 MaterialPageRoute(builder: (_) => RegisterScreen()));},
                             child: Text(
                                 "Sign Up",
+                                style: GoogleFonts.exo2(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
+                            )
+                        )
+                      ]
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        GestureDetector(
+                            onTap: () {Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => PasswordReset()));},
+                            child: Text(
+                                "Forgot Password ? ",
                                 style: GoogleFonts.exo2(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
                             )
                         )

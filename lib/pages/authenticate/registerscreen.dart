@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/shared/loading.dart';
-import 'loginscreen.dart';
+import 'package:quick_pc/services/passwordvalidator.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final Color logoColor = Color(0xff66C290);
 
   final AuthService _auth  = AuthService();
+
+  PasswordValidator passVal = PasswordValidator();
 
   // key used to identify form
   final _formkey = GlobalKey<FormState>();
@@ -28,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
+    return loading ?  Loading() : Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -52,7 +55,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Enter a unique username and password to register an account',
+                    'Enter your email and a password that contains: '
+                        'An uppercase letter, a lowercase letter, a number'
+                        ' and is 8 characters or more'
+                        ' to register an account',
                     textAlign: TextAlign.center,
                     style:
                     GoogleFonts.exo2(color: Colors.white, fontSize: 14),
@@ -79,9 +85,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             loading = false;
                           });
                         }
-                        //Navigator.push(context,
-                            //MaterialPageRoute(builder: (_) => LoginScreen()));
+                        else {
+                          setState(() {
+                            Navigator.pop(context);
+                            loading = false;
+                          });
+                        }
                       }
+                      print(loading);
                     },
                     color: logoColor,
                     child: Text('Register',
@@ -109,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       decoration: BoxDecoration(
           color: logoColor, border: Border.all(color: Colors.blue)),
       child: TextFormField(
-        validator: (val) => val.length < 6 ? 'Enter a password 6 characters or more' : null,
+        validator: (val) => !passVal.validateStructure(val) ? 'Enter a password 8 characters or more' : null,
         onChanged: (val) {
           setState(() => password = val);
         },
@@ -138,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       decoration: BoxDecoration(
           color: logoColor, border: Border.all(color: Colors.blue)),
       child: TextFormField(
-        validator: (val) => val.isEmpty ? 'Enter an email' : null,
+        validator: (val) => val.isEmpty ? 'Enter a valid email' : null,
         onChanged: (val) {
           setState(() => email = val);
         },
