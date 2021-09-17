@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-class Step0_PSU extends StatefulWidget {
-  Step0_PSU({Key key}) : super(key: key);
+class Step0_Page extends StatefulWidget {
+  Step0_Page({Key key}) : super(key: key);
 
   @override
-  _Step0_PSUState createState() => _Step0_PSUState();
+  _Step0_PageState createState() => _Step0_PageState();
 }
 
-class _Step0_PSUState extends State<Step0_PSU> {
+class _Step0_PageState extends State<Step0_Page> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   YoutubePlayerController _controller = YoutubePlayerController(
@@ -47,17 +47,16 @@ class _Step0_PSUState extends State<Step0_PSU> {
           ),
           child: SingleChildScrollView(
             child: Column(
-
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
                   child: Text(
-                    'Things to Know Before Starting to Build Your PC',
+                    'Things to Know Before Building Your PC',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -66,7 +65,6 @@ class _Step0_PSUState extends State<Step0_PSU> {
                   padding: EdgeInsets.fromLTRB(15, 15, 15, 17),
                   child: Text(
                     'So you decided you want to build your first computer. Congratulations!\n\nBuilding a PC, while intimidating, can be a fun process! Before you build your computer, however, there are somethings to keep in mind before you begin building yr PC.',
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 16,
@@ -77,7 +75,6 @@ class _Step0_PSUState extends State<Step0_PSU> {
                   padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
                   child: Text(
                     'This might seem obvious, but make sure you have all the parts necessary to build your computer. The main parts you will need for your computer are as follows:',
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 16,

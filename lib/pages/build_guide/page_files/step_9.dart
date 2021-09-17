@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-class Step9_PSU extends StatefulWidget {
-  Step9_PSU({Key key}) : super(key: key);
+class Step9_Page extends StatefulWidget {
+  Step9_Page({Key key}) : super(key: key);
 
   @override
-  _Step9_PSUState createState() => _Step9_PSUState();
+  _Step9_PageState createState() => _Step9_PageState();
 }
 
-class _Step9_PSUState extends State<Step9_PSU> {
+class _Step9_PageState extends State<Step9_Page> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

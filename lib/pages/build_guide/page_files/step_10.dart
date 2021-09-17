@@ -2,14 +2,14 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:flutter/material.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 
-class Step10_PSU extends StatefulWidget {
-  Step10_PSU({Key key}) : super(key: key);
+class Step10_Page extends StatefulWidget {
+  Step10_Page({Key key}) : super(key: key);
 
   @override
-  _Step10_PSUState createState() => _Step10_PSUState();
+  _Step10_PageState createState() => _Step10_PageState();
 }
 
-class _Step10_PSUState extends State<Step10_PSU> {
+class _Step10_PageState extends State<Step10_Page> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   YoutubePlayerController _controller = YoutubePlayerController(

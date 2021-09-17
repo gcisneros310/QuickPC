@@ -30,14 +30,14 @@ List<ExpandViewListText> generateItems(int numberOfItems) {
   });
 }
 
-class Step2_PSU extends StatefulWidget {
-  Step2_PSU({Key key}) : super(key: key);
+class Step2_Page extends StatefulWidget {
+  Step2_Page({Key key}) : super(key: key);
 
   @override
-  _Step2_PSUState createState() => _Step2_PSUState();
+  _Step2_PageState createState() => _Step2_PageState();
 }
 
-class _Step2_PSUState extends State<Step2_PSU> {
+class _Step2_PageState extends State<Step2_Page> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<ExpandViewListText> exp = generateItems(2);
   YoutubePlayerController _controller = YoutubePlayerController(

@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-class Step7_PSU extends StatefulWidget {
-  Step7_PSU({Key key}) : super(key: key);
+class Step7_Page extends StatefulWidget {
+  Step7_Page({Key key}) : super(key: key);
 
   @override
-  _Step7_PSUState createState() => _Step7_PSUState();
+  _Step7_PageState createState() => _Step7_PageState();
 }
 
-class _Step7_PSUState extends State<Step7_PSU> {
+class _Step7_PageState extends State<Step7_Page> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   YoutubePlayerController _controller = YoutubePlayerController(

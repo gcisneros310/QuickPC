@@ -28,24 +28,24 @@ class _BuildGuideList extends State<BuildGuideList> {
     ['Step 4', 'Install the Motherboard'],
     ['Step 5', 'Install the CPU Cooler/Heatsink'],
     ['Step 6', 'Install the Graphics Card'],
-    ['Step 7', '(Optional) Install any Optional Devices'],
+    ['Step 7 (Optional)', 'Install any Optional Devices'],
     ['Step 8', 'Install Storage Devices'],
     ['Step 9', 'Review All Connections'],
     ['Step 10', 'Power on your Computer'],
   ];
 
   var stepListPageIndexes = [
-    Step0_PSU(),
-    Step1_PSU(),
-    Step2_PSU(),
-    Step3_PSU(),
-    Step4_PSU(),
-    Step5_PSU(),
-    Step6_PSU(),
-    Step7_PSU(),
-    Step8_PSU(),
-    Step9_PSU(),
-    Step10_PSU(),
+    Step0_Page(),
+    Step1_Page(),
+    Step2_Page(),
+    Step3_Page(),
+    Step4_Page(),
+    Step5_Page(),
+    Step6_Page(),
+    Step7_Page(),
+    Step8_Page(),
+    Step9_Page(),
+    Step10_Page(),
   ];
   var stepInfo = [];
 
@@ -102,10 +102,12 @@ class _BuildGuideList extends State<BuildGuideList> {
         children: <Widget>[
           Expanded(
             flex: 4,
-            child: Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(lesson.subtitle,
-                    style: TextStyle(color: Colors.white))),
+              child: Text(lesson.subtitle,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14
+                  )
+              )
           )
         ],
       ),
@@ -129,20 +131,24 @@ class _BuildGuideList extends State<BuildGuideList> {
 
     final Color logoColor = Color(0xff66c290);
 
-    final makeBody = Container(
-      // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: stepInfo.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(stepInfo[index], index);
-        },
-      ),
+    final makeBody = Padding(
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        child: Container(
+          // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: stepInfo.length,
+            itemBuilder: (BuildContext context, int index) {
+              return makeCard(stepInfo[index], index);
+            },
+          ),
+        )
     );
 
+
     return Scaffold(
-      backgroundColor: Colors.grey[800],
+      backgroundColor: Colors.grey[700],
       appBar: AppBar(
         centerTitle: true,
         title: const Text("PC Build Guide"),
