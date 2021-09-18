@@ -18,7 +18,7 @@ class _ContactUs extends State<ContactUs> {
   final controllerName = TextEditingController();
   final controllerEmail = TextEditingController();
   final controllerMessage = TextEditingController();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future sendEmail({
     String name,
     String email,
@@ -62,7 +62,9 @@ class _ContactUs extends State<ContactUs> {
      body: Padding(
        padding: const EdgeInsets.all(30.0),
        child: Container(
-           child: Form(child: Column(
+           child: Form(
+               key: _formKey,
+               child: Column(
                mainAxisAlignment: MainAxisAlignment.center,
                children: <Widget>[
                  Text(
@@ -72,21 +74,41 @@ class _ContactUs extends State<ContactUs> {
                    GoogleFonts.exo2(color: Colors.white, fontSize: 28),
                  ),
                  SizedBox(height: 35),
-                 TextField(
-                   controller: controllerName,
-                   decoration: InputDecoration(
-                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                       hintText: "Name",
-                       filled: true,
-                       border: OutlineInputBorder(),
-                       prefixIcon: Icon(Icons.account_circle_rounded, color: Colors.white),
-                       fillColor: logoColor),
-                   style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
+                 TextFormField(
+                     validator: (value) {
+                       if(value.isEmpty)
+                       {
+                         return 'Enter a name';
+                       }
+                       else
+                       {
+                         return null;
+                       }
+                     },
+                     controller: controllerName,
+                     decoration: InputDecoration(
+                         contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                         hintText: "Name",
+                         filled: true,
+                         border: OutlineInputBorder(),
+                         prefixIcon: Icon(Icons.account_circle_rounded, color: Colors.white),
+                         fillColor: logoColor),
+                     style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
 
                  ),
 
                  SizedBox(height: 15),
-                 TextField(
+                 TextFormField(
+                     validator: (value) {
+                       if(value.isEmpty)
+                       {
+                         return 'Enter a valid email';
+                       }
+                       else
+                       {
+                         return null;
+                       }
+                     },
                      controller: controllerEmail,
                      decoration: InputDecoration(
                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -98,7 +120,17 @@ class _ContactUs extends State<ContactUs> {
                    style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
                  ),
                  SizedBox(height: 15),
-                 TextField(
+                 TextFormField(
+                   validator: (value) {
+                     if(value.isEmpty)
+                       {
+                         return 'Enter a message';
+                       }
+                     else
+                       {
+                         return null;
+                       }
+                   },
                    controller: controllerMessage,
                    maxLines: 5,
                    decoration: InputDecoration(
@@ -109,13 +141,14 @@ class _ContactUs extends State<ContactUs> {
                    style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
                  ),
                  TextButton(onPressed: () {
+                   if(!_formKey.currentState.validate())
+                     {
+                       return;
+                     }
+                   sendEmail( name: controllerName.text,
+                       email: controllerEmail.text,
+                       message: controllerMessage.text);
 
-                  print(controllerName.text);
-                  print(controllerEmail.text);
-                  print(controllerMessage.text);
-                  sendEmail( name: controllerName.text,
-                             email: controllerEmail.text,
-                             message: controllerMessage.text);
                  },
                      child: Text('Send')),
 
