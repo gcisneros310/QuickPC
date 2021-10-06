@@ -50,20 +50,20 @@ class _BuildGuideList extends State<BuildGuideList> {
   var stepInfo = [];
 
   var iconsList = [
-  AppIcons.question_mark,
-    AppIcons.power_supply,
-    AppIcons.processor,
-    AppIcons.ram,
-    AppIcons.motherboard,
-    AppIcons.cooler,
-    AppIcons.gpu,
-    AppIcons.gpu,
-    AppIcons.slave_hard_drive,
-    AppIcons.power_plug,
-    AppIcons.power_button,
+  StepIcons.question_mark,
+    StepIcons.power_supply,
+    StepIcons.processor,
+    StepIcons.ram,
+    StepIcons.motherboard,
+    StepIcons.cooler,
+    StepIcons.gpu,
+    StepIcons.gpu,
+    StepIcons.slave_hard_drive,
+    StepIcons.power_plug,
+    StepIcons.power_button,
   ];
 
-  List getLessons() {
+  List getStepTitles() {
     for (var i = 0; i <stepListPageIndexes.length; i++) {
         StepCardInfo temp = StepCardInfo(
           title : stepsListTitlesAndSubTitles[i][0],
@@ -76,7 +76,7 @@ class _BuildGuideList extends State<BuildGuideList> {
 
   @override
   Widget build(BuildContext context) {
-    stepInfo = getLessons();
+    stepInfo = getStepTitles();
 
     ListTile makeListTile(StepCardInfo lesson, var listIndex) => ListTile(
       contentPadding:
@@ -154,6 +154,7 @@ class _BuildGuideList extends State<BuildGuideList> {
         title: const Text("PC Build Guide"),
         backgroundColor: logoColor,
         elevation: 0.0,
+
       ),
 
       body: makeBody,

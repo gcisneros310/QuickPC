@@ -60,6 +60,24 @@ class _Step3_PageState extends State<Step3_Page> {
                     ),
                   ),
                   Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      child: Image(
+                        image: AssetImage('assets/images/ram sticks.jpg'),
+                      )
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                    child: Text(
+                      'A pair of RGB RAM sticks',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                     child: Text(
                       'System memory, or RAM, doesn’t require any careful goo placement or wires. There are just two important factors, assuming you’ve chosen compatible RAM: Direction and slot choice.\n\nThe direction is easy enough. Each memory stick has a notch in the contacts lining the bottom edge that lines up with a block in the motherboard’s memory slots. If you hold it just above the slot and the two line up, it’s facing the right direction. If it doesn’t line up, spin it 180 degrees.\n\nSlot choice depends on a few factors, one of which is how you purchased RAM. If it’s just a single stick, install it in the A1 slot and move on with your life. A diagram in the motherboard’s manual should label the slots if it isn’t printed directly on the PCB.',

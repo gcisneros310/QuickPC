@@ -15,8 +15,8 @@
 ///
 import 'package:flutter/widgets.dart';
 
-class AppIcons {
-  AppIcons._();
+class StepIcons {
+  StepIcons._();
 
   static const _kFontFam = 'AppIcons';
 
