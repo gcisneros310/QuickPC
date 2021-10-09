@@ -1,4 +1,4 @@
-import 'package:fl_chart/fl_chart.dart';
+//import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Case_Part.dart';
@@ -13,8 +13,8 @@ import 'package:quick_pc/pages/build_list/PartCardInfo.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/pages/build_guide/step.dart';
 import 'package:quick_pc/presentation/app_icons_icons.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+//import 'package:syncfusion_flutter_charts/charts.dart';
+//import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 
 class MenuItem {

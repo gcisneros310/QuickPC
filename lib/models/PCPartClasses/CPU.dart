@@ -11,9 +11,56 @@ class CPU_Part extends Part{
     this.coreCount = 0;
   }
 
-  CPU_Part.valueConstructors(String partName, String manufacturerName, double price, double baseclk, double boostclk, int coreCount) : super.loadData(partName, manufacturerName, price){
+  CPU_Part.valueConstructors(String partName, String manufacturerName,
+      double price, double baseclk, double boostclk, int coreCount)
+      : super.loadData(partName, manufacturerName, price){
     this.base_clock = baseclk;
     this.boost_clock = boostclk;
     this.coreCount = coreCount;
   }
+
+  fromDatabase(Map<dynamic, dynamic> data){
+
+    return CPU_Part.valueConstructors(
+        data['name'],
+        data['manufacturer'],
+        data['price'].toDouble(),
+        data['base clock'].toDouble(),
+        data['boost clock'].toDouble(),
+        data['core count']
+    );
+
+  }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

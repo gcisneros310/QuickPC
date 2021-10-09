@@ -12,9 +12,22 @@ class GPU_Part extends Part {
     this.vram = null;
   }
 
-  GPU_Part.loadData(String partName, String manufacturerName, double price, baseclock, boostclock, vram) : super.loadData(partName, manufacturerName, price) {
+  GPU_Part.loadData(String partName, String manufacturerName, double price, baseclock, boostclock, vram)
+      : super.loadData(partName, manufacturerName, price) {
     this.base_clock = baseclock;
     this.boost_clock = boostclock;
     this.vram = vram;
   }
+
+
+  fromDatabase(Map<dynamic, dynamic> data){
+    return GPU_Part.loadData(
+        data['name'],
+        data['manufacturer'],
+        data['price'],
+        data['baseClock'],
+        data['boostClock'],
+        data['vram']);
+  }
+
 }
