@@ -1,4 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Case_Part.dart';
@@ -9,6 +10,7 @@ import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
+import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/pages/build_list/PartCardInfo.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/pages/build_guide/step.dart';
@@ -26,11 +28,18 @@ class MenuItem {
 
 class MenuItems {
   static const setBudgetMenuItem = MenuItem(text: 'Set a Budget', icon: Icons.money);
+  static const showPieChartMenuItem = MenuItem(text: 'Show Price Chart', icon: Icons.pie_chart);
   static const List<MenuItem> menuItemsList = [
-    setBudgetMenuItem
+    setBudgetMenuItem,
+    showPieChartMenuItem
   ];
 }
 
+class Constants{
+  Constants._();
+  static const double padding =20;
+  static const double avatarRadius =45;
+}
 
 class PartList extends StatefulWidget {
   @override
@@ -48,15 +57,19 @@ class BudgetData {
     this.partTitle = partTitle; this.totalPrice = price;
   }
 
-  void setBudgetData(var objectList) {
 
-  }
 }
+
+var partTitles = [
+  'CPU', 'Motherboard', 'RAM', 'GPU', 'Power Supply',
+  'Cooler', 'Hard Drive', 'Case'
+];
 
 class CompletePCBuild {
   double price;
   double buildBudget;
   List<Part> partList;
+  List<double> priceList;
 
   CompletePCBuild() {
     this.price = 0;
@@ -65,14 +78,31 @@ class CompletePCBuild {
       CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
       PSU_Part(), Cooler_Part(), Storage_Part(), Case_Part(),
     ];
+    
+    double returnTotalPrice() {
+      double temp = 0;
+      for(int x = 0; x < this.partList.length; x++) {
+        temp += this.partList[x].price;
+      }
+      return temp;
+    }
   }
 
+  List<BudgetData> getPriceList() {
+    List<BudgetData> temp = [];
+    for (int x = 0; x < partList.length; x++) {
+      BudgetData tempObj = BudgetData.loadData(partTitles[x], partList[x].price);
+      temp.add(tempObj);
+    }
+    return temp;
+  }
 }
 
 class _BuildGuideList extends State<PartList> {
   CompletePCBuild buildObject = new CompletePCBuild();
-  TextEditingController budgetEntryController = new TextEditingController();
 
+
+  TextEditingController budgetEntryController = new TextEditingController();
   createAlertDialog(BuildContext context) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
@@ -90,12 +120,21 @@ class _BuildGuideList extends State<PartList> {
               print(buildObject.price.runtimeType);
               Navigator.of(context).pop();
             },
+          ),
+          MaterialButton(
+            elevation: 5.0,
+            child: Text("Cancel"),
+            onPressed: (){
+              Navigator.of(context).pop();
+            },
           )
         ],
       );
     }
     );
   }
+
+
 
   var iconsList = [
     StepIcons.question_mark, StepIcons.power_supply, StepIcons.processor,
@@ -104,10 +143,7 @@ class _BuildGuideList extends State<PartList> {
     StepIcons.power_plug, StepIcons.power_button,
   ];
 
-  var partTitles = [
-    'CPU', 'Motherboard', 'RAM', 'GPU', 'Power Supply',
-    'Cooler', 'Hard Drive', 'Case'
-  ];
+  
 
   var partObjects = [
     CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
@@ -140,6 +176,7 @@ class _BuildGuideList extends State<PartList> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    List<BudgetData> pieChartInfo = buildObject.getPriceList();
 
     final Color logoColor = Color(0xff66c290);
     var partInfo = getStepTitles();
@@ -212,7 +249,10 @@ class _BuildGuideList extends State<PartList> {
               ],
             )
           ),
-      onTap: () {}
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PCPartInfoPage()));
+      }
       );
 
     Card makeCard(PartCardInfo lesson, var listIndex) => Card(
@@ -239,6 +279,69 @@ class _BuildGuideList extends State<PartList> {
         )
     );
 
+    AlertDialog onSelected(BuildContext context, MenuItem item) {
+      switch(item) {
+        case MenuItems.setBudgetMenuItem:
+          print("the settings button do be getting clicked tho...");
+          createAlertDialog(context);
+          // return SimpleDialog(
+          //   title: Text("FUCK THIS"),
+          // );
+          break;
+        case MenuItems.showPieChartMenuItem:
+          createAlertDialog(BuildContext context) {
+            return showDialog(context: context, builder: (context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Constants.padding),
+                ),
+                title: Text("PC Part Price Pie Chart"),
+                content: Container(
+                    height: 600,
+                    width: 400,
+                    child: Column(
+                      children: [
+                        SfCircularChart(
+
+                          series: <CircularSeries>[
+                            PieSeries<BudgetData, String>(
+                              dataSource: pieChartInfo,
+                              xValueMapper: (BudgetData data, _) => data.partTitle,
+                              yValueMapper: (BudgetData data, _) => data.totalPrice,
+                              radius: '100%',
+                                dataLabelMapper: (BudgetData data, _) => data.totalPrice.toString(),
+                                dataLabelSettings: DataLabelSettings(
+                                    isVisible: true
+                                )
+                            )
+                          ],
+                          legend: Legend(
+                              isVisible: true,
+                              overflowMode: LegendItemOverflowMode.scroll
+                          ),
+                        ),
+                        Divider(),
+                      ],
+                    )
+                ),
+                actions: <Widget>[
+                  MaterialButton(
+                    elevation: 5.0,
+                    child: Text("Exit"),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            }
+            );
+          }
+          createAlertDialog(context);
+          break;
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey[700],
       key: scaffoldKey,
@@ -256,6 +359,68 @@ class _BuildGuideList extends State<PartList> {
             )
           ]
       ),
+      persistentFooterButtons: [
+        Container(
+          color: logoColor,
+          height: 50,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      child: Text(
+                          "Total price:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          )
+                      )
+                  ),
+                  Container(
+                      child: Text(
+                          '\$' + buildObject.price.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          )
+                      )
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      child: Text(
+                          "Budget set:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          )
+                      )
+                  ),
+                  Container(
+                      child: Text(
+                          '\$' + buildObject.buildBudget.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          )
+                      )
+                  ),
+                ],
+              ),
+            ]
+          ),
+        )
+      ],
       body: makeBody,
     );
   }
@@ -274,29 +439,4 @@ class _BuildGuideList extends State<PartList> {
         ]
     ),
   );
-
-  AlertDialog onSelected(BuildContext context, MenuItem item) {
-    switch(item) {
-      case MenuItems.setBudgetMenuItem:
-        print("the settings button do be getting clicked tho...");
-        createAlertDialog(context);
-        // return SimpleDialog(
-        //   title: Text("FUCK THIS"),
-        // );
-        break;
-    }
-  }
 }
-
-// makeBody
-// SfCircularChart(
-//   legend: Legend(isVisible: true),
-//   series: <CircularSeries>[
-//     PieSeries<BudgetData, String>(
-//         dataSource: partBudgetDataList,
-//         xValueMapper: (BudgetData data, _) => data.partTitle,
-//         yValueMapper: (BudgetData data, _) => data.totalPrice
-//     )
-//   ],
-// ),
-// Divider(),

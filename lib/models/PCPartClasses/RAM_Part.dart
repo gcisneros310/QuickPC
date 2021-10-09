@@ -7,13 +7,15 @@ class RAM_Part extends Part {
   int stickCount;
 
   RAM_Part() : super() {
+    this.price = 110.0;
     this.clockSpeed = null;
     this.timings = null;
     this.memoryCapacity = null;
     this.stickCount = 0;
   }
   
-  RAM_Part.loadData(String partName, String manufacturerName, double price, String clockSpeed, String timings, String memoryCapacity, int stickCount) : super.loadData(partName, manufacturerName, price){
+  RAM_Part.loadData(String partName, String manufacturerName, double price, String productImageURL, String clockSpeed, String timings, String memoryCapacity, int stickCount) :
+        super.loadData(partName, manufacturerName, price, productImageURL){
     this.clockSpeed = clockSpeed;
     this.timings = timings;
     this.memoryCapacity = memoryCapacity;

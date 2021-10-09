@@ -6,12 +6,15 @@ class PSU_Part extends Part {
   String modularityType;
 
   PSU_Part () : super() {
+    this.price = 90.0;
+
     this.wattage = 0;
     this.efficiencyRating = null;
     this.modularityType = null;
   }
 
-  PSU_Part.loadData(String partName, String manufacturerName, double price, int wattage, String modularityType, String formFactor) : super.loadData(partName, manufacturerName, price) {
+  PSU_Part.loadData(String partName, String manufacturerName, double price, String productImageURL, int wattage, String modularityType, String formFactor) :
+        super.loadData(partName, manufacturerName, price, productImageURL) {
     this.wattage = wattage;
     this.efficiencyRating = efficiencyRating;
     this.modularityType = modularityType;
