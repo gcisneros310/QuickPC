@@ -15,7 +15,6 @@ class PartsList extends StatefulWidget {
 class _PartsListState extends State<PartsList> {
 
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -30,19 +29,7 @@ class _PartsListState extends State<PartsList> {
 
       },
 
-
-
     );
 
-
-    /*final cpus = Provider.of<List<CPU>>(context);
-
-
-    return ListView.builder(
-      itemCount: cpus.length,
-      itemBuilder: (context, index) {
-        return PartTile(cpu: cpus[index]);
-      },
-    );*/
   }
 }

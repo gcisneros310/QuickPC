@@ -4,7 +4,6 @@ import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 
 
-
 final databaseReference = FirebaseDatabase.instance.reference();
 
 getTest(){
@@ -14,25 +13,65 @@ getTest(){
   });
 }
 
+//PASS A STRING INDICATING THE TYPE
+//RETURNS A LIST OF THAT TYPE OF PART
 Future<List<Part>> getPart(String partType) async {
 
   List<Part> partList = [];
 
   print('Inside realtimeDatabase.dart, hello');
 
+
   switch (partType) {
-    case 'gpu':
-      return getGPUList();
     case 'cpu':
       return getCPUList();
-
+    case 'gpu':
+      return getGPUList();
 
   }
 
-
   return partList;
+}
 
-  /*DataSnapshot dataSnapshot = await databaseReference.child('cpu/').get();
+//CPU list from realtime database
+Future<List<Part>> getCPUList() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').get();
+  List<Part> cpuList = [];
+
+  if(dataSnapshot.value != null){
+
+    dataSnapshot.value.forEach((key, value){
+      CPU_Part c =  CPU_Part().fromDatabase(value);
+      //c.fromDatabase(value);
+      //print(value);
+      //print('CPU Name: ' + c.partName);
+      cpuList.add(c);
+    });
+  }
+
+  return cpuList;
+}
+
+//Graphics-Cards list from realtime database
+Future<List<Part>> getGPUList() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/gpu/').get();
+  List<Part> gpuList = [];
+
+  if(dataSnapshot.value != null){
+
+    dataSnapshot.value.forEach((key, value){
+      GPU_Part g = GPU_Part().fromDatabase(value);
+      gpuList.add(g);
+    });
+  }
+
+  return gpuList;
+}
+
+
+/*DataSnapshot dataSnapshot = await databaseReference.child('cpu/').get();
   List<Part> parts = [];
 
   if(dataSnapshot.value != null){
@@ -49,45 +88,3 @@ Future<List<Part>> getPart(String partType) async {
   }
   //print(parts);
   return parts;*/
-}
-
-//CPU list from realtime database
-Future<List<Part>> getCPUList() async {
-
-  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').get();
-  List<Part> cpuList = [];
-
-  if(dataSnapshot.value != null){
-
-    dataSnapshot.value.forEach((key, value){
-      CPU_Part c =  CPU_Part().fromDatabase(value);
-      //c.fromDatabase(value);
-      //print(value);
-      //print('Cores: ');
-      //print(c.coreCount);
-      cpuList.add(c);
-    });
-  }
-
-  return cpuList;
-}
-
-//graphics cards list from realtime database
-Future<List<Part>> getGPUList() async {
-
-  DataSnapshot dataSnapshot = await databaseReference.child('parts/gpu/').get();
-  List<Part> gpuList = [];
-
-  if(dataSnapshot.value != null){
-
-    dataSnapshot.value.forEach((key, value){
-      GPU_Part g = new GPU_Part();
-      g.fromDatabase(value);
-      gpuList.add(g);
-    });
-  }
-
-  return gpuList;
-}
-
-
