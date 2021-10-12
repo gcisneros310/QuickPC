@@ -9,7 +9,8 @@ class Cooler_Part extends Part {
     this.fanSpeed = 0;
   }
 
-  Cooler_Part.loadData(String partName, String manufacturerName, double price, String coolerType, int fanSpeed) : super.loadData(partName, manufacturerName, price) {
+  Cooler_Part.loadData(String partName, String manufacturerName, double price, String productImageURL, String coolerType, int fanSpeed) :
+        super.loadData(partName, manufacturerName, price, productImageURL) {
     this.coolingType = coolerType;
     this.fanSpeed = fanSpeed;
   }
