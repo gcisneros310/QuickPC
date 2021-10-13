@@ -13,8 +13,6 @@ class PartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context){
 
-
-
     switch (partType) {
       case 'cpu':
         CPU_Part cpu = part;
@@ -24,7 +22,7 @@ class PartTile extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
                 child: ListTile(
                   title: Text(cpu.partName),
-                  subtitle: Text('Data: ${cpu.coreCount}'),
+                  subtitle: Text('Price: ${cpu.price}'),
                   onTap: (){
                     // Navigator.pushNamed(context, '/part_info',
                     //     arguments: cpu);
@@ -60,9 +58,7 @@ class PartTile extends StatelessWidget {
                   },
                 )
             )
-
         );
-
     }
 
     return Padding(
