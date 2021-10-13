@@ -76,5 +76,15 @@ class AuthService {
       return null;
     }
   }
+  Future deleteAccount() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    try{
+      await user.delete();
+    }
+    catch(e){
+      print("Error at deleteAccount");
+      return null;
+    }
+  }
 
 }

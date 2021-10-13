@@ -33,12 +33,18 @@ dependencies:
   flutter_spinkit: ^5.1.0
   http: ^0.13.3
   any_link_preview: ^1.0.7
+  flutter_swiper: ^1.1.6
+
 
   google_fonts:
   youtube_player_iframe: ^2.2.2
+  shared_preferences_settings: ^1.2.0
+  adobe_xd: ^2.0.0+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -53,8 +59,19 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/
     - assets/QuickPCLogo.png
     - assets/buildguideintropc.png
+    - assets/notificationpng.png
+    - assets/searchpcparts.jpg
+    - assets/searchparts.png
+    - assets/amdryzen.jpg
+    - assets/searchicon.png
+    - assets/desktop.png
+    - assets/build.png
+    - assets/suggest.png
+    - assets/guide.png
+
 
   fonts:
     - family: AppIcons

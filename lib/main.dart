@@ -4,6 +4,8 @@ import 'package:quick_pc/models/users.dart';
 import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/home/home.dart';
+import 'package:quick_pc/pages/home/home2.dart';
+import 'package:quick_pc/pages/home/home3.dart';
 import 'package:quick_pc/pages/part_info/part_info.dart';
 import 'package:quick_pc/pages/search/pick_search.dart';
 import 'package:quick_pc/pages/search/search.dart';
@@ -37,6 +39,8 @@ class MyApp extends StatelessWidget {
         '/pick_search': (context) => PickSearch(),
         '/search': (context) => Search(),
         '/part_info': (context) => PartInfo(),
+          '/home2': (context) => Home2(),
+          '/home3': (context) => Home2(),
         },
       ),
     );
