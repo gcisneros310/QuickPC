@@ -66,22 +66,22 @@ class _HomeState extends State<Home> {
           //BUILD PC
           ElevatedButton.icon(
             onPressed: (){
-              //Navigator.pushNamed(context, '/pick_search');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PartList())
+              );
             },
             icon: Icon(Icons.build),
             label: Text('Build PC'),
             style: ElevatedButton.styleFrom(
-                primary: greyout
+                primary: logoColor
             )
           ),
 
           //Suggest PC
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PartList())
-              );
+
             },
             icon: Icon(Icons.desktop_windows_rounded),
             label: Text('Suggest PC'),
