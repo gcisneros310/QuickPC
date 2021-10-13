@@ -15,7 +15,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final Color logoColor = Color(0xff66c290);
 
-  CPU_Part cpuObj = CPU_Part.valueConstructors("Ryzen 5 5600X", "AMD", 299.99, 'https://c1.neweggimages.com/ProductImageCompressAll1280/19-113-666-V01.jpg', 3.6, 4.4, 8);
+  CPU_Part cpuObj = CPU_Part.valueConstructors("Ryzen 5 5600X", "AMD", 299.99, "",'https://c1.neweggimages.com/ProductImageCompressAll1280/19-113-666-V01.jpg', 3.6, 4.4, 8);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

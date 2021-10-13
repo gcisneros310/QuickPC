@@ -13,7 +13,8 @@ class Storage_Part extends Part {
     this.formFactor = null;
   }
 
-  Storage_Part.loadData(String partName, String manufacturerName, double price, String productImageURL, String capacity, String storageType, String formFactor) : super.loadData(partName, manufacturerName, price, productImageURL) {
+  Storage_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, String capacity, String storageType, String formFactor)
+  : super.loadData(partName, manufacturerName, price, productURL, productImageURL){
     this.capacity = capacity;
     this.storageType = storageType;
     this.formFactor = formFactor;

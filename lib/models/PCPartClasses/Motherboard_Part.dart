@@ -12,8 +12,8 @@ class Motherboard_Part extends Part {
     this.formFactor = null;
   }
 
-  Motherboard_Part.loadData(String partName, String manufacturerName, double price, String productImageURL, String chipset, String socket, String formFactor) :
-        super.loadData(partName, manufacturerName, price, productImageURL){
+  Motherboard_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, String chipset, String socket, String formFactor) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL){
     this.chipset = chipset;
     this.cpuSocket = socket;
     this.formFactor = formFactor;

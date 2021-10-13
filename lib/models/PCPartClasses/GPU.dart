@@ -14,9 +14,8 @@ class GPU_Part extends Part {
     this.vram = null;
   }
 
-  GPU_Part.loadData(String partName, String manufacturerName, double price, String productImageURL,
-      baseclock, boostclock, vram)
-      : super.loadData(partName, manufacturerName, price, productImageURL) {
+  GPU_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, baseclock, boostclock, vram)
+      : super.loadData(partName, manufacturerName, price, productURL, productImageURL) {
     this.base_clock = baseclock;
     this.boost_clock = boostclock;
     this.vram = vram;
@@ -28,6 +27,7 @@ class GPU_Part extends Part {
         data['name'],
         data['manufacturer'],
         data['price'],
+        data['newegg_URL'],
         data['image_URL'],
         data['baseClock'],
         data['boostClock'],
