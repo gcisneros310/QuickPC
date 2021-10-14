@@ -55,7 +55,9 @@ class BudgetData {
     this.partTitle = partTitle; this.totalPrice = price;
   }
 
+  void setBudgetData(var objectList) {
 
+  }
 }
 
 var partTitles = [
