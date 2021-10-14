@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/pages/account/account.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
+import 'package:quick_pc/pages/build_list/build_list.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/services/auth.dart';
 
@@ -67,24 +68,26 @@ class _HomeState extends State<Home> {
           //BUILD PC
           ElevatedButton.icon(
             onPressed: (){
-              //Navigator.pushNamed(context, '/pick_search');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PartList())
+              );
             },
             icon: Icon(Icons.build),
             label: Text('Build PC'),
             style: ElevatedButton.styleFrom(
-                primary: greyout
+                primary: logoColor
             )
           ),
 
           //Suggest PC
           ElevatedButton.icon(
             onPressed: (){
-              //Navigator.pushNamed(context, '/pick_search');
+
             },
             icon: Icon(Icons.desktop_windows_rounded),
             label: Text('Suggest PC'),
             style: ElevatedButton.styleFrom(
-                primary: greyout
             )
           ),
 

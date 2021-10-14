@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/services/auth.dart';
 
 import 'build_guide_list.dart';
@@ -9,17 +10,15 @@ class BuildGuideIntro extends StatefulWidget {
 }
 
 class _BuildGuideIntro extends State<BuildGuideIntro> {
-
-
   final Color logoColor = Color(0xff66c290);
   final Color greyout = Colors.grey;
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      primary: true,
       backgroundColor: Colors.grey[850],
       appBar: AppBar(
+
         backgroundColor: logoColor,
         centerTitle: true,
         title: Text("PC Build Guide"),
@@ -38,8 +37,7 @@ class _BuildGuideIntro extends State<BuildGuideIntro> {
                       "Building a PC might be daunting, but rest assured it is easier "
                       "than expected, and this guide will help you through each individual step.\n\n"
                       "This guide will include a variety of both visual and descriptive guides for most steps of the building process\n\n"
-                      "This guide will list out 10 major steps. If you ever get lost or stuck, feel free to go back and forth between steps!."
-                  ,
+                      "This guide will list out 10 major steps. If you ever get lost or stuck, feel free to go back and forth between steps!.",
                   style: TextStyle(
                       fontSize: 14.5,
                       letterSpacing: 2.0,
@@ -52,13 +50,10 @@ class _BuildGuideIntro extends State<BuildGuideIntro> {
                         image: AssetImage('assets/images/Avant-Tower-Gaming-PC.png')
                     )
                 )
-
               ],
             )
         ),
       ),
-
-
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
@@ -70,6 +65,8 @@ class _BuildGuideIntro extends State<BuildGuideIntro> {
         label: const Text("Go to Guide"),
         backgroundColor: logoColor,
       ),
+      drawer: SafeArea(child: NavigationDrawer()),
+      drawerEnableOpenDragGesture: true,
 
     );
   }

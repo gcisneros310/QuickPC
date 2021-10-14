@@ -17,11 +17,17 @@ class ExpandViewListText {
 }
 
 List<ExpandViewListText> generateItems(int numberOfItems) {
+
   var manufacturers = ['Intel', 'AMD'];
+  var cpu_image_asset_list = [
+    'assets/images/INTEL CPU.jpg',
+    'assets/images/AMD CPU.jpg'
+  ];
   var instructions = [
     'Instead of jutting from the processor, pins now reside in modern Intel sockets on motherboards, making CPU installation easy. This part of the socket is called the contact array. Absolutely do not bend or touch these pins!\n\nThe square metal bracket holding the CPU in place is the load plate, and it’s raised and lowered using the load lever. When clamped down, the end of the load lever tucks under a hook to keep everything in place. When you unbox your motherboard, the contact array will be covered with a piece of plastic. This plastic will pop out once you open the bracket, so wait to open it until you’re ready to install your processor.\n\nFirst, open the load plate. Do this by gently pushing down on the load arm and moving it out sideways from under the hook, and then raising it up all the way. The hook’s lever action opens the plate, which you can easily flip up. At this point, the plastic piece will come loose. If it doesn’t pop out, gently remove it.\n\nAs shown above, the CPU itself should have a small half-circle notch on each side of the chip. With the contacts facing down, there should be only one direction where the notches line up with the notches in the socket. Pick up your processor by the sides, clamping it lightly between your fingertips. Here, you want to avoid touching the bottom of the processor.\n\nWith the processor in hand, line up the notches (or use the small gold triangle in the corner to line up the socket) and set the processor in. You don’t need to apply any force here. The processor should slot in without issues. Once it’s sitting in the socket, very gently press the side to make sure it’s slotted in. Again, very gently do this. You don’t want to move your processor. You want to make sure it’s in place.\n\nUse the load arm on the side to lower the plate over the chip, then push down and re-clip the arm under the hook once again. This requires a fair amount of pressure, so make sure the chip is properly seated before pressing down.\n\nRemember, the notches in the processor should align with those in the socket. If in doubt, start again and double-check.',
     'Unlike Intel’s design, pins jut from AMD’s CPUs. These pins insert into holes embedded in the motherboard’s CPU socket. The load arm on the socket slightly shifts the holes underneath, gripping the pins on the processor when pressed all the way down.\n\nIf it isn’t already, raise the arm so that it’s pointing straight up, and then rests a little farther back. That ensures the holes for the pins are wide open.',
   ];
+
   return List.generate(numberOfItems, (int index) {
     return ExpandViewListText(
       headerValue: 'Installing an ' + manufacturers[index] + ' CPU',
@@ -119,6 +125,60 @@ class _Step2_PageState extends State<Step2_Page> {
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      child: Image(
+                        image: AssetImage('assets/images/PLACING CPU.gif'),
+                      )
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                    child: Text(
+                      'Placing a CPU into the socket',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      child: Image(
+                        image: AssetImage('assets/images/AMD CPU.jpg'),
+                      )
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                    child: Text(
+                      'AMD CPU (pins on the bottom)',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      child: Image(
+                        image: AssetImage('assets/images/INTEL CPU.jpg'),
+                      )
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                    child: Text(
+                      'Intel CPU (pinless)',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
                       ),
                     ),
                   ),
