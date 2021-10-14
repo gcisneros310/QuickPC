@@ -1,12 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_pc/models/users.dart';
 import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/home/home.dart';
-import 'package:quick_pc/pages/home/home2.dart';
-import 'package:quick_pc/pages/home/home3.dart';
 import 'package:quick_pc/pages/part_info/part_info.dart';
 import 'package:quick_pc/pages/search/pick_search.dart';
 import 'package:quick_pc/pages/search/search.dart';
@@ -16,11 +13,7 @@ import 'package:quick_pc/services/auth.dart';
 
 import 'pages/wrapper.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
 
@@ -28,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<PCUser>.value(
+    return StreamProvider<User>.value(
 
       value: AuthService().user,
       child: MaterialApp(
@@ -44,8 +37,6 @@ class MyApp extends StatelessWidget {
         '/pick_search': (context) => PickSearch(),
         '/search': (context) => Search(),
         '/part_info': (context) => PartInfo(),
-          '/home2': (context) => Home2(),
-          '/home3': (context) => Home2(),
         },
       ),
     );

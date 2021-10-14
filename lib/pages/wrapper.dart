@@ -12,7 +12,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // accessing user data from the provider
-    final user = Provider.of<PCUser>(context);
+    final user = Provider.of<User>(context);
 
     // return either Home or Authenticate widget
     if(user == null){

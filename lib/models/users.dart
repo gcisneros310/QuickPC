@@ -1,6 +1,7 @@
-class PCUser {
+class User {
   final String uid;
 
-  PCUser({this.uid});
+  User({this.uid});
+
 
 }

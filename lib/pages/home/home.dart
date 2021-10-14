@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quick_pc/pages/account/account.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/build_list/build_list.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
@@ -23,7 +22,6 @@ class _HomeState extends State<Home> {
     final title = 'Quick PC Home Page';
 
     return Scaffold(
-
       backgroundColor: Colors.grey[850],
       appBar: AppBar(
         backgroundColor: logoColor,
@@ -68,22 +66,22 @@ class _HomeState extends State<Home> {
           //BUILD PC
           ElevatedButton.icon(
             onPressed: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PartList())
-              );
+              //Navigator.pushNamed(context, '/pick_search');
             },
             icon: Icon(Icons.build),
             label: Text('Build PC'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
 
           //Suggest PC
           ElevatedButton.icon(
             onPressed: (){
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PartList())
+              );
             },
             icon: Icon(Icons.desktop_windows_rounded),
             label: Text('Suggest PC'),
@@ -109,16 +107,13 @@ class _HomeState extends State<Home> {
 
           //Account
           ElevatedButton.icon(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Account()),
-                );
-              },
+            onPressed: (){
+             // Navigator.pushNamed(context, '/pick_search');
+            },
             icon: Icon(Icons.account_circle_outlined),
             label: Text('Account'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
           ),
 
@@ -145,20 +140,8 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.info_outline),
             label: Text('About Us'),
             style: ElevatedButton.styleFrom(
-                primary: logoColor
+                primary: greyout
             )
-          ),
-
-          //ABOUT US
-          ElevatedButton.icon(
-              onPressed: (){
-                 Navigator.pushNamed(context, '/home3');
-              },
-              icon: Icon(Icons.info_outline),
-              label: Text('Home Test'),
-              style: ElevatedButton.styleFrom(
-                  primary: logoColor
-              )
           ),
         ]
       )

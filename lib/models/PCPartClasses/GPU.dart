@@ -20,18 +20,4 @@ class GPU_Part extends Part {
     this.boost_clock = boostclock;
     this.vram = vram;
   }
-
-
-  fromDatabase(Map<dynamic, dynamic> data){
-    return GPU_Part.loadData(
-        data['name'],
-        data['manufacturer'],
-        data['price'],
-        data['newegg_URL'],
-        data['image_URL'],
-        data['baseClock'],
-        data['boostClock'],
-        data['vram']);
-  }
-
 }

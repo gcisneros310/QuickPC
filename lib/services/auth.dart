@@ -7,25 +7,25 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user object based on firebase user
-  PCUser _useFromFirebaseUser(User user) {
+  User _useFromFirebaseUser(FirebaseUser user) {
     // return user id if it exists, if not return null
-    return user != null ? PCUser(uid: user.uid) : null;
+    return user != null ? User(uid: user.uid) : null;
   }
 
   // auth change user stream
   // whenever a change in authentication return state changed
   // Every time we get a fire base user we map it to our User class
-  Stream<PCUser> get user {
-    return _auth.authStateChanges()
+  Stream<User> get user {
+    return _auth.onAuthStateChanged
         .map(_useFromFirebaseUser);
   }
 
   // sign in anon
   Future signInAnon() async {
     try {
-      UserCredential result = await _auth.signInAnonymously();
-      User user = result.user;
-      return _useFromFirebaseUser(user);
+     AuthResult result = await _auth.signInAnonymously();
+     FirebaseUser user = result.user;
+     return _useFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
       return null;
@@ -36,8 +36,8 @@ class AuthService {
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      User user = result.user;
+      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
       return _useFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
@@ -48,8 +48,8 @@ class AuthService {
   // register with email and password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      User user = result.user;
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
       return _useFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
@@ -73,16 +73,6 @@ class AuthService {
     }
     catch(e){
       print(e.toString());
-      return null;
-    }
-  }
-  Future deleteAccount() async {
-    User user = FirebaseAuth.instance.currentUser;
-    try{
-      await user.delete();
-    }
-    catch(e){
-      print("Error at deleteAccount");
       return null;
     }
   }

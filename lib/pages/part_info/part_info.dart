@@ -48,7 +48,7 @@ class _PartInfoState extends State<PartInfo> {
           body: TabBarView(
             children: [
               //Info tab Contents
-/*              ListView.builder(
+              ListView.builder(
                 itemCount: widget.cpu.features.length,
                 itemBuilder: (context, index) {
                   String key = widget.cpu.features.keys.elementAt(index);
@@ -57,7 +57,7 @@ class _PartInfoState extends State<PartInfo> {
                     tileColor: Colors.white,
                   );
                 },
-              ),*/
+              ),
 
               //Buy Tab Contents
               Icon(Icons.shopping_cart),

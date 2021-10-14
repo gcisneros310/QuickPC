@@ -18,21 +18,4 @@ class CPU_Part extends Part{
     this.boost_clock = boostclk;
     this.coreCount = coreCount;
   }
-
-  fromDatabase(Map<dynamic, dynamic> data){
-
-    return CPU_Part.valueConstructors(
-        data['name'],
-        data['manufacturer'],
-        data['price'].toDouble(),
-        data['newegg_URL'],
-        data['image_URL'],
-        data['base clock'].toDouble(),
-        data['boost clock'].toDouble(),
-        data['core count']
-    );
-
-  }
-
-
 }
