@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -57,7 +56,9 @@ class BudgetData {
     this.partTitle = partTitle; this.totalPrice = price;
   }
 
+  void setBudgetData(var objectList) {
 
+  }
 }
 
 var partTitles = [
