@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -17,6 +18,7 @@ import 'package:quick_pc/presentation/app_icons_icons.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+final Color logoColor = Color(0xff66c290);
 
 class MenuItem {
   final String text;
@@ -40,11 +42,6 @@ class Constants{
   static const double avatarRadius =45;
 }
 
-class PartList extends StatefulWidget {
-  @override
-  _BuildGuideList createState() => _BuildGuideList();
-}
-
 class BudgetData {
   String partTitle;
   double totalPrice;
@@ -61,9 +58,23 @@ class BudgetData {
   }
 }
 
+class PartList extends StatefulWidget {
+  PartList({Key key}) : super(key: key);
+
+  @override
+  _PartListState createState() => _PartListState();
+}
+
 var partTitles = [
   'CPU', 'Motherboard', 'RAM', 'GPU', 'Power Supply',
   'Cooler', 'Hard Drive', 'Case'
+];
+
+var iconsList = [
+  StepIcons.question_mark, StepIcons.power_supply, StepIcons.processor,
+  StepIcons.ram, StepIcons.motherboard, StepIcons.cooler,
+  StepIcons.gpu, StepIcons.gpu, StepIcons.slave_hard_drive,
+  StepIcons.power_plug, StepIcons.power_button,
 ];
 
 class CompletePCBuild {
@@ -99,11 +110,13 @@ class CompletePCBuild {
   }
 }
 
-class _BuildGuideList extends State<PartList> {
+class _PartListState extends State<PartList> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   CompletePCBuild buildObject = new CompletePCBuild();
-
-
   TextEditingController budgetEntryController = new TextEditingController();
+
+
   createAlertDialog(BuildContext context) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
@@ -117,9 +130,11 @@ class _BuildGuideList extends State<PartList> {
             elevation: 5.0,
             child: Text("Submit"),
             onPressed: (){
-              buildObject.price = double.parse(budgetEntryController.text);
-              print(buildObject.price.runtimeType);
-              Navigator.of(context).pop();
+              setState(() {
+                buildObject.price = double.parse(budgetEntryController.text);
+                print(buildObject.price.runtimeType);
+                Navigator.of(context).pop();
+              });
             },
           ),
           MaterialButton(
@@ -134,23 +149,10 @@ class _BuildGuideList extends State<PartList> {
     }
     );
   }
-
-
-
-  var iconsList = [
-    StepIcons.question_mark, StepIcons.power_supply, StepIcons.processor,
-    StepIcons.ram, StepIcons.motherboard, StepIcons.cooler,
-    StepIcons.gpu, StepIcons.gpu, StepIcons.slave_hard_drive,
-    StepIcons.power_plug, StepIcons.power_button,
-  ];
-
-
-
   var partObjects = [
     CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
     PSU_Part(), Cooler_Part(), Storage_Part(), Case_Part(),
   ];
-
   List<BudgetData> loadPrices() {
     List<BudgetData> tempList = [];
     for(int x = 0; x < partObjects.length; x++)
@@ -161,124 +163,9 @@ class _BuildGuideList extends State<PartList> {
     return tempList;
   }
 
-  List getStepTitles() {
-    var stepInfo = [];
-    for (var i = 0; i < partTitles.length; i++) {
-      PartCardInfo temp = PartCardInfo(
-          partCategoryTitle : partTitles[i],
-          partTitle: partObjects[i].partName,
-          price: buildObject.partList[i].price.toString()
-      );
-      stepInfo.add(temp);
-    }
-    return stepInfo;
-  }
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     List<BudgetData> pieChartInfo = buildObject.getPriceList();
-
-    final Color logoColor = Color(0xff66c290);
-    var partInfo = getStepTitles();
-
-    ListTile makeListTile(PartCardInfo lesson, var listIndex) => ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        leading: Container(
-          padding: EdgeInsets.only(right: 12.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.white24)
-              )
-          ),
-          child: Icon(
-            iconsList[listIndex],
-            color: Colors.white,
-            size: 42,
-          ),
-        ),
-        title: Text(
-          lesson.partCategoryTitle,
-          style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18
-          ),
-        ),
-        subtitle: Row(
-          children: <Widget>[
-            Expanded(
-                flex: 4,
-                child: Text(
-                    lesson.partTitle,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13
-                    )
-                )
-            ),
-
-          ],
-        ),
-        trailing:
-        Container(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                              'Price',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              )
-                          ),
-                          Text(
-                              partObjects[listIndex].price.toString(),
-                              style: TextStyle(
-                                color: Colors.white,
-                              )
-                          ),
-                        ]
-                    )
-                ),
-                Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-
-              ],
-            )
-        ),
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => PCPartInfoPage()));
-        }
-    );
-
-    Card makeCard(PartCardInfo lesson, var listIndex) => Card(
-      elevation: 8.0,
-      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-        child: makeListTile(lesson, listIndex),
-      ),
-    );
-
-    final makeBody = Padding(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-        child: Container(
-          // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: partTitles.length,
-            itemBuilder: (BuildContext context, int index) {
-              return makeCard(partInfo[index], index);
-            },
-          ),
-        )
-    );
 
     AlertDialog onSelected(BuildContext context, MenuItem item) {
       switch(item) {
@@ -344,7 +231,6 @@ class _BuildGuideList extends State<PartList> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[700],
       key: scaffoldKey,
       appBar: AppBar(
           title: const Text("PC Part List"),
@@ -360,6 +246,7 @@ class _BuildGuideList extends State<PartList> {
             )
           ]
       ),
+      backgroundColor: Color(0xFFF5F5F5),
       persistentFooterButtons: [
         Container(
           color: logoColor,
@@ -422,7 +309,137 @@ class _BuildGuideList extends State<PartList> {
           ),
         )
       ],
-      body: makeBody,
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: Color(0xFFEEEEEE),
+          ),
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            itemCount: 8,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                child: Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  elevation: 8.0,
+                  child: Container(
+                    width: 100,
+                    height: 195,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[700],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8,8,8,0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Image.network(
+                                  buildObject.partList[index].productImageURL,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 200,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0x4f4f4f),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        partTitles[index],
+                                        style:
+                                        TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        buildObject.partList[index].partName,
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        "\$" + buildObject.partList[index].price.toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                          EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  print('Button pressed ...');
+                                },
+                                child: Text('Search Part'),
+                                style: TextButton.styleFrom(
+                                  primary: Colors.white,
+                                  backgroundColor: Colors.teal,
+                                  onSurface: Colors.grey,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  print('Button pressed ...');
+                                },
+                                child: Text('Remove Selection'),
+                                style: TextButton.styleFrom(
+                                  primary: Colors.white,
+                                  backgroundColor: Colors.teal,
+                                  onSurface: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+          ),
+        ),
+      ),
     );
   }
 
@@ -440,4 +457,5 @@ class _BuildGuideList extends State<PartList> {
         ]
     ),
   );
+
 }
