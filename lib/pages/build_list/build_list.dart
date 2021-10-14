@@ -15,6 +15,7 @@ import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/pages/build_guide/step.dart';
 import 'package:quick_pc/presentation/app_icons_icons.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 
 class MenuItem {
@@ -78,7 +79,7 @@ class CompletePCBuild {
       CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
       PSU_Part(), Cooler_Part(), Storage_Part(), Case_Part(),
     ];
-    
+
     double returnTotalPrice() {
       double temp = 0;
       for(int x = 0; x < this.partList.length; x++) {
@@ -114,7 +115,7 @@ class _BuildGuideList extends State<PartList> {
         actions: <Widget>[
           MaterialButton(
             elevation: 5.0,
-              child: Text("Submit"),
+            child: Text("Submit"),
             onPressed: (){
               buildObject.price = double.parse(budgetEntryController.text);
               print(buildObject.price.runtimeType);
@@ -143,7 +144,7 @@ class _BuildGuideList extends State<PartList> {
     StepIcons.power_plug, StepIcons.power_button,
   ];
 
-  
+
 
   var partObjects = [
     CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
@@ -153,10 +154,10 @@ class _BuildGuideList extends State<PartList> {
   List<BudgetData> loadPrices() {
     List<BudgetData> tempList = [];
     for(int x = 0; x < partObjects.length; x++)
-      {
-        BudgetData tempObj = BudgetData.loadData(partTitles[x], 2.0 * (x + 1));
-        tempList.add(tempObj);
-      }
+    {
+      BudgetData tempObj = BudgetData.loadData(partTitles[x], 2.0 * (x + 1));
+      tempList.add(tempObj);
+    }
     return tempList;
   }
 
@@ -166,7 +167,7 @@ class _BuildGuideList extends State<PartList> {
       PartCardInfo temp = PartCardInfo(
           partCategoryTitle : partTitles[i],
           partTitle: partObjects[i].partName,
-        price: buildObject.partList[i].price.toString()
+          price: buildObject.partList[i].price.toString()
       );
       stepInfo.add(temp);
     }
@@ -182,45 +183,45 @@ class _BuildGuideList extends State<PartList> {
     var partInfo = getStepTitles();
 
     ListTile makeListTile(PartCardInfo lesson, var listIndex) => ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      leading: Container(
-        padding: EdgeInsets.only(right: 12.0),
-        decoration: new BoxDecoration(
-            border: new Border(
-                right: new BorderSide(width: 1.0, color: Colors.white24)
-            )
-        ),
-        child: Icon(
-          iconsList[listIndex],
-          color: Colors.white,
-          size: 42,
-        ),
-      ),
-      title: Text(
-        lesson.partCategoryTitle,
-        style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18
-        ),
-      ),
-      subtitle: Row(
-        children: <Widget>[
-          Expanded(
-              flex: 4,
-              child: Text(
-                  lesson.partTitle,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13
-                  )
+        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        leading: Container(
+          padding: EdgeInsets.only(right: 12.0),
+          decoration: new BoxDecoration(
+              border: new Border(
+                  right: new BorderSide(width: 1.0, color: Colors.white24)
               )
           ),
+          child: Icon(
+            iconsList[listIndex],
+            color: Colors.white,
+            size: 42,
+          ),
+        ),
+        title: Text(
+          lesson.partCategoryTitle,
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18
+          ),
+        ),
+        subtitle: Row(
+          children: <Widget>[
+            Expanded(
+                flex: 4,
+                child: Text(
+                    lesson.partTitle,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13
+                    )
+                )
+            ),
 
-        ],
-      ),
-      trailing:
-          Container(
+          ],
+        ),
+        trailing:
+        Container(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -248,12 +249,12 @@ class _BuildGuideList extends State<PartList> {
 
               ],
             )
-          ),
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PCPartInfoPage()));
-      }
-      );
+        ),
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => PCPartInfoPage()));
+        }
+    );
 
     Card makeCard(PartCardInfo lesson, var listIndex) => Card(
       elevation: 8.0,
@@ -305,10 +306,10 @@ class _BuildGuideList extends State<PartList> {
 
                           series: <CircularSeries>[
                             PieSeries<BudgetData, String>(
-                              dataSource: pieChartInfo,
-                              xValueMapper: (BudgetData data, _) => data.partTitle,
-                              yValueMapper: (BudgetData data, _) => data.totalPrice,
-                              radius: '100%',
+                                dataSource: pieChartInfo,
+                                xValueMapper: (BudgetData data, _) => data.partTitle,
+                                yValueMapper: (BudgetData data, _) => data.totalPrice,
+                                radius: '100%',
                                 dataLabelMapper: (BudgetData data, _) => data.totalPrice.toString(),
                                 dataLabelSettings: DataLabelSettings(
                                     isVisible: true
@@ -346,16 +347,16 @@ class _BuildGuideList extends State<PartList> {
       backgroundColor: Colors.grey[700],
       key: scaffoldKey,
       appBar: AppBar(
-        title: const Text("PC Part List"),
-        backgroundColor: logoColor,
-        centerTitle: true,
-        elevation: 4,
+          title: const Text("PC Part List"),
+          backgroundColor: logoColor,
+          centerTitle: true,
+          elevation: 4,
           actions: [
             PopupMenuButton<MenuItem>(
               onSelected: (item) => onSelected(context, item),
-                itemBuilder: (context) => [
-                  ...MenuItems.menuItemsList.map(buildItem).toList(),
-                ],
+              itemBuilder: (context) => [
+                ...MenuItems.menuItemsList.map(buildItem).toList(),
+              ],
             )
           ]
       ),
@@ -364,60 +365,60 @@ class _BuildGuideList extends State<PartList> {
           color: logoColor,
           height: 50,
           child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      child: Text(
-                          "Total price:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.white,
-                          )
-                      )
-                  ),
-                  Container(
-                      child: Text(
-                          '\$' + buildObject.price.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.white,
-                          )
-                      )
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      child: Text(
-                          "Budget set:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.white,
-                          )
-                      )
-                  ),
-                  Container(
-                      child: Text(
-                          '\$' + buildObject.buildBudget.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.white,
-                          )
-                      )
-                  ),
-                ],
-              ),
-            ]
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        child: Text(
+                            "Total price:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            )
+                        )
+                    ),
+                    Container(
+                        child: Text(
+                            '\$' + buildObject.price.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            )
+                        )
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        child: Text(
+                            "Budget set:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            )
+                        )
+                    ),
+                    Container(
+                        child: Text(
+                            '\$' + buildObject.buildBudget.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            )
+                        )
+                    ),
+                  ],
+                ),
+              ]
           ),
         )
       ],
