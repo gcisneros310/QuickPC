@@ -77,7 +77,7 @@ class AuthService {
     }
   }
   Future deleteAccount() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    User user = FirebaseAuth.instance.currentUser;
     try{
       await user.delete();
     }

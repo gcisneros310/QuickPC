@@ -332,8 +332,6 @@ class _Home2State extends State<Home2> {
     drawer: Drawer();
 
     return Scaffold(
-
-
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black54),
