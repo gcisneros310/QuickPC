@@ -1,14 +1,15 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quick_pc/pages/account/account.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/pages/home/swiperModel.dart';
+import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'dashboard_card.dart';
+import 'home.dart';
 
 
 class Home2 extends StatefulWidget {
@@ -24,7 +25,7 @@ class _Home2State extends State<Home2> {
   int _currentIndex = 0;
   String currentPage;
   final List _children = [];
-
+  
   List<T> map<T>(List list, Function handler){
     List<T> result = [];
     for( var i =0; i< list.length; i++){
@@ -369,24 +370,28 @@ class _Home2State extends State<Home2> {
                       color: colorBlue,
                       totalParts: "27",
                       icon: "assets/desktop.png",
+                      userChoice: 0,
                     ),
                     DashboardCard(
                       name: "Build PC",
                       color: colorPurple,
                       totalParts: "27",
                       icon: "assets/build.png",
+                      userChoice: 1,
                     ),
                     DashboardCard(
                       name: "Suggest PC",
                       color: colorOrange,
                       totalParts: "27",
                       icon: "assets/suggest.png",
+                      userChoice: 5,
                     ),
                     DashboardCard(
                       name: "Build Guide",
                       color: colorGreen,
                       totalParts: "27",
                       icon: "assets/guide.png",
+                      userChoice: 3,
                     ),
                   ],
                 ),
@@ -431,22 +436,8 @@ class _Home2State extends State<Home2> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Home"
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.build),
-                label: "Your Builds"
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_rounded),
-                label: "Account"
-            ),
-          ]
-      ),
+
+
     );
 
 
