@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_pc/pages/bottom_navigation/bottom_navigation_bar.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/pages/search/pick_search.dart';
@@ -151,7 +152,7 @@ class NavigationDrawer extends StatelessWidget{
     switch(index) {
       case -1:
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Home(),
+          builder: (context) => BottomNav(),
         ));
         break;
       case 0:
