@@ -28,6 +28,17 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
         centerTitle: true,
         elevation: 4,
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Navigator.push(
+          //     context,
+          //     // MaterialPageRoute(builder: (context) => BuildGuideList())
+          // );
+        },
+        icon: Icon(Icons.arrow_forward),
+        label: const Text("Go to Guide"),
+        backgroundColor: logoColor,
+      ),
       backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
