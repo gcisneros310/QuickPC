@@ -132,6 +132,18 @@ class _PartListState extends State<PartList> {
     return tempList;
   }
 
+
+  var partTypes = [
+    'cpu',
+    'motherboard',
+    'memory',
+    'gpu',
+    'psu',
+    'cooler',
+    'storage',
+    'case'
+  ];
+
   @override
   Widget build(BuildContext context) {
     List<BudgetData> pieChartInfo = buildObject.getPriceList();
@@ -412,6 +424,9 @@ class _PartListState extends State<PartList> {
                               TextButton.icon(
                                 onPressed: () {
                                   print('Search button pressed ...');
+                                  Navigator.pushNamed(
+                                    context, '/search', arguments: {
+                                    'partType': partTypes[index]},);
                                 },
                                 icon: Icon(Icons.search),
                                 label: Text('Search Part'),
