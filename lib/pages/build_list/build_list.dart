@@ -17,6 +17,7 @@ import 'package:quick_pc/pages/build_guide/step.dart';
 import 'package:quick_pc/presentation/app_icons_icons.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 final Color logoColor = Color(0xff66c290);
 
@@ -70,6 +71,8 @@ var partTitles = [
   'Cooler', 'Hard Drive', 'Case'
 ];
 
+
+
 var iconsList = [
   StepIcons.question_mark, StepIcons.power_supply, StepIcons.processor,
   StepIcons.ram, StepIcons.motherboard, StepIcons.cooler,
@@ -90,14 +93,6 @@ class CompletePCBuild {
       CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
       PSU_Part(), Cooler_Part(), Storage_Part(), Case_Part(),
     ];
-
-    double returnTotalPrice() {
-      double temp = 0;
-      for(int x = 0; x < this.partList.length; x++) {
-        temp += this.partList[x].price;
-      }
-      return temp;
-    }
   }
 
   List<BudgetData> getPriceList() {
@@ -108,47 +103,21 @@ class CompletePCBuild {
     }
     return temp;
   }
-}
+
+  void updatePrice() {
+    double temp = 0;
+    for(int x = 0; x < this.partList.length; x++) {
+      temp += this.partList[x].price;
+    }
+    this.price = temp;
+  }}
+CompletePCBuild buildObject = CompletePCBuild();
 
 class _PartListState extends State<PartList> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  CompletePCBuild buildObject = new CompletePCBuild();
   TextEditingController budgetEntryController = new TextEditingController();
 
-
-  createAlertDialog(BuildContext context) {
-    return showDialog(context: context, builder: (context) {
-      return AlertDialog(
-        title: Text("Set your Budget"),
-        content: TextField(
-          keyboardType: TextInputType.number,
-          controller: budgetEntryController,
-        ),
-        actions: <Widget>[
-          MaterialButton(
-            elevation: 5.0,
-            child: Text("Submit"),
-            onPressed: (){
-              setState(() {
-                buildObject.price = double.parse(budgetEntryController.text);
-                print(buildObject.price.runtimeType);
-                Navigator.of(context).pop();
-              });
-            },
-          ),
-          MaterialButton(
-            elevation: 5.0,
-            child: Text("Cancel"),
-            onPressed: (){
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      );
-    }
-    );
-  }
   var partObjects = [
     CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
     PSU_Part(), Cooler_Part(), Storage_Part(), Case_Part(),
@@ -166,6 +135,40 @@ class _PartListState extends State<PartList> {
   @override
   Widget build(BuildContext context) {
     List<BudgetData> pieChartInfo = buildObject.getPriceList();
+
+    createAlertDialog(BuildContext context) {
+      return showDialog(context: context, builder: (context) {
+        return AlertDialog(
+          title: Text("Set your Budget"),
+          content: TextField(
+            keyboardType: TextInputType.number,
+            controller: budgetEntryController,
+          ),
+          actions: <Widget>[
+            MaterialButton(
+              elevation: 5.0,
+              child: Text("Submit"),
+              onPressed: (){
+                setState(() {
+                  buildObject.buildBudget = double.parse(budgetEntryController.text);
+                  print(buildObject.price);
+                  buildObject.updatePrice();
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+            MaterialButton(
+              elevation: 5.0,
+              child: Text("Cancel"),
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
+      );
+    }
 
     AlertDialog onSelected(BuildContext context, MenuItem item) {
       switch(item) {
@@ -322,7 +325,7 @@ class _PartListState extends State<PartList> {
             itemCount: 8,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
                 child: Card(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   elevation: 8.0,
@@ -406,25 +409,79 @@ class _PartListState extends State<PartList> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              TextButton(
+                              TextButton.icon(
                                 onPressed: () {
-                                  print('Button pressed ...');
+                                  print('Search button pressed ...');
                                 },
-                                child: Text('Search Part'),
+                                icon: Icon(Icons.search),
+                                label: Text('Search Part'),
                                 style: TextButton.styleFrom(
                                   primary: Colors.white,
                                   backgroundColor: Colors.teal,
                                   onSurface: Colors.grey,
                                 ),
                               ),
-                              TextButton(
+                              TextButton.icon(
                                 onPressed: () {
                                   print('Button pressed ...');
+                                  setState(() {
+                                    print(index);
+                                    print(buildObject.partList[index].price);
+                                    buildObject.partList[index] = returnDefaultPart(index);
+                                    buildObject.updatePrice();
+                                    print(buildObject.partList[index].price);
+                                  }
+                                  );
                                 },
-                                child: Text('Remove Selection'),
+                                icon: Icon(Icons.delete),
+                                label: Text('Remove Part'),
                                 style: TextButton.styleFrom(
                                   primary: Colors.white,
                                   backgroundColor: Colors.teal,
+                                  onSurface: Colors.grey,
+                                ),
+                              ),
+                              TextButton.icon(
+                                onPressed: () {
+                                  print('PRICE SELECTED' + buildObject.partList[index].price.toString());
+                                    return showDialog(context: context, builder: (context) {
+                                      return AlertDialog(
+                                        title: Text("Enter new price"),
+                                        content: TextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: budgetEntryController,
+                                        ),
+                                        actions: <Widget>[
+                                          MaterialButton(
+                                            elevation: 8.0,
+                                            child: Text("Cancel"),
+                                            onPressed: (){
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          MaterialButton(
+                                            elevation: 8.0,
+                                            child: Text("Submit"),
+                                            onPressed: (){
+                                              setState(() {
+                                                buildObject.partList[index].price = double.parse(budgetEntryController.text);
+                                                print(buildObject.price.runtimeType);
+                                                buildObject.updatePrice();
+                                                Navigator.of(context).pop();
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                    );
+
+                                },
+                                icon: Icon(Icons.edit),
+                                label: Text('Edit Price'),
+                                style: TextButton.styleFrom(
+                                  primary: Colors.white,
+                                  backgroundColor: Colors.greenAccent,
                                   onSurface: Colors.grey,
                                 ),
                               ),
@@ -441,6 +498,35 @@ class _PartListState extends State<PartList> {
         ),
       ),
     );
+  }
+
+  Part returnDefaultPart(int index){
+    switch(index) {
+      case 0:
+        return CPU_Part();
+        break;
+      case 1:
+        return Motherboard_Part();
+        break;
+      case 2:
+        return RAM_Part();
+        break;
+      case 3:
+        return GPU_Part();
+        break;
+      case 4:
+        return PSU_Part();
+        break;
+      case 5:
+        return Cooler_Part();
+        break;
+      case 6:
+        return Storage_Part();
+        break;
+      case 7:
+        return Case_Part();
+        break;
+    }
   }
 
   PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem<MenuItem>(

@@ -97,9 +97,7 @@ class _PickSearchState extends State<PickSearch> {
               //CPU
               ElevatedButton.icon(
                   onPressed: (){
-
                     FocusScope.of(context).unfocus();
-
                     //Call the next page and pass a String of the part type
                     Navigator.pushNamed(
                       context, '/search', arguments: {
