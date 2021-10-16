@@ -29,7 +29,7 @@ class CPU_Part extends Part{
         data['image_URL'],
         double.parse(data['base clock']) ?? 0.0,
         double.parse(data['boost clock']) ?? 0.0,
-        data['core count'] ?? 0
+        int.parse(data['core count']) ?? 0
     );
 
   }
