@@ -19,24 +19,6 @@ class _PickSearchState extends State<PickSearch> {
   String searchTerm = '';
   FocusNode myFocusNode;
 
-  //List<Part> parts = [];
-  //String partType = 'gpu';
-
-
-/*  void updateList(){
-    getPart('gpu').then((p) => {
-      this.setState(() {
-        *//*p.forEach((e) {
-          print(e.name);
-        });*//*
-        //print(p);
-        parts = p;
-      })
-    });
-
-    print(parts.isEmpty);
-  }*/
-
 
   @override
   void initState() {
@@ -198,7 +180,7 @@ class _PickSearchState extends State<PickSearch> {
               //CPU COOLER
               ElevatedButton.icon(
                   onPressed: (){
-                    //Navigator.pushNamed(context, '/search');
+                    Navigator.pushNamed(context, '/select_search');
                   },
                   icon: Icon(Icons.memory_sharp),
                   label: Text('CPU Cooler'),

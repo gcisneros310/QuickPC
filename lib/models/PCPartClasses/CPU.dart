@@ -22,14 +22,14 @@ class CPU_Part extends Part{
   fromDatabase(Map<dynamic, dynamic> data){
 
     return CPU_Part.valueConstructors(
-        data['name'],
-        data['manufacturer'],
-        data['price'].toDouble(),
+        data['name'] ?? "CPU",
+        data['manufacturer'] ?? "Manufactuer",
+        double.parse(data['price']) ?? 0.0,
         data['newegg_URL'],
         data['image_URL'],
-        data['base clock'].toDouble(),
-        data['boost clock'].toDouble(),
-        data['core count']
+        double.parse(data['base clock']) ?? 0.0,
+        double.parse(data['boost clock']) ?? 0.0,
+        data['core count'] ?? 0
     );
 
   }

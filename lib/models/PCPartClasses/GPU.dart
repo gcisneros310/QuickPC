@@ -26,11 +26,11 @@ class GPU_Part extends Part {
     return GPU_Part.loadData(
         data['name'],
         data['manufacturer'],
-        data['price'],
+        double.parse(data['price']) ?? 0.0,
         data['newegg_URL'],
         data['image_URL'],
-        data['baseClock'],
-        data['boostClock'],
+        double.parse(data['baseClock']) ?? 0.0,
+        double.parse(data['boostClock']) ?? 0.0,
         data['vram']);
   }
 
