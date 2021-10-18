@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/pages/part_info/part_info.dart';
 
 class PartTile extends StatelessWidget {
@@ -30,8 +31,14 @@ class PartTile extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          //builder: (context) => PartInfo(cpu: cpu),
+                          builder: (context) => PCPartInfoPage(part: cpu, partType: partType),
                         ));
+
+                    /*Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PartInfo(cpu: cpu),
+                        ));*/
                   },
                 )
             )
@@ -45,7 +52,7 @@ class PartTile extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
                 child: ListTile(
                   title: Text(gpu.partName),
-                  subtitle: Text('Data: ${gpu.base_clock}'),
+                  subtitle: Text('Price: \$${gpu.price}'),
                   onTap: (){
                     // Navigator.pushNamed(context, '/part_info',
                     //     arguments: cpu);

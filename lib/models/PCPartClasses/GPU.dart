@@ -1,16 +1,16 @@
 import 'PCPart.dart';
 
 class GPU_Part extends Part {
-  double base_clock;
-  double boost_clock;
+  String base_clock;
+  String boost_clock;
   String vram;
 
 
   GPU_Part() : super() {
     this.price = 600.0;
 
-    this.base_clock = 0;
-    this.boost_clock = 0;
+    this.base_clock = '0';
+    this.boost_clock = '0';
     this.vram = null;
   }
 
@@ -29,8 +29,8 @@ class GPU_Part extends Part {
         double.parse(data['price']) ?? 0.0,
         data['newegg_URL'],
         data['image_URL'],
-        double.parse(data['baseClock']) ?? 0.0,
-        double.parse(data['boostClock']) ?? 0.0,
+        data['base clock'],
+        data['boost clock'],
         data['vram']);
   }
 
