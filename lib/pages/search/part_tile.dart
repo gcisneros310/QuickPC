@@ -22,6 +22,12 @@ class PartTile extends StatelessWidget {
             child: Card(
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
                 child: ListTile(
+                  leading: Image.network(
+                    cpu.productImageURL,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                   title: Text(cpu.partName),
                   subtitle: Text('Price: ${cpu.price}'),
                   onTap: (){
