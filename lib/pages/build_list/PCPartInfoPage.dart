@@ -6,6 +6,21 @@ import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:quick_pc/presentation/p_c_part_info_icons_icons.dart';
 
+import 'build_list.dart';
+class MenuItem {
+  final String text;
+  final IconData icon;
+
+  const MenuItem({this.text, this.icon});
+}
+
+class MenuItems {
+  static const addPartMenuItem = MenuItem(text: 'Add Part to List', icon: Icons.money);
+  static const List<MenuItem> menuItemsList = [
+    addPartMenuItem,
+  ];
+}
+
 class PCPartInfoPage extends StatefulWidget {
   final Part part;
   final String partType;
@@ -20,11 +35,16 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final Color logoColor = Color(0xff66c290);
 
+  var attributeNames = [
+    "Manufacturer",
+    "Base Clock",
+    "Boost Clock",
+    "Core Count"
+  ];
 
-  CPU_Part cpuObj = CPU_Part.valueConstructors("Ryzen 5 5600X", "AMD", 299.99, "",'https://c1.neweggimages.com/ProductImageCompressAll1280/19-113-666-V01.jpg', 3.6, 4.4, 8);
   @override
   Widget build(BuildContext context) {
-
+    CPU_Part cpuObj = widget.part;
     String partName = "part";
     double partPrice = 1.0;
     double clock;
@@ -45,625 +65,202 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
         break;
     }
 
+    createAlertDialog(BuildContext context) {
+      return showDialog(context: context, builder: (context) {
+        return AlertDialog(
+          title: Text("Add Part to List?"),
+          actions: <Widget>[
+            MaterialButton(
+              elevation: 5.0,
+              child: Text("Yes"),
+              onPressed: (){
+                setState(() {
+                  CompletePCBuild tempObj = new CompletePCBuild();
+                  tempObj.partList[0] = cpuObj;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) => PartList(tempObj)
 
-
-
-    Scaffold printInteger(int aNumber) {
-
-
-      return Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          title: (Text("CPU Information Page")),
-          backgroundColor: logoColor,
-          automaticallyImplyLeading: true,
-          actions: [],
-          centerTitle: true,
-          elevation: 4,
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            // Navigator.push(
-            //     context,
-            //     // MaterialPageRoute(builder: (context) => BuildGuideList())
-            // );
-          },
-          icon: Icon(Icons.arrow_forward),
-          label: const Text("Go to Guide"),
-          backgroundColor: logoColor,
-        ),
-        backgroundColor: Color(0xFFF5F5F5),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10, 15, 10, 15),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: Color(0xFFEEEEEE),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                      child: Image.network(
-                        cpuObj.productImageURL,
-                        width: double.infinity,
-                        height: 250,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                      child: Text(
-                        partName,
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ), // IMAGE AND TITLE
-                    Divider(
-                      thickness: 5,
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      child: Container(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                        width: double.infinity,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        PCPartInfoIcons.dollar,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                    ),
-
-                                    Text(
-                                      'Price',
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                            Text(
-                              cpuObj.price.toString(),
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ), // CORE COUNT
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      child: Container(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                        width: double.infinity,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        PCPartInfoIcons.manufacturer,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                    ),
-
-                                    Text(
-                                      'Manufacturer',
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                            Text(
-                              cpuObj.manufacturerName.toString(),
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ), // CORE COUNT
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      child: Container(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                        width: double.infinity,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        PCPartInfoIcons.base_clock,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                    ),
-
-                                    Text(
-                                      'Base Clock',
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                            Text(
-                              cpuObj.base_clock.toString() + "MHz",
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ), // CORE COUNT
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      child: Container(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                        width: double.infinity,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        PCPartInfoIcons.boost_clock,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                    ),
-
-                                    Text(
-                                      'Boost Clock',
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                            Text(
-                              cpuObj.coreCount.toString(),
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ), // CORE COUNT
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      child: Container(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                        width: double.infinity,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        PCPartInfoIcons.hashtag,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                    ),
-
-                                    Text(
-                                      'Core Count',
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            ),
-                            Text(
-                              cpuObj.coreCount.toString(),
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ), // CORE COUNT
-
-                  ],
-                ),
-              ),
+                    )
+                  );
+                });
+              },
             ),
-          ),
-        ),
+            MaterialButton(
+              elevation: 5.0,
+              child: Text("No"),
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
       );
+    }
+
+    AlertDialog onSelected(BuildContext context, MenuItem item) {
+      switch(item) {
+        case MenuItems.addPartMenuItem:
+          print("the settings button do be getting clicked tho...");
+          createAlertDialog(context);
+          // return SimpleDialog(
+          //   title: Text("FUCK THIS"),
+          // );
+          break;
+
+      }
     }
 
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: (Text("CPU Information Page")),
+        title: (Text("Info Page")),
         backgroundColor: logoColor,
         automaticallyImplyLeading: true,
-        actions: [],
         centerTitle: true,
         elevation: 4,
+
+        actions: [
+          PopupMenuButton<MenuItem>(
+            onSelected: (item) => onSelected(context, item),
+            itemBuilder: (context) => [
+              ...MenuItems.menuItemsList.map(buildItem).toList(),
+            ],
+          )
+        ],
+
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Navigator.push(
-          //     context,
-          //     // MaterialPageRoute(builder: (context) => BuildGuideList())
-          // );
-        },
-        icon: Icon(Icons.arrow_forward),
-        label: const Text("Go to Guide"),
-        backgroundColor: logoColor,
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     // Navigator.push(
+      //     //     context,
+      //     //     // MaterialPageRoute(builder: (context) => BuildGuideList())
+      //     // );
+      //   },
+      //   icon: Icon(Icons.arrow_forward),
+      //   label: const Text("Go to Guide"),
+      //   backgroundColor: logoColor,
+      // ),
       backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(10, 15, 10, 15),
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: Color(0xFFEEEEEE),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                    child: Image.network(
-                      cpuObj.productImageURL,
-                      width: double.infinity,
-                      height: 250,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                    child: Text(
-                      partName,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ), // IMAGE AND TITLE
-                  Divider(
-                    thickness: 5,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      PCPartInfoIcons.dollar,
-                                      color: Colors.black,
-                                      size: 24,
-                                    ),
-                                  ),
-
-                                  Text(
-                                    'Price',
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                          Text(
-                            cpuObj.price.toString(),
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ), // CORE COUNT
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      PCPartInfoIcons.manufacturer,
-                                      color: Colors.black,
-                                      size: 24,
-                                    ),
-                                  ),
-
-                                  Text(
-                                    'Manufacturer',
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                          Text(
-                            cpuObj.manufacturerName.toString(),
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ), // CORE COUNT
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      PCPartInfoIcons.base_clock,
-                                      color: Colors.black,
-                                      size: 24,
-                                    ),
-                                  ),
-
-                                  Text(
-                                    'Base Clock',
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                          Text(
-                            cpuObj.base_clock.toString() + "MHz",
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ), // CORE COUNT
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      PCPartInfoIcons.boost_clock,
-                                      color: Colors.black,
-                                      size: 24,
-                                    ),
-                                  ),
-
-                                  Text(
-                                    'Boost Clock',
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                          Text(
-                            cpuObj.coreCount.toString(),
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ), // CORE COUNT
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Icon(
-                                    PCPartInfoIcons.hashtag,
-                                    color: Colors.black,
-                                    size: 24,
-                                  ),
-                                ),
-
-                                Text(
-                                  'Core Count',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ),
-                          Text(
-                            cpuObj.coreCount.toString(),
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ), // CORE COUNT
-
-                ],
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: Color(0xFFEEEEEE),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                child: Image.network(
+                  cpuObj.productImageURL,
+                  width: 250,
+                  height: 250,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                child: Text(
+                  cpuObj.partName,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                child: Text(
+                  "\$" + cpuObj.price.toString(),
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+              Divider(
+                height: 5,
+                thickness: 4,
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                child: Container(
+                  width: double.infinity,
+                  height: 260,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFEEEEEE),
+                  ),
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.vertical,
+                      itemCount: cpuObj.partAttributeMap.length,
+                      itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: Color(0xFFF5F5F5),
+                        child: Container(
+                          width: 100,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                attributeNames[index],
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                cpuObj.partAttributeMap[index].toString(),
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),
     );
   }
+
+  PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem<MenuItem>(
+    value: item,
+    child: Row(
+        children:[
+          Icon(
+              item.icon,
+              color: Colors.black,
+              size: 18
+          ),
+          const SizedBox(width:12),
+          Text(item.text),
+        ]
+    ),
+  );
 }

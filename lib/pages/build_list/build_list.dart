@@ -60,7 +60,10 @@ class BudgetData {
 }
 
 class PartList extends StatefulWidget {
-  PartList({Key key}) : super(key: key);
+  CompletePCBuild buildObject;
+  PartList(CompletePCBuild tempObj, {Key key}) : super(key: key) {
+    this.buildObject = tempObj;
+  }
 
   @override
   _PartListState createState() => _PartListState();
@@ -111,7 +114,6 @@ class CompletePCBuild {
     }
     this.price = temp;
   }}
-CompletePCBuild buildObject = CompletePCBuild();
 
 class _PartListState extends State<PartList> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -146,6 +148,7 @@ class _PartListState extends State<PartList> {
 
   @override
   Widget build(BuildContext context) {
+    CompletePCBuild buildObject = widget.buildObject;
     List<BudgetData> pieChartInfo = buildObject.getPriceList();
 
     createAlertDialog(BuildContext context) {
@@ -343,7 +346,7 @@ class _PartListState extends State<PartList> {
                   elevation: 8.0,
                   child: Container(
                     width: 100,
-                    height: 195,
+                    height: 220,
                     decoration: BoxDecoration(
                       color: Colors.grey[700],
                     ),
@@ -371,7 +374,7 @@ class _PartListState extends State<PartList> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
                                   width: 200,
-                                  height: 100,
+                                  height: 135,
                                   decoration: BoxDecoration(
                                     color: Color(0x4f4f4f),
                                   ),

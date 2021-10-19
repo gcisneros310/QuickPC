@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
             onPressed: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PartList())
+                  MaterialPageRoute(builder: (context) => PartList(CompletePCBuild()))
               );
             },
             icon: Icon(Icons.build),

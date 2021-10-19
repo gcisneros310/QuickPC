@@ -37,7 +37,7 @@ class DashboardCard extends StatelessWidget {
               }
               break;
             case 1:{
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PartList()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PartList(CompletePCBuild())));
             }
             break;
             case 2:{

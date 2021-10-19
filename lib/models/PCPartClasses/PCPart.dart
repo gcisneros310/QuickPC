@@ -6,6 +6,8 @@ abstract class Part {
   String productImageURL;
   bool partIsChosen;
 
+  Map partAttributeMap = {};
+
   Part() {
     this.partName = 'No part chosen';
     this.manufacturerName = 'empty';
@@ -25,7 +27,6 @@ abstract class Part {
     this.productImageURL = productImageURL;
   }
 
-
-
+  void setPartAttributeMapData(){}
 
 }

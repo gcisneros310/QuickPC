@@ -23,7 +23,6 @@ class _PartInfoState extends State<PartInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-
         length: 3,
         child: Scaffold(
 
