@@ -6,7 +6,7 @@ class Motherboard_Part extends Part {
   String formFactor;
 
   Motherboard_Part() : super() {
-    this.price = 139.0;
+    this.price = 0.0;
     this.chipset = null;
     this.cpuSocket = null;
     this.formFactor = null;
@@ -18,4 +18,8 @@ class Motherboard_Part extends Part {
     this.cpuSocket = socket;
     this.formFactor = formFactor;
   }
+
+  Motherboard_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
 }

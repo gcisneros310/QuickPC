@@ -17,4 +17,7 @@ class Case_Part extends Part {
     this.color = color;
     this.dimensions = dimensions;
   }
+
+  Case_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 }

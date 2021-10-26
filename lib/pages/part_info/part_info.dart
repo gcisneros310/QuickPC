@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/cpu.dart';
 
 class PartInfo extends StatefulWidget {
-  final CPU cpu;
+  final CPU_Part cpu;
 
   PartInfo({Key key, @required this.cpu}) : super(key:key);
 
@@ -22,7 +23,6 @@ class _PartInfoState extends State<PartInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-
         length: 3,
         child: Scaffold(
 
@@ -43,10 +43,13 @@ class _PartInfoState extends State<PartInfo> {
                     icon: Icon(Icons.rate_review)),
               ],
             ),
-            title: Text('${widget.cpu.name}'),
+            title: Text('${widget.cpu.partName}'),
           ),
           body: TabBarView(
             children: [
+
+              Text(widget.cpu.partName),
+
               //Info tab Contents
 /*              ListView.builder(
                 itemCount: widget.cpu.features.length,

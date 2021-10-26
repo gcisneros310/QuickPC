@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:provider/provider.dart';
-import 'package:quick_pc/pages/search/parts_list.dart';
+import 'package:quick_pc/pages/search/search_list.dart';
 import 'package:quick_pc/services/database.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
 
@@ -99,7 +99,7 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  PartsList(partType),
+                  SearchList(partType),
 
                   //Filter Tab Contents
                   Icon(Icons.filter_alt),

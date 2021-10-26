@@ -9,6 +9,7 @@ import 'package:quick_pc/pages/home/home2.dart';
 import 'package:quick_pc/pages/part_info/part_info.dart';
 import 'package:quick_pc/pages/search/pick_search.dart';
 import 'package:quick_pc/pages/search/search.dart';
+import 'package:quick_pc/pages/search/select_search.dart';
 import 'package:quick_pc/pages/welcome.dart';
 import 'package:quick_pc/pages/wrapper.dart';
 import 'package:quick_pc/services/auth.dart';
@@ -36,14 +37,16 @@ class MyApp extends StatelessWidget {
         //home: Wrapper(),
 
         routes: {
-        '/welcome': (context) => Welcome(),
-        '/loginscreen': (context) => LoginScreen(),
-        '/registerscreen': (context) => RegisterScreen(),
-        '/home': (context) => Home(),
-        '/pick_search': (context) => PickSearch(),
-        '/search': (context) => Search(),
-        '/part_info': (context) => PartInfo(),
+          '/welcome': (context) => Welcome(),
+          '/loginscreen': (context) => LoginScreen(),
+          '/registerscreen': (context) => RegisterScreen(),
+          '/home': (context) => Home(),
+          '/pick_search': (context) => PickSearch(),
+          '/search': (context) => Search(),
+          '/part_info': (context) => PartInfo(),
           '/home2': (context) => Home2(),
+          '/select_search': (context) => SelectSearch(),
+
         },
       ),
     );
