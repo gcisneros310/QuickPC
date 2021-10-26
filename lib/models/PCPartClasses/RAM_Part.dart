@@ -7,7 +7,7 @@ class RAM_Part extends Part {
   int stickCount;
 
   RAM_Part() : super() {
-    this.price = 110.0;
+    this.price = 0.0;
     this.clockSpeed = null;
     this.timings = null;
     this.memoryCapacity = null;
@@ -21,4 +21,7 @@ class RAM_Part extends Part {
     this.memoryCapacity = memoryCapacity;
     this.stickCount = stickCount;
   }
+
+  RAM_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 }

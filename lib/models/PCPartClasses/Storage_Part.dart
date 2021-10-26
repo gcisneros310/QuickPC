@@ -6,7 +6,7 @@ class Storage_Part extends Part {
   String formFactor;
 
   Storage_Part() : super() {
-    this.price = 65.0;
+    this.price = 0.0;
 
     this.capacity = null;
     this.storageType = null;
@@ -19,4 +19,7 @@ class Storage_Part extends Part {
     this.storageType = storageType;
     this.formFactor = formFactor;
   }
+
+  Storage_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 }

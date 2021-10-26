@@ -7,7 +7,7 @@ class GPU_Part extends Part {
 
 
   GPU_Part() : super() {
-    this.price = 600.0;
+    this.price = 0.0;
 
     this.base_clock = '0';
     this.boost_clock = '0';
@@ -34,4 +34,6 @@ class GPU_Part extends Part {
         data['vram']);
   }
 
+  GPU_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 }

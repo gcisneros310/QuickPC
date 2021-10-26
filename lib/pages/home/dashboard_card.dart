@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/build_list/build_list.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
