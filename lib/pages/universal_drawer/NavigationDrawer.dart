@@ -152,7 +152,7 @@ class NavigationDrawer extends StatelessWidget{
     switch(index) {
       case -1:
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => BottomNav(),
+          builder: (context) => Home(),
         ));
         break;
       case 0:

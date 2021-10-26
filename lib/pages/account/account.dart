@@ -8,6 +8,7 @@ import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
 import 'package:quick_pc/pages/report_a_bug/report_a_bug.dart';
+import 'package:quick_pc/pages/terms_of_service/terms_and_policy.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
@@ -52,15 +53,16 @@ class _AccountState extends State<Account> {
                   children: [
                     // Icon(Icons.person, color: Colors.blueAccent),
                     SizedBox(width: 10),
-                    Text("Feedback", style: GoogleFonts.exo2(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold))
+                    Text("SUPPORT", style: GoogleFonts.exo2(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold))
                   ],
                 ),
                 Divider(height: 20, thickness:1),
                 SizedBox(height:10),
+                //buildToSOption((context), "Terms of Service"),
                 buildReportOption((context), "Report a Bug"),
                 buildFeedbackOption((context), "Send Feedback"),
-                buildToSOption((context), "Terms of Service"),
-
+                buildTermsOption((context), "Terms of Service"),
+                buildTermsOption((context), "Privacy Policy"),
               ],
       )
       )
@@ -221,6 +223,45 @@ class _AccountState extends State<Account> {
               Icon(Icons.arrow_forward_ios, color: Colors.grey),
             ],
           )
+      ),
+    );
+  }
+
+  GestureDetector buildTermsOption(BuildContext context, String title){
+    return GestureDetector(
+      onTap:(){
+        switch(title){
+          case "Terms of Service": {
+            showDialog(context: context, builder: (context){
+              return PrivacyPolicy(
+                  mdFileName: 'terms_of_service.md'
+              );
+            },);
+          }
+          break;
+          case "Privacy Policy": {
+            showDialog(context: context, builder: (context){
+              return PrivacyPolicy(
+                  mdFileName: 'privacy_policy.md'
+              );
+            },);
+          }
+          break;
+          default: {
+            print("Invalid choice");
+          }
+        }
+      },
+      child:Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title, style: GoogleFonts.exo2(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold)),
+              Icon(Icons.arrow_forward_ios, color: Colors.grey),
+            ],
+          )
+
       ),
     );
   }

@@ -27,7 +27,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     return Scaffold(
       backgroundColor: Colors.grey[850],
       appBar: AppBar(
-        title: Text("Reset Password"),
+        title: Text("Change Password"),
         titleTextStyle: GoogleFonts.exo2(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
         backgroundColor: logoColor,
         centerTitle: true,
@@ -48,7 +48,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         children: <Widget>[
                           SizedBox(height: 100),
                           Text(
-                            'Reset Password',
+                            'Change Password',
                             textAlign: TextAlign.center,
                             style:
                             GoogleFonts.exo2(color: Colors.white, fontSize: 28),
@@ -155,7 +155,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               );
                             },
                             color: logoColor,
-                            child: Text('Reset Password',
+                            child: Text('Change Password',
                                 style: GoogleFonts.exo2(color: Colors.grey[850], fontSize: 16)),
                             textColor: Colors.white,
                           ),
