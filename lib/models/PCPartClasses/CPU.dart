@@ -29,6 +29,10 @@ class CPU_Part extends Part{
     this.setPartAttributeMapData();
   }
 
+  CPU_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
+
   fromDatabase(Map<dynamic, dynamic> data){
     return CPU_Part.valueConstructors(
         data['name'] ?? "CPU",

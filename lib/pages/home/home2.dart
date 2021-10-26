@@ -5,6 +5,7 @@ import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/pages/home/swiperModel.dart';
 import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
+import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -334,6 +335,7 @@ class _Home2State extends State<Home2> {
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      drawer: NavigationDrawer(),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,

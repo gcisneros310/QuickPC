@@ -1,12 +1,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
+import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/bottom_navigation/bottom_navigation_bar.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
+import 'package:quick_pc/pages/build_list/build_list.dart';
 import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/pages/search/pick_search.dart';
+import 'package:quick_pc/services/auth.dart';
 
 class NavigationDrawer extends StatelessWidget{
+  final AuthService _auth = AuthService();
   final padding = EdgeInsets.symmetric(horizontal: 20);
   final Color logoColor = Color(0xFF464746);
 
@@ -84,7 +89,10 @@ class NavigationDrawer extends StatelessWidget{
             buildMenuItem(
               text: 'Sign Out',
               icon: Icons.exit_to_app,
-              onClicked: () => selectedItem(context, 7),
+              onClicked: () async{
+                await _auth.signOut();
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => LoginScreen()));
+              },
             ),
 
           ]
@@ -161,6 +169,9 @@ class NavigationDrawer extends StatelessWidget{
         ));
         break;
       case 1:
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => PartList(CompletePCBuild()),
+        ));
         break;
       case 2:
 
