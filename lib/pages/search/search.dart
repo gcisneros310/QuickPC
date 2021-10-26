@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quick_pc/pages/search/search_list.dart';
 import 'package:quick_pc/services/database.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
+import 'package:quick_pc/pages/search/part_filter.dart';
 
 
 class Search extends StatefulWidget {
@@ -21,8 +22,8 @@ class _SearchState extends State<Search> {
       size: 28);
 
   String searchTerm;
-  //List<Part> parts = [];
   String partType = '';
+  Filter fil = Filter().getFilter();
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,9 @@ class _SearchState extends State<Search> {
     if (arguments != null){
       searchTerm = arguments['searchTerm'];
       partType = arguments['partType'];
-      //parts = arguments['partsList'];
     }
 
     DatabaseService().doSearch(searchTerm);
-
-
 
     //return FutureProvider<List<Part>>.value(
     //value: DatabaseService(searchTerm: searchTerm).cpus,
@@ -99,7 +97,7 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  SearchList(partType),
+                  SearchList(partType, fil),
 
                   //Filter Tab Contents
                   Icon(Icons.filter_alt),

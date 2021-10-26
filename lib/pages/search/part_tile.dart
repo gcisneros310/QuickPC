@@ -29,22 +29,17 @@ class PartTile extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   title: Text(cpu.partName),
-                  subtitle: Text('Price: ${cpu.price}'),
-                  onTap: (){
-                    // Navigator.pushNamed(context, '/part_info',
-                    //     arguments: cpu);
+                  subtitle: Text('Price: ${cpu.price}'
+                      + '  Cores: ${cpu.coreCount}'),
 
+                  onTap: (){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => PCPartInfoPage(part: cpu, partType: partType),
-                        ));
+                        )
+                    );
 
-                    /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PartInfo(cpu: cpu),
-                        ));*/
                   },
                 )
             )
@@ -58,16 +53,17 @@ class PartTile extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
                 child: ListTile(
                   title: Text(gpu.partName),
-                  subtitle: Text('Price: \$${gpu.price}'),
-                  onTap: (){
-                    // Navigator.pushNamed(context, '/part_info',
-                    //     arguments: cpu);
+                  subtitle: Text('Price: \$${gpu.price}'
+                      + '  Memory: ${gpu.vram}'),
 
+                  onTap: (){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          //builder: (context) => PartInfo(cpu: cpu),
-                        ));
+                          builder: (context) => PCPartInfoPage(part: gpu, partType: partType),
+                        )
+                    );
+
                   },
                 )
             )
