@@ -17,7 +17,7 @@ class CPU_Part extends Part{
     this.base_clock = 0;
     this.boost_clock = 0;
     this.coreCount = 0;
-
+    this.partName = "NO CPU CHOSEN";
     this.setPartAttributeMapData();
   }
 

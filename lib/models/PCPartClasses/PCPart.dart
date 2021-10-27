@@ -1,11 +1,14 @@
+import 'dart:io';
+
 abstract class Part {
   String partName;
   String manufacturerName;
   double price;
   String productURL;
   String productImageURL;
+  bool deviceImagePresent;
+  File deviceImage;
   bool partIsChosen;
-
   Map partAttributeMap = {};
 
   Part() {
@@ -14,6 +17,7 @@ abstract class Part {
     this.price = 0;
     this.productURL = 'www.google.com';
     this.productImageURL = 'https://static.wikia.nocookie.net/roblox-phantom-forces/images/a/a9/Photo-here.png/revision/latest?cb=20180710181254';
+    this.deviceImagePresent = false;
     this.partIsChosen = false;
   }
 
