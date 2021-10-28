@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -11,6 +13,7 @@ import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
+import 'package:quick_pc/pages/build_list/AddCustomPartPage.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/pages/build_list/PartCardInfo.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
@@ -20,6 +23,8 @@ import 'package:quick_pc/presentation/app_icons_icons.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import 'SavedListsPage.dart';
 
 final Color logoColor = Color(0xff66c290);
 
@@ -33,9 +38,14 @@ class MenuItem {
 class MenuItems {
   static const setBudgetMenuItem = MenuItem(text: 'Set a Budget', icon: Icons.money);
   static const showPieChartMenuItem = MenuItem(text: 'Show Price Chart', icon: Icons.pie_chart);
+  static const saveListToAccountMenuItem  = MenuItem(text: 'Save List to Account', icon: Icons.save);
+  static const viewSavedListsMenuItem  = MenuItem(text: 'View Saved Lists', icon: Icons.search);
+
   static const List<MenuItem> menuItemsList = [
     setBudgetMenuItem,
-    showPieChartMenuItem
+    showPieChartMenuItem,
+    saveListToAccountMenuItem,
+    viewSavedListsMenuItem
   ];
 }
 
@@ -51,13 +61,8 @@ class BudgetData {
   BudgetData() {
     this.partTitle = null; this.totalPrice = 0;
   }
-
   BudgetData.loadData(String partTitle, double price) {
     this.partTitle = partTitle; this.totalPrice = price;
-  }
-
-  void setBudgetData(var objectList) {
-
   }
 }
 
@@ -146,14 +151,15 @@ class PartList extends StatefulWidget {
 }
 
 class _PartListState extends State<PartList> {
-  CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
+  CompletePCBuild buildObj;
 
   TooltipBehavior _toolTipBehavior;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextEditingController budgetEntryController = new TextEditingController();
+  TextEditingController buildNamingController = new TextEditingController();
 
-  
+
   List<BudgetData> loadPrices() {
     List<BudgetData> tempList = [];
     for(int x = 0; x < 8; x++)
@@ -179,6 +185,7 @@ class _PartListState extends State<PartList> {
   @override
   Widget build(BuildContext context) {
     buildObj = widget.buildObject;
+
     buildObj.updatePrice();
     List<BudgetData> pieChartInfo = buildObj.getPriceList();
     _toolTipBehavior = TooltipBehavior(enable: true);
@@ -282,7 +289,63 @@ class _PartListState extends State<PartList> {
           }
           createAlertDialog(context);
           break;
+        case MenuItems.saveListToAccountMenuItem:
+          createAlertDialog(BuildContext context) {
+            return showDialog(context: context, builder: (context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Constants.padding),
+                ),
+                title: Text("Save Part List to User Account"),
+                content: Container(
+                    height: 350,
+                    width: 350,
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: buildNamingController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Enter build title here',
+                          )
+                        )
+                      ],
+                    )
+                ),
+                actions: <Widget>[
+                  MaterialButton(
+                    elevation: 5.0,
+                    child: Text("Exit"),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  MaterialButton(
+                    elevation: 5.0,
+                    child: Text("Save to Account"),
+                    onPressed: (){
+                      buildObj.buildName = buildNamingController.text;
+                      // String buildObjJSON = jsonEncode(buildObj);
+                      // print(buildObjJSON);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            }
+            );
+          }
+          createAlertDialog(context);
+          break;
+
+        case MenuItems.viewSavedListsMenuItem:
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SavedListsPage())
+          );
+          break;
       }
+
     }
 
     return Scaffold(
@@ -389,128 +452,147 @@ class _PartListState extends State<PartList> {
                     )
                     );
                   },
-                  child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 8.0,
-                    child: Expanded(
-                      child: Container(
-                        width: 100,
-                        height: 220,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[700],
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8,8,8,0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Image.network(
-                                      buildObj.partList[index].productImageURL,
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: 200,
-                                      height: 135,
-                                      decoration: BoxDecoration(
-                                        color: Color(0x4f4f4f),
+                  child: Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      elevation: 8.0,
+                        child: Container(
+                          width: 100,
+                          height: 280,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[700],
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(8,8,8,0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: buildObj.partList[index].deviceImagePresent == false
+                                          ? Image.network(
+                                        buildObj.partList[index].productImageURL,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+
+                                      )
+                                          : Image.file(
+                                        buildObj.partList[index].deviceImage,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
                                       ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            partTitles[index],
-                                            style:
-                                            TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            buildObj.partList[index].partName,
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          Text(
-                                            "\$" + buildObj.partList[index].price.toString(),
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          )
-                                        ],
-                                      ),
+
                                     ),
-                                  )
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: 200,
+                                        height: 135,
+                                        decoration: BoxDecoration(
+                                          color: Color(0x4f4f4f),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              partTitles[index],
+                                              style:
+                                              TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              buildObj.partList[index].partName,
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 16,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Text(
+                                              "\$" + buildObj.partList[index].price.toString(),
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                              EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton.icon(
-                                    onPressed: () {
-                                      print('Search button pressed ...');
-                                      Navigator.pushNamed(
-                                        context, '/search', arguments: {
-                                        'partType': partTypes[index]},);
-                                    },
-                                    icon: Icon(Icons.search),
-                                    label: Text('Search Part'),
-                                    style: TextButton.styleFrom(
-                                      primary: Colors.white,
-                                      backgroundColor: Colors.teal,
-                                      onSurface: Colors.grey,
+                              Padding(
+                                padding:
+                                EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    TextButton.icon(
+                                      onPressed: () {
+                                        print('Search button pressed ...');
+                                        Navigator.pushNamed(
+                                          context, '/search', arguments: {
+                                          'partType': partTypes[index]},);
+                                      },
+                                      icon: Icon(Icons.search),
+                                      label: Text('Search Part'),
+                                      style: TextButton.styleFrom(
+                                        primary: Colors.white,
+                                        backgroundColor: Colors.teal,
+                                        onSurface: Colors.grey,
+                                      ),
                                     ),
-                                  ),
-                                  TextButton.icon(
-                                    onPressed: () {
-                                      print('Button pressed ...');
-                                      setState(() {
-                                        print(index);
-                                        print(buildObj.partList[index].price);
-                                        buildObj.partList[index] = returnDefaultPart(index);
-                                        buildObj.updatePrice();
-                                        print(buildObj.partList[index].price);
-                                      }
-                                      );
-                                    },
-                                    icon: Icon(Icons.delete),
-                                    label: Text('Remove Part'),
-                                    style: TextButton.styleFrom(
-                                      primary: Colors.white,
-                                      backgroundColor: Colors.teal,
-                                      onSurface: Colors.grey,
+                                    TextButton.icon(
+                                      onPressed: () {
+                                        print('Button pressed ...');
+                                        setState(() {
+                                          print(index);
+                                          print(buildObj.partList[index].price);
+                                          buildObj.partList[index] = returnDefaultPart(index);
+                                          buildObj.updatePrice();
+                                          print(buildObj.partList[index].price);
+                                        }
+                                        );
+                                      },
+                                      icon: Icon(Icons.delete),
+                                      label: Text('Remove Part'),
+                                      style: TextButton.styleFrom(
+                                        primary: Colors.white,
+                                        backgroundColor: Colors.teal,
+                                        onSurface: Colors.grey,
+                                      ),
                                     ),
-                                  ),
-                                  TextButton.icon(
-                                    onPressed: () {
-                                      print('PRICE SELECTED' + buildObj.partList[index].price.toString());
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    TextButton.icon(
+                                      onPressed: () {
+                                        print('PRICE SELECTED' + buildObj.partList[index].price.toString());
                                         return showDialog(context: context, builder: (context) {
                                           return AlertDialog(
                                             title: Text("Enter new price"),
@@ -543,24 +625,40 @@ class _PartListState extends State<PartList> {
                                         }
                                         );
 
-                                    },
-                                    icon: Icon(Icons.edit),
-                                    label: Text('Edit Price'),
-                                    style: TextButton.styleFrom(
-                                      primary: Colors.white,
-                                      backgroundColor: Colors.greenAccent,
-                                      onSurface: Colors.grey,
+                                      },
+                                      icon: Icon(Icons.edit),
+                                      label: Text('Edit Price'),
+                                      style: TextButton.styleFrom(
+                                        primary: Colors.white,
+                                        backgroundColor: Colors.greenAccent,
+                                        onSurface: Colors.grey,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                                    TextButton.icon(
+                                      onPressed: () {
+                                        print("BUTTON INDEX : " + index.toString());
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => AddCustomPartPage.partConstructor(buildObj, index))
+                                        );
+                                      },
+                                      icon: Icon(Icons.add),
+                                      label: Text('Add Custom Part'),
+                                      style: TextButton.styleFrom(
+                                        primary: Colors.white,
+                                        backgroundColor: Colors.greenAccent,
+                                        onSurface: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
               );
             }
           ),
