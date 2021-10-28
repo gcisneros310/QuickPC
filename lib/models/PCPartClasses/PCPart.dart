@@ -24,6 +24,7 @@ abstract class Part {
   // non-default constructors are defined by classname.<nameofconstructor>, weird as shit
   Part.loadData(String partName, String manufacturerName, double price, String productURL, String productImageURL) {
     this.partIsChosen = true;
+    this.deviceImagePresent = false;
     this.productURL = productURL;
     this.partName = partName;
     this.manufacturerName = manufacturerName;

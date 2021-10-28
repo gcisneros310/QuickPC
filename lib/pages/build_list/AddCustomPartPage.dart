@@ -49,6 +49,7 @@ class _AddCustomPartPageState extends State<AddCustomPartPage> {
       setState(() => this.image = tempImage);
     } on PlatformException catch (e) {
       print("SHIT DIDNT WORK");
+      print(e);
     }
 
   }

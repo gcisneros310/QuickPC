@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -22,6 +24,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'SavedListsPage.dart';
+
 final Color logoColor = Color(0xff66c290);
 
 class MenuItem {
@@ -34,9 +38,14 @@ class MenuItem {
 class MenuItems {
   static const setBudgetMenuItem = MenuItem(text: 'Set a Budget', icon: Icons.money);
   static const showPieChartMenuItem = MenuItem(text: 'Show Price Chart', icon: Icons.pie_chart);
+  static const saveListToAccountMenuItem  = MenuItem(text: 'Save List to Account', icon: Icons.save);
+  static const viewSavedListsMenuItem  = MenuItem(text: 'View Saved Lists', icon: Icons.search);
+
   static const List<MenuItem> menuItemsList = [
     setBudgetMenuItem,
-    showPieChartMenuItem
+    showPieChartMenuItem,
+    saveListToAccountMenuItem,
+    viewSavedListsMenuItem
   ];
 }
 
@@ -52,13 +61,8 @@ class BudgetData {
   BudgetData() {
     this.partTitle = null; this.totalPrice = 0;
   }
-
   BudgetData.loadData(String partTitle, double price) {
     this.partTitle = partTitle; this.totalPrice = price;
-  }
-
-  void setBudgetData(var objectList) {
-
   }
 }
 
@@ -153,6 +157,7 @@ class _PartListState extends State<PartList> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextEditingController budgetEntryController = new TextEditingController();
+  TextEditingController buildNamingController = new TextEditingController();
 
 
   List<BudgetData> loadPrices() {
@@ -180,6 +185,7 @@ class _PartListState extends State<PartList> {
   @override
   Widget build(BuildContext context) {
     buildObj = widget.buildObject;
+
     buildObj.updatePrice();
     List<BudgetData> pieChartInfo = buildObj.getPriceList();
     _toolTipBehavior = TooltipBehavior(enable: true);
@@ -283,7 +289,63 @@ class _PartListState extends State<PartList> {
           }
           createAlertDialog(context);
           break;
+        case MenuItems.saveListToAccountMenuItem:
+          createAlertDialog(BuildContext context) {
+            return showDialog(context: context, builder: (context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Constants.padding),
+                ),
+                title: Text("Save Part List to User Account"),
+                content: Container(
+                    height: 350,
+                    width: 350,
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: buildNamingController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Enter build title here',
+                          )
+                        )
+                      ],
+                    )
+                ),
+                actions: <Widget>[
+                  MaterialButton(
+                    elevation: 5.0,
+                    child: Text("Exit"),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  MaterialButton(
+                    elevation: 5.0,
+                    child: Text("Save to Account"),
+                    onPressed: (){
+                      buildObj.buildName = buildNamingController.text;
+                      // String buildObjJSON = jsonEncode(buildObj);
+                      // print(buildObjJSON);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            }
+            );
+          }
+          createAlertDialog(context);
+          break;
+
+        case MenuItems.viewSavedListsMenuItem:
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SavedListsPage())
+          );
+          break;
       }
+
     }
 
     return Scaffold(

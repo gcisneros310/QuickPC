@@ -29,9 +29,7 @@ class PCPartInfoPage extends StatefulWidget {
 
   PCPartInfoPage({Key key, this.part, this.partType}) : super(key: key);
 
-  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {
-
-  }
+  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {}
 
   @override
   _PCPartInfoPageState createState() => _PCPartInfoPageState();
