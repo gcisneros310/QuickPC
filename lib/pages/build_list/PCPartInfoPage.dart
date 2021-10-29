@@ -156,98 +156,101 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
           decoration: BoxDecoration(
             color: Color(0xFFEEEEEE),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                child: Image.network(
-                  cpuObj.productImageURL,
-                  width: 250,
-                  height: 250,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                child: Text(
-                  cpuObj.partName,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                  child: Image.network(
+                    cpuObj.productImageURL,
+                    width: 250,
+                    height: 250,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                child: Text(
-                  "\$" + cpuObj.price.toString(),
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                  child: Text(
+                    cpuObj.partName,
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
-              ),
-              Divider(
-                height: 5,
-                thickness: 4,
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                child: Container(
-                  width: double.infinity,
-                  height: 260,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEEEEEE),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                  child: Text(
+                    "\$" + cpuObj.price.toString(),
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.vertical,
-                      itemCount: cpuObj.partAttributeMap.length,
-                      itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        color: Color(0xFFF5F5F5),
-                        child: Container(
-                          width: 100,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEEEE),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                attributeNames[index],
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
+                ),
+                Divider(
+                  height: 5,
+                  thickness: 4,
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                  child: Container(
+                    width: double.infinity,
+                    height: 260,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEEEEEE),
+                    ),
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      scrollDirection: Axis.vertical,
+                        itemCount: cpuObj.partAttributeMap.length,
+                        itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          color: Color(0xFFF5F5F5),
+                          child: Container(
+                            width: 100,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEEEE),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  attributeNames[index],
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                cpuObj.partAttributeMap[index].toString(),
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              )
-                            ],
+                                Text(
+                                  cpuObj.partAttributeMap[index].toString(),
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      }
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

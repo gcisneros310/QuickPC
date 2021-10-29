@@ -1,22 +1,96 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/pages/account/account.dart';
+import 'package:quick_pc/models/PCPartClasses/CPU.dart';
+import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
+import 'package:quick_pc/models/PCPartClasses/GPU.dart';
+import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
+import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
+import 'package:quick_pc/pages/home/popular_fields.dart';
 import 'package:quick_pc/pages/home/swiperModel.dart';
-import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-
 import 'dashboard_card.dart';
-import 'home.dart';
+import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
+
 
 
 class Home2 extends StatefulWidget {
   @override
   _Home2State createState() => _Home2State();
 }
+List<Part> demoList = [
+  CPU_Part.valueConstructors(
+      'Intel Core i9-10940X - Core i9 10th Gen Cascade Lake 14-Core 3.3 GHz LGA 2066 165W Desktop Processor - BX8069510940X',
+      'Intel',
+      799.99,
+      'https://www.newegg.com/intel-core-i9-10th-gen-core-i9-10940x/p/N82E16819118109',
+      'https://c1.neweggimages.com/ProductImageCompressAll1280/19-118-109-V01.jpg',
+      3.3,
+      4.8,
+      12
+  ),
+  CPU_Part.valueConstructors(
+      'AMD Ryzen 7 5700G 3.8 GHz 8-Core Processor - 100-100000263BOX',
+      'AMD',
+      324.99,
+      'https://www.newegg.com/amd-ryzen-7-5700g-ryzen-7-5000-g-series/p/N82E16819113682',
+      'https://c1.neweggimages.com/ProductImageCompressAll1280/19-113-682-V01.jpg',
+      3.8,
+      4.6,
+      8
+  ),
+  CPU_Part.valueConstructors(
+      'AMD Threadripper 3990X 2.9 GHz 64-Core Processor - 100-100000163WOF',
+      'AMD',
+      3964.99,
+      'https://www.newegg.com/amd-ryzen-threadripper-3990x/p/N82E16819113620',
+      'https://c1.neweggimages.com/ProductImageCompressAll1280/19-113-620-V02.jpg',
+      2.9,
+      4.3,
+      64
+  ),
+  CPU_Part.valueConstructors(
+      'AMD Ryzen 7 3800X 3.9 GHz 8-Core Processor - Ryzen 7 3800X100-100000025BOX',
+      'AMD',
+      348.75,
+      'https://www.newegg.com/amd-ryzen-7-3800x/p/N82E16819113104',
+      'https://c1.neweggimages.com/ProductImageCompressAll1280/19-113-104-V03.jpg',
+      3.9,
+      4.5,
+      8
+  ),
+  CPU_Part.valueConstructors(
+      'Intel Core i7-9700K 3.6 GHz 8-Core Processor - BX80684I79700K',
+      'Intel',
+      308.88,
+      'https://www.newegg.com/core-i7-9th-gen-intel-core-i7-9700k/p/N82E16819117958',
+      'https://c1.neweggimages.com/ProductImageCompressAll1280/19-117-958-V22.jpg',
+      3.6,
+      4.9,
+      8
+  ),
+  CPU_Part.valueConstructors(
+      'Intel Core i9-9900K 3.6 GHz 8-Core Processor - BX80684I99900K',
+      'Intel',
+      465.86,
+      'https://www.newegg.com/core-i9-9th-gen-intel-core-i9-9900k/p/N82E16819117957',
+      'https://c1.neweggimages.com/ProductImageCompressAll1280/19-117-957-01.jpg',
+      3.6,
+      5,
+      8
+  ),
+  GPU_Part.demoConstructor(
+      'ASUS TUF Gaming NVIDIA GeForce RTX 3080 V2 OC Edition Graphics Card (PCIe 4.0, 10GB GDDR6X, LHR, HDMI 2.1, DisplayPort 1.4a)',
+      'ASUS',
+      1532.99,
+      'https://www.newegg.com/asus-geforce-rtx-3080-tuf-rtx3080-o10g-v2-gaming/p/N82E16814126525?Item=9SIAPMXFGT6270',
+      'https://c1.neweggimages.com/ProductImageCompressAll1280/14-126-525-V01.jpg'
+  ),
+];
 
 class _Home2State extends State<Home2> {
   final Color logoColor = Color(0xff66c290);
@@ -123,10 +197,39 @@ class _Home2State extends State<Home2> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Popular",
-                    style: GoogleFonts.exo2(color: Colors.black54, fontSize: 20, fontWeight: FontWeight.bold)),
-                Text("View All",
-                    style: GoogleFonts.exo2(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)),
+                RichText(
+                  //textAlign: TextAlign.center,
+                  text: TextSpan(
+                    //text: "By creating an account, you are agreeing to our \n",
+                    //style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
+                    children: [
+                      TextSpan(
+                        text: "Popular",
+                        style: GoogleFonts.exo2(color: Colors.black54, fontSize: 20, fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()..onTap =(){
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                RichText(
+                  //textAlign: TextAlign.center,
+                  text: TextSpan(
+                    //text: "By creating an account, you are agreeing to our \n",
+                    //style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
+                    children: [
+                      TextSpan(
+                        text: "View All",
+                        style: GoogleFonts.exo2(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()..onTap =(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PopularFields()));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
               ],
             ),
           ),
@@ -134,62 +237,72 @@ class _Home2State extends State<Home2> {
       ),
     );
   }
-  Widget popularPictureRow(){
+  Widget popularPictureRow(String itemType, double price, String imageAsset,int demoIndex){
+
+    //Delete these later
+    CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
+    buildObj.partList = demoList;
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:[
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity((0.5)),
-                  offset: Offset(0,3),
-                ),
-              ],
-            ),
-            child: Container(
-              width: 190,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 190,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        image:DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage('assets/amdryzen.jpg')
-                        ),
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal:20, vertical: 10),
-                    width: 180,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("\$420.00", style: GoogleFonts.exo2(color: Colors.black54, fontSize: 16, fontWeight: FontWeight.w700)),
-                            Icon(Icons.add_circle)
-                          ],
-                        ),
-                        Text("AMD Ryzen 3700x", style: GoogleFonts.exo2(color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w700)),
-                      ],
-                    ),
-
+      child: InkWell(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[demoIndex], "cpu")));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:[
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity((0.5)),
+                    offset: Offset(0,3),
                   ),
                 ],
               ),
+              child: Container(
+                width: 190,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 160,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          image:DecorationImage(
+                              //fit: BoxFit.fill,
+                              image: NetworkImage(imageAsset),
+                          ),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal:20, vertical: 10),
+                      width: 190,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children:[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                  child: Text(itemType, style: GoogleFonts.exo2(color: Colors.black54, fontSize: 14, fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,)),
+                              //Icon(Icons.add_circle)
+                            ],
+                          ),
+                          Text("\$$price", style: GoogleFonts.exo2(color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -206,10 +319,38 @@ class _Home2State extends State<Home2> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Featured",
-                    style: GoogleFonts.exo2(color: Colors.black54, fontSize: 20, fontWeight: FontWeight.bold)),
-                Text("View All",
-                    style: GoogleFonts.exo2(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)),
+                RichText(
+                  //textAlign: TextAlign.center,
+                  text: TextSpan(
+                    //text: "By creating an account, you are agreeing to our \n",
+                    //style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
+                    children: [
+                      TextSpan(
+                        text: "Trending",
+                        style: GoogleFonts.exo2(color: Colors.black54, fontSize: 20, fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()..onTap =(){
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                RichText(
+                  //textAlign: TextAlign.center,
+                  text: TextSpan(
+                    //text: "By creating an account, you are agreeing to our \n",
+                    //style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
+                    children: [
+                      TextSpan(
+                        text: "View All",
+                        style: GoogleFonts.exo2(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()..onTap =(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>SavedListInfoPage()));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -330,6 +471,8 @@ class _Home2State extends State<Home2> {
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
     //orientation = _mediaQueryData.orientation;
+    CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
+    buildObj.partList = demoList;
 
     drawer: Drawer();
 
@@ -411,10 +554,10 @@ class _Home2State extends State<Home2> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          popularPictureRow(),
-                          popularPictureRow(),
-                          popularPictureRow(),
-                          popularPictureRow(),
+                          popularPictureRow(demoList[3].partName, demoList[3].price, demoList[3].productImageURL, 3),
+                          popularPictureRow(demoList[2].partName, demoList[2].price, demoList[2].productImageURL, 2),
+                          popularPictureRow(demoList[1].partName, demoList[1].price, demoList[1].productImageURL, 1),
+                          popularPictureRow(demoList[0].partName, demoList[0].price, demoList[0].productImageURL, 0),
                         ],
                       ),
                     ),
@@ -423,14 +566,15 @@ class _Home2State extends State<Home2> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          popularPictureRow(),
-                          popularPictureRow(),
-                          popularPictureRow(),
-                          popularPictureRow(),
+                          popularPictureRow(demoList[0].partName, demoList[0].price, demoList[0].productImageURL, 0),
+                          popularPictureRow(demoList[1].partName, demoList[1].price, demoList[1].productImageURL, 1),
+                          popularPictureRow(demoList[2].partName, demoList[2].price, demoList[2].productImageURL, 2),
+                          popularPictureRow(demoList[3].partName, demoList[3].price, demoList[3].productImageURL, 3),
                           SizedBox(height:100),
                         ],
                       ),
                     ),
+                    SizedBox(height:15),
                   ],
                 ),
               ),

@@ -13,6 +13,11 @@ getTest(){
   });
 }
 
+getCPU(){
+  databaseReference.child('cpu/').get().then((DataSnapshot data){
+  });
+}
+
 //PASS A STRING INDICATING THE TYPE
 //RETURNS A LIST OF THAT TYPE OF PART
 Future<List<Part>> getPart(String partType) async {
