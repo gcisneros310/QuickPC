@@ -14,6 +14,12 @@ class PartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context){
 
+    //new plan
+    //Have switch case define 5 generic data set for a type
+    // have one tile display them
+
+    //name, image, price, data1, data2
+
     switch (partType) {
       case 'cpu':
         CPU_Part cpu = part;
@@ -76,7 +82,7 @@ class PartTile extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
             child: ListTile(
               title: Text(part.partName),
-              subtitle: Text('Data: ${part.price}'),
+              subtitle: Text('Price: ${part.price}'),
               onTap: (){
                 // Navigator.pushNamed(context, '/part_info',
                 //     arguments: cpu);

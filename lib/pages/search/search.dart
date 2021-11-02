@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_pc/pages/search/filters/filterUI.dart';
 import 'package:quick_pc/pages/search/search_list.dart';
 import 'package:quick_pc/services/database.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
-import 'package:quick_pc/pages/search/part_filter.dart';
+import 'package:quick_pc/pages/search/filters/part_filter.dart';
 
 
 class Search extends StatefulWidget {
@@ -22,8 +23,13 @@ class _SearchState extends State<Search> {
       size: 28);
 
   String searchTerm;
-  String partType = '';
-  Filter fil = Filter().getFilter();
+  String partType = "";
+  bool clearFilter = true;
+  Filter fil;
+  FilterUI filUI;
+
+  SearchList list;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +37,14 @@ class _SearchState extends State<Search> {
     //Getting arguments
     final arguments = ModalRoute.of(context).settings.arguments as Map;
 
+
     if (arguments != null){
       searchTerm = arguments['searchTerm'];
       partType = arguments['partType'];
     }
+
+    fil = Filter(partType);
+    filUI = FilterUI(fil);
 
     DatabaseService().doSearch(searchTerm);
 
@@ -97,10 +107,45 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  SearchList(partType, fil),
+                  list = SearchList(partType, fil),
+
+
 
                   //Filter Tab Contents
-                  Icon(Icons.filter_alt),
+
+                  Scaffold(
+
+                    body: filUI,
+                    
+                    floatingActionButton: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FloatingActionButton.extended(
+                            onPressed: (){
+                              list.clearFilter = true;
+                              fil = new Filter(partType);
+                              },
+                            label: const Text('Clear'),
+                            backgroundColor: logoColor,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          FloatingActionButton.extended(
+                            onPressed: (){
+                              list.clearFilter = false;
+                              },
+                            label: const Text('Apply'),
+                            backgroundColor: logoColor,
+                          )
+                        ]
+                    )
+
+
+
+
+                  ),
+
 
                   //Compare Tab Contents
                   //Icon(Icons.compare_arrows),
