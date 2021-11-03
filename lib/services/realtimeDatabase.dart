@@ -22,7 +22,7 @@ Future<void> sendListToDatabase(Map<String,dynamic> json) async {
 Future<List<CompletePCBuild>> getSavedUserBuilds(int userID) async {
   List<CompletePCBuild> savedBuildLists = [];
 
-  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').get();
+  DataSnapshot dataSnapshot = await databaseReference.child('build list/').get();
   if(dataSnapshot.value != null) {
     dataSnapshot.value.forEach((key, value){
       CompletePCBuild temp =  CompletePCBuild.fromJson(value);
@@ -35,14 +35,27 @@ Future<List<CompletePCBuild>> getSavedUserBuilds(int userID) async {
   }
   }
 
+getBuilds(String id){
+
+  //id = "8wWhlPnAeyQKQ5Dp2ZrdiQE5Ibc2";
+
+  databaseReference.child('build list/').orderByChild("buildUserID").equalTo(id)
+      .once().then((DataSnapshot data){
+
+    data.value.forEach((key, value){
+
+      print(key);
+      print(value);
+
+    });
+  });
+}
+
 //PASS A STRING INDICATING THE TYPE
 //RETURNS A LIST OF THAT TYPE OF PART
 Future<List<Part>> getPart(String partType) async {
 
   List<Part> partList = [];
-
-  print('Inside realtimeDatabase.dart, hello');
-
 
   switch (partType) {
     case 'cpu':
@@ -58,7 +71,7 @@ Future<List<Part>> getPart(String partType) async {
 //CPU list from realtime database
 Future<List<Part>> getCPUList() async {
 
-  DataSnapshot dataSnapshot = await databaseReference.child('build list/').g;
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu').get();
   List<Part> cpuList = [];
 
   if(dataSnapshot.value != null){

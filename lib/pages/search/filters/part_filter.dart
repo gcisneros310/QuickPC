@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/search/filters/gpu_filter.dart';
 import 'package:quick_pc/pages/search/filters/mobo_filter.dart';
 import 'package:quick_pc/pages/search/filters/ram_filter.dart';

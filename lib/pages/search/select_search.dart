@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/presentation/app_icons_icons.dart';
+import 'package:quick_pc/services/realtimeDatabase.dart';
 
 class SelectSearch extends StatefulWidget {
   SelectSearch({Key key}) : super(key: key);
@@ -105,10 +104,15 @@ class _SelectSearchState extends State<SelectSearch> {
 
           IconButton(
             onPressed: () {
-              if (searchTerm != ""){
-                Navigator.pushNamed(
-                  context, '/search', arguments: {'searchTerm': searchTerm},);
-              }
+
+              String id = "8wWhlPnAeyQKQ5Dp2ZrdiQE5Ibc2";
+              getBuilds(id);
+
+
+              // if (searchTerm != ""){
+              //   Navigator.pushNamed(
+              //     context, '/search', arguments: {'searchTerm': searchTerm},);
+              // }
             },
             icon: searchIcon,
           )
