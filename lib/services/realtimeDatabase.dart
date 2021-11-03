@@ -1,7 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
+import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 
 
 final databaseReference = FirebaseDatabase.instance.reference();
@@ -12,6 +13,27 @@ getTest(){
     print(data.key);
   });
 }
+
+Future<void> sendListToDatabase(Map<String,dynamic> json) async {
+  await databaseReference.child('build list/').push().update(json);
+}
+
+
+Future<List<CompletePCBuild>> getSavedUserBuilds(int userID) async {
+  List<CompletePCBuild> savedBuildLists = [];
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').get();
+  if(dataSnapshot.value != null) {
+    dataSnapshot.value.forEach((key, value){
+      CompletePCBuild temp =  CompletePCBuild.fromJson(value);
+      //c.fromDatabase(value);
+      //print(value);
+      //print('CPU Name: ' + c.partName);
+      savedBuildLists.add(temp);
+    });
+
+  }
+  }
 
 //PASS A STRING INDICATING THE TYPE
 //RETURNS A LIST OF THAT TYPE OF PART
@@ -36,7 +58,7 @@ Future<List<Part>> getPart(String partType) async {
 //CPU list from realtime database
 Future<List<Part>> getCPUList() async {
 
-  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').get();
+  DataSnapshot dataSnapshot = await databaseReference.child('build list/').g;
   List<Part> cpuList = [];
 
   if(dataSnapshot.value != null){

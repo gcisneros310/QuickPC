@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/presentation/p_c_part_info_icons_icons.dart';
 
@@ -29,9 +29,7 @@ class PCPartInfoPage extends StatefulWidget {
 
   PCPartInfoPage({Key key, this.part, this.partType}) : super(key: key);
 
-  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {
-
-  }
+  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {}
 
   @override
   _PCPartInfoPageState createState() => _PCPartInfoPageState();

@@ -1,4 +1,4 @@
-import 'PCPart.dart';
+import 'Part.dart';
 
 class Cooler_Part extends Part {
   String coolingType;
@@ -9,6 +9,9 @@ class Cooler_Part extends Part {
     this.fanSpeed = 0;
   }
 
+  Cooler_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
   Cooler_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, String coolerType, int fanSpeed) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL) {
     this.coolingType = coolerType;
@@ -17,4 +20,14 @@ class Cooler_Part extends Part {
 
   Cooler_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
+  factory Cooler_Part.fromJson(dynamic json) {
+    return Cooler_Part.loadFromDatabase(
+        json['partName'] as String,
+        json['manufacturerName'] as String,
+        json['price'] as double,
+        json['productImageURL'] as String,
+        json['productURL'] as String
+    );
+  }
 }

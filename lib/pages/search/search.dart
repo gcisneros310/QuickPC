@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_pc/pages/search/filters/filterUI.dart';
 import 'package:quick_pc/pages/search/search_list.dart';
