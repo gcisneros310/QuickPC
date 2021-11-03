@@ -78,6 +78,8 @@ Future<List<Part>> getCPUList() async {
 //Graphics-Cards list from realtime database
 Future<List<Part>> getGPUList() async {
 
+  //await databaseReference.child('build list/').push().update(m);
+
   DataSnapshot dataSnapshot = await databaseReference.child('parts/gpu/').get();
   List<Part> gpuList = [];
 

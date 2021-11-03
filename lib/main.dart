@@ -42,10 +42,11 @@ class MyApp extends StatelessWidget {
           '/registerscreen': (context) => RegisterScreen(),
           '/home': (context) => Home(),
           '/pick_search': (context) => PickSearch(),
+          '/select_search': (context) => SelectSearch(),
           '/search': (context) => Search(),
           '/part_info': (context) => PartInfo(),
           '/home2': (context) => Home2(),
-          '/select_search': (context) => SelectSearch(),
+
 
         },
       ),

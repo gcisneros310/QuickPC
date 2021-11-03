@@ -14,6 +14,12 @@ class PartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context){
 
+    //new plan
+    //Have switch case define 5 generic data set for a type
+    // have one tile display them
+
+    //name, image, price, data1, data2
+
     switch (partType) {
       case 'cpu':
         CPU_Part cpu = part;
@@ -22,23 +28,24 @@ class PartTile extends StatelessWidget {
             child: Card(
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
                 child: ListTile(
+                  leading: Image.network(
+                    cpu.productImageURL,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                   title: Text(cpu.partName),
-                  subtitle: Text('Price: ${cpu.price}'),
-                  onTap: (){
-                    // Navigator.pushNamed(context, '/part_info',
-                    //     arguments: cpu);
+                  subtitle: Text('Price: ${cpu.price}'
+                      + '  Cores: ${cpu.coreCount}'),
 
+                  onTap: (){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => PCPartInfoPage(part: cpu, partType: partType),
-                        ));
+                        )
+                    );
 
-                    /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PartInfo(cpu: cpu),
-                        ));*/
                   },
                 )
             )
@@ -52,16 +59,17 @@ class PartTile extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
                 child: ListTile(
                   title: Text(gpu.partName),
-                  subtitle: Text('Price: \$${gpu.price}'),
-                  onTap: (){
-                    // Navigator.pushNamed(context, '/part_info',
-                    //     arguments: cpu);
+                  subtitle: Text('Price: \$${gpu.price}'
+                      + '  Memory: ${gpu.vram}'),
 
+                  onTap: (){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          //builder: (context) => PartInfo(cpu: cpu),
-                        ));
+                          builder: (context) => PCPartInfoPage(part: gpu, partType: partType),
+                        )
+                    );
+
                   },
                 )
             )
@@ -74,7 +82,7 @@ class PartTile extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
             child: ListTile(
               title: Text(part.partName),
-              subtitle: Text('Data: ${part.price}'),
+              subtitle: Text('Price: ${part.price}'),
               onTap: (){
                 // Navigator.pushNamed(context, '/part_info',
                 //     arguments: cpu);

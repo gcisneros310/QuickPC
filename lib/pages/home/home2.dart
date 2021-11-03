@@ -284,7 +284,7 @@ class _Home2State extends State<Home2> {
             switch(integer){
               case 0:
                 {
-                  Navigator.pushNamed(context, '/pick_search');
+                  Navigator.pushNamed(context, '/select_search');
                 }
                 break;
               case 1:{
