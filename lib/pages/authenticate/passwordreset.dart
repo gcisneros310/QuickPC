@@ -72,7 +72,7 @@ class _PasswordResetState extends State<PasswordReset> {
                       minWidth: double.maxFinite,
                       height: 50,
                       onPressed: () async{
-                        _auth.resetPass(email);
+                        await _auth.resetPass(email);
                         Navigator.of(context).pop();
                       },
                       color: logoColor,
