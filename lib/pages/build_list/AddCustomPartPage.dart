@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Case_Part.dart';
@@ -10,7 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
@@ -39,14 +40,14 @@ class AddCustomPartPage extends StatefulWidget {
 }
 
 class _AddCustomPartPageState extends State<AddCustomPartPage> {
-  File image;
-
+  File selectedDeviceImage = null;
+  bool imageSelected = false;
   Future pickImage(ImageSource source) async {
     try{
       final XFile image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
       final tempImage = File(image.path);
-      setState(() => this.image = tempImage);
+      setState(() => this.selectedDeviceImage = tempImage);
     } on PlatformException catch (e) {
       print("SHIT DIDNT WORK");
       print(e);
@@ -74,6 +75,7 @@ class _AddCustomPartPageState extends State<AddCustomPartPage> {
 
   @override
   Widget build(BuildContext context) {
+    temp = returnDefaultPart(widget.index);
     TextField titleTextField = TextField(
       controller: titleTextController,
       decoration: InputDecoration(
@@ -204,40 +206,88 @@ class _AddCustomPartPageState extends State<AddCustomPartPage> {
                 padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                 child: Container(
                   width: 500,
-                  height: 150,
+                  height: 175,
                   decoration: BoxDecoration(
                     color: Color(0xFFEEEEEE),
                   ),
-                  child: Container(
-                    height: 150,
-                    width: 500,
-                    child: Row(
+                  child: Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Choose photo \nfrom camera or gallery'),
-                        TextButton.icon(
-                          onPressed: () {
-                            print("GALLERY CRICKED");
-                            pickImage(ImageSource.gallery);
-                          },
-                          icon: Icon(Icons.image),
-                            label: Text("Gallery"),
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            backgroundColor: Colors.teal,
-                            onSurface: Colors.grey,
+                        Text(
+                            'Choose photo from the camera or gallery',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-
                         ),
-                        TextButton.icon(
-                            onPressed: () {},
-                            icon: Icon(Icons.camera),
-                          label: Text("Camera"),
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            backgroundColor: Colors.teal,
-                            onSurface: Colors.grey,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                          children: [
+                            TextButton.icon(
+                              onPressed: () {
+                                pickImage(ImageSource.gallery);
+                                setState(() {
+                                  temp = returnDefaultPart(widget.index);
+
+                                  print("GALLERY CRICKED");
+                                  temp.deviceImage = selectedDeviceImage;
+                                  temp.deviceImagePresent = true;
+                                  if(selectedDeviceImage != null) {
+                                    imageSelected = true;
+                                  }
+                                });
+                              },
+                              icon: Icon(Icons.image),
+                              label: Text("Gallery"),
+                              style: TextButton.styleFrom(
+                                primary: Colors.white,
+                                backgroundColor: Colors.teal,
+                                onSurface: Colors.grey,
+                              ),
+
+                            ),
+                            TextButton.icon(
+                              onPressed: () {
+
+                                setState(() {
+                                  pickImage(ImageSource.camera);
+                                  temp = returnDefaultPart(widget.index);
+                                  temp.deviceImage = selectedDeviceImage;
+                                  temp.deviceImagePresent = true;
+                                  print("CAMERA CRICKED");
+                                  if(selectedDeviceImage != null) {
+                                    imageSelected = true;
+                                    print("THIS IS BIG TRUE");
+                                  }
+                                });
+
+                              },
+                              icon: Icon(Icons.camera),
+                              label: Text("Camera"),
+                              style: TextButton.styleFrom(
+                                primary: Colors.white,
+                                backgroundColor: Colors.teal,
+                                onSurface: Colors.grey,
+                              ),
+                            )
+                          ],
+                        ),
+                       temp.deviceImagePresent == false
+                            ? Image.network(
+                          temp.productImageURL,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+
                         )
+                            : Image.file(
+                          temp.deviceImage,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
                       ]
                     )
                   ),
@@ -256,8 +306,8 @@ class _AddCustomPartPageState extends State<AddCustomPartPage> {
         onPressed: () {
 
           temp = returnDefaultPart(widget.index);
-          if(image != null) {
-            temp.deviceImage = image;
+          if(selectedDeviceImage != null) {
+            temp.deviceImage = selectedDeviceImage;
             temp.deviceImagePresent = true;
           }
           print(temp.partName);
@@ -306,6 +356,9 @@ class _AddCustomPartPageState extends State<AddCustomPartPage> {
         break;
       case 7:
         return Case_Part();
+        break;
+      default:
+        return null;
         break;
     }
   }

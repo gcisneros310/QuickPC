@@ -32,6 +32,16 @@ abstract class Part {
     this.productImageURL = productImageURL;
   }
 
-  void setPartAttributeMapData(){}
+  Map toJson() {
+    return {
+      "partName": partName.toString(),
+      "manufacturerName": manufacturerName.toString(),
+      "price": price.toStringAsFixed(2),
+      "productURL": productURL.toString(),
+      "productImageURL": productImageURL.toString(),
+    };
+  }
+
+  static fromJson(e) {}
 
 }

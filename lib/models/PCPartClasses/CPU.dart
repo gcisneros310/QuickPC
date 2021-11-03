@@ -1,4 +1,4 @@
-import 'PCPart.dart';
+import 'Part.dart';
 
 class CPU_Part extends Part{
   double base_clock;
@@ -11,6 +11,9 @@ class CPU_Part extends Part{
   "Boost Clock",
   "Core Count"
   ];
+
+  CPU_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 
   CPU_Part() : super() {
     this.price = 0;
@@ -53,5 +56,16 @@ class CPU_Part extends Part{
       2: this.boost_clock,
       3: this.coreCount,
     };
+  }
+
+
+  factory CPU_Part.fromJson(Map<dynamic, dynamic> json) {
+    return CPU_Part.loadFromDatabase(
+      json['partName'] as String,
+      json['manufacturerName'] as String,
+      json['price'] as double,
+      json['productImageURL'] as String,
+      json['productURL'] as String
+    );
   }
 }

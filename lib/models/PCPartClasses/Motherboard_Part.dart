@@ -1,4 +1,4 @@
-import 'PCPart.dart';
+import 'Part.dart';
 
 class Motherboard_Part extends Part {
   String chipset;
@@ -12,6 +12,9 @@ class Motherboard_Part extends Part {
     this.formFactor = null;
   }
 
+  Motherboard_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
   Motherboard_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, String chipset, String socket, String formFactor) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL){
     this.chipset = chipset;
@@ -21,5 +24,15 @@ class Motherboard_Part extends Part {
 
   Motherboard_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
+  factory Motherboard_Part.fromJson(dynamic json) {
+    return Motherboard_Part.loadFromDatabase(
+        json['partName'] as String,
+        json['manufacturerName'] as String,
+        json['price'] as double,
+        json['productImageURL'] as String,
+        json['productURL'] as String
+    );
+  }
 
 }

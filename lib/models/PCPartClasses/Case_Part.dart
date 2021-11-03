@@ -1,4 +1,4 @@
-import 'PCPart.dart';
+import 'Part.dart';
 
 class Case_Part extends Part {
   String motherboardFormFactor;
@@ -11,6 +11,9 @@ class Case_Part extends Part {
     this.dimensions = null;
   }
 
+  Case_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
   Case_Part.loadData(String partName, String manufacturerName, double price, String productURL, String productImageURL, String motherboardFormFactor, String color, String dimensions)
       : super.loadData(partName, manufacturerName, price, productURL, productImageURL) {
     this.motherboardFormFactor = motherboardFormFactor;
@@ -20,4 +23,14 @@ class Case_Part extends Part {
 
   Case_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
+  factory Case_Part.fromJson(dynamic json) {
+    return Case_Part.loadFromDatabase(
+        json['partName'] as String,
+        json['manufacturerName'] as String,
+        json['price'] as double,
+        json['productImageURL'] as String,
+        json['productURL'] as String
+    );
+  }
 }

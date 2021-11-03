@@ -1,6 +1,8 @@
 
 import 'dart:convert';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quick_pc/models/users.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -9,7 +11,7 @@ import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
@@ -20,10 +22,10 @@ import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/pages/build_guide/step.dart';
 import 'package:quick_pc/presentation/app_icons_icons.dart';
+import 'package:quick_pc/services/realtimeDatabase.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'SavedListsPage.dart';
 
 final Color logoColor = Color(0xff66c290);
@@ -156,8 +158,10 @@ class _PartListState extends State<PartList> {
   TooltipBehavior _toolTipBehavior;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TextEditingController budgetEntryController = new TextEditingController();
-  TextEditingController buildNamingController = new TextEditingController();
+  TextEditingController _budgetEntryController = new TextEditingController();
+  TextEditingController _priceEditingController = new TextEditingController();
+
+  TextEditingController _buildNamingController = new TextEditingController();
 
 
   List<BudgetData> loadPrices() {
@@ -197,7 +201,10 @@ class _PartListState extends State<PartList> {
           title: Text("Set your Budget"),
           content: TextField(
             keyboardType: TextInputType.number,
-            controller: budgetEntryController,
+            controller: _budgetEntryController,
+            decoration: InputDecoration(
+              labelText: "Enter new price here (dollars)"
+            ),
           ),
           actions: <Widget>[
             MaterialButton(
@@ -205,7 +212,7 @@ class _PartListState extends State<PartList> {
               child: Text("Submit"),
               onPressed: (){
                 setState(() {
-                  buildObj.buildBudget = double.parse(budgetEntryController.text);
+                  buildObj.buildBudget = double.parse(_budgetEntryController.text);
                   print(buildObj.price);
                   buildObj.updatePrice();
                   Navigator.of(context).pop();
@@ -298,12 +305,12 @@ class _PartListState extends State<PartList> {
                 ),
                 title: Text("Save Part List to User Account"),
                 content: Container(
-                    height: 350,
+                    height: 100,
                     width: 350,
                     child: Column(
                       children: [
                         TextField(
-                          controller: buildNamingController,
+                          controller: _buildNamingController,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Enter build title here',
@@ -323,11 +330,17 @@ class _PartListState extends State<PartList> {
                   MaterialButton(
                     elevation: 5.0,
                     child: Text("Save to Account"),
-                    onPressed: (){
-                      buildObj.buildName = buildNamingController.text;
-                      // String buildObjJSON = jsonEncode(buildObj);
-                      // print(buildObjJSON);
+                    onPressed: () async {
+                      buildObj.buildName = _buildNamingController.text;
+                      final FirebaseAuth _auth = FirebaseAuth.instance;
+                      buildObj.buildUserID = _auth.currentUser.uid;
+                      print("USER ID: " + buildObj.buildUserID);
+                      Map<String,dynamic> buildObjJSON = buildObj.toJson();
+                      debugPrint(buildObjJSON.toString(), wrapWidth: 2048);
+                      sendListToDatabase(buildObjJSON);
                       Navigator.of(context).pop();
+                      Fluttertoast.showToast(msg: "List has been saved to your account!",
+                      backgroundColor: Colors.grey);
                     },
                   ),
                 ],
@@ -444,13 +457,20 @@ class _PartListState extends State<PartList> {
                 padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
                 child: InkWell(
                   onTap: () {
-                    print("THIS WORKS!");
-                    print(index);
-                    Navigator.push(
-                        context, MaterialPageRoute(
-                        builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[index], "cpu")
-                    )
-                    );
+                    print("INDEX FOR PART $partTitles[index]");
+                    if(buildObj.partList[index].partIsChosen) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[index], "cpu"))
+                      );
+                    }
+                    else {
+                      String partTitle = partTitles[index];
+                      Fluttertoast.showToast(
+                        fontSize: 18,
+                        backgroundColor: Colors.grey,
+                          msg:
+                          "You havent chosen a $partTitle!\nChoose a part to view its info");
+                    }
                   },
                   child: Expanded(
                     child: Card(
@@ -561,14 +581,37 @@ class _PartListState extends State<PartList> {
                                       ),
                                     ),
                                     TextButton.icon(
-                                      onPressed: () {
+                                      onPressed: ()
+                                      {
                                         print('Button pressed ...');
                                         setState(() {
-                                          print(index);
-                                          print(buildObj.partList[index].price);
-                                          buildObj.partList[index] = returnDefaultPart(index);
-                                          buildObj.updatePrice();
-                                          print(buildObj.partList[index].price);
+                                          return showDialog(context: context, builder: (context) {
+                                            return AlertDialog(
+                                              title: Text("Are you sure you want to remove this part?"),
+                                              actions: <Widget>[
+                                                MaterialButton(
+                                                  elevation: 8.0,
+                                                  child: Text("No"),
+                                                  onPressed: (){
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                                MaterialButton(
+                                                  elevation: 8.0,
+                                                  child: Text("Yes"),
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      print(buildObj.partList[index].price);
+                                                      buildObj.partList[index] = returnDefaultPart(index);
+                                                      buildObj.updatePrice();
+                                                      print(buildObj.partList[index].price);
+                                                      Navigator.of(context).pop();
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
                                         }
                                         );
                                       },
@@ -576,7 +619,7 @@ class _PartListState extends State<PartList> {
                                       label: Text('Remove Part'),
                                       style: TextButton.styleFrom(
                                         primary: Colors.white,
-                                        backgroundColor: Colors.teal,
+                                        backgroundColor: Colors.redAccent,
                                         onSurface: Colors.grey,
                                       ),
                                     ),
@@ -598,7 +641,13 @@ class _PartListState extends State<PartList> {
                                             title: Text("Enter new price"),
                                             content: TextField(
                                               keyboardType: TextInputType.number,
-                                              controller: budgetEntryController,
+                                              controller: _priceEditingController,
+                                              decoration: InputDecoration(
+                                                  labelText: "Enter new price here (dollars)",
+                                                enabledBorder: const OutlineInputBorder(
+                                                  borderSide: const BorderSide(color: Colors.teal, width: 0.0),
+                                                ),
+                                              ),
                                             ),
                                             actions: <Widget>[
                                               MaterialButton(
@@ -613,7 +662,7 @@ class _PartListState extends State<PartList> {
                                                 child: Text("Submit"),
                                                 onPressed: (){
                                                   setState(() {
-                                                    buildObj.partList[index].price = double.parse(budgetEntryController.text);
+                                                    buildObj.partList[index].price = double.parse(_priceEditingController.text);
                                                     print(buildObj.price.runtimeType);
                                                     buildObj.updatePrice();
                                                     Navigator.of(context).pop();
@@ -624,13 +673,12 @@ class _PartListState extends State<PartList> {
                                           );
                                         }
                                         );
-
                                       },
                                       icon: Icon(Icons.edit),
                                       label: Text('Edit Price'),
                                       style: TextButton.styleFrom(
                                         primary: Colors.white,
-                                        backgroundColor: Colors.greenAccent,
+                                        backgroundColor: Colors.teal,
                                         onSurface: Colors.grey,
                                       ),
                                     ),
@@ -646,7 +694,7 @@ class _PartListState extends State<PartList> {
                                       label: Text('Add Custom Part'),
                                       style: TextButton.styleFrom(
                                         primary: Colors.white,
-                                        backgroundColor: Colors.greenAccent,
+                                        backgroundColor: Colors.teal,
                                         onSurface: Colors.grey,
                                       ),
                                     ),
@@ -692,6 +740,9 @@ class _PartListState extends State<PartList> {
         break;
       case 7:
         return Case_Part();
+        break;
+      default:
+        return null;
         break;
     }
   }

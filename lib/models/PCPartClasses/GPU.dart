@@ -1,4 +1,4 @@
-import 'PCPart.dart';
+import 'Part.dart';
 
 class GPU_Part extends Part {
   String base_clock;
@@ -13,6 +13,9 @@ class GPU_Part extends Part {
     this.boost_clock = '0';
     this.vram = null;
   }
+
+  GPU_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 
   GPU_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, baseclock, boostclock, vram)
       : super.loadData(partName, manufacturerName, price, productURL, productImageURL) {
@@ -36,4 +39,14 @@ class GPU_Part extends Part {
 
   GPU_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+
+  factory GPU_Part.fromJson(dynamic json) {
+    return GPU_Part.loadFromDatabase(
+        json['partName'] as String,
+        json['manufacturerName'] as String,
+        json['price'] as double,
+        json['productImageURL'] as String,
+        json['productURL'] as String
+    );
+  }
 }

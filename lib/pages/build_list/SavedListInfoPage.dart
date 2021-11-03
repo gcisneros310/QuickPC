@@ -167,7 +167,6 @@ class _SavedListInfoPageState extends State<SavedListInfoPage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           createAlertDialog(context);
-
         },
         icon: Icon(Icons.edit),
         label: const Text("Edit List"),
