@@ -45,6 +45,10 @@ dependencies:
   youtube_player_iframe: ^2.2.2
   shared_preferences_settings: ^1.2.0
   adobe_xd: ^2.0.0+1
+  flutter_markdown: ^0.6.8
+  fluttertoast: ^8.0.8
+  image_picker: ^0.8.4+1
+  auto_size_text: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -64,6 +68,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
     - assets/images/
     - assets/QuickPCLogo.png
     - assets/buildguideintropc.png

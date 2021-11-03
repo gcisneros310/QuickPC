@@ -14,6 +14,11 @@ getTest(){
   });
 }
 
+getCPU(){
+  databaseReference.child('cpu/').get().then((DataSnapshot data){
+  });
+}
+
 Future<void> sendListToDatabase(Map<String,dynamic> json) async {
   await databaseReference.child('build list/').push().update(json);
 }
@@ -57,6 +62,9 @@ Future<List<Part>> getPart(String partType) async {
 
   List<Part> partList = [];
 
+  print('Inside realtimeDatabase.dart, hello');
+
+
   switch (partType) {
     case 'cpu':
       return getCPUList();
@@ -71,7 +79,7 @@ Future<List<Part>> getPart(String partType) async {
 //CPU list from realtime database
 Future<List<Part>> getCPUList() async {
 
-  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu').get();
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').get();
   List<Part> cpuList = [];
 
   if(dataSnapshot.value != null){
@@ -90,8 +98,6 @@ Future<List<Part>> getCPUList() async {
 
 //Graphics-Cards list from realtime database
 Future<List<Part>> getGPUList() async {
-
-  //await databaseReference.child('build list/').push().update(m);
 
   DataSnapshot dataSnapshot = await databaseReference.child('parts/gpu/').get();
   List<Part> gpuList = [];

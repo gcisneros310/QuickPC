@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/pages/account/account.dart';
+import 'package:quick_pc/pages/build_list/SavedListsPage.dart';
 import 'package:quick_pc/pages/home/home2.dart';
-import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
-
-
-
-
 
 class BottomNav extends StatefulWidget {
   @override
@@ -17,7 +13,7 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
     Home2(),
-    PageNotImplemented(),
+    SavedListsPage(),
     Account(),
   ];
 
@@ -50,7 +46,5 @@ class _BottomNavState extends State<BottomNav> {
         onTap: _onItemTap,
       ),
     );
-
-
   }
 }
