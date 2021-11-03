@@ -6,6 +6,7 @@ import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/pages/home/home.dart';
+import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
 import 'package:quick_pc/pages/report_a_bug/report_a_bug.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
@@ -58,6 +59,8 @@ class _AccountState extends State<Account> {
                 SizedBox(height:10),
                 buildReportOption((context), "Report a Bug"),
                 buildFeedbackOption((context), "Send Feedback"),
+                buildToSOption((context), "Terms of Service"),
+
               ],
       )
       )
@@ -70,6 +73,28 @@ class _AccountState extends State<Account> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ChangePassword()),
+        );
+      },
+      child:Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title, style: GoogleFonts.exo2(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold)),
+              Icon(Icons.arrow_forward_ios, color: Colors.grey),
+            ],
+          )
+
+      ),
+    );
+  }
+
+  GestureDetector buildToSOption(BuildContext context, String title){
+    return GestureDetector(
+      onTap:(){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PageNotImplemented()),
         );
       },
       child:Padding(
@@ -184,7 +209,7 @@ class _AccountState extends State<Account> {
     return GestureDetector(
       onTap:() async{
           await _auth.signOut();
-          Navigator.pop(context);
+          //Navigator.pop(context);
           },
 
       child:Padding(
