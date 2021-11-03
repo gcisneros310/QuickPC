@@ -15,7 +15,6 @@ class PopularFields extends StatefulWidget {
   _PageNotImplemented createState() => _PageNotImplemented();
 }
 
-
 List<Part> demoList = [
   CPU_Part.valueConstructors(
       'Intel Core i9-10940X - Core i9 10th Gen Cascade Lake 14-Core 3.3 GHz LGA 2066 165W Desktop Processor - BX8069510940X',
@@ -86,7 +85,6 @@ List<Part> demoList = [
   ),
 ];
 
-
 class _PageNotImplemented extends State<PopularFields> {
   final Color logoColor = Color(0xff66c290);
   final Color greyout = Colors.grey;
@@ -94,7 +92,6 @@ class _PageNotImplemented extends State<PopularFields> {
   final controllerEmail = TextEditingController();
   final controllerMessage = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 
   Widget testWidget(int partIndex, String partType ){
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();

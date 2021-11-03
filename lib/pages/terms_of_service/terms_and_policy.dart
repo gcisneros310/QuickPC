@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:quick_pc/services/auth.dart';
 
 class PrivacyPolicy extends StatelessWidget {
   PrivacyPolicy({
@@ -36,7 +35,6 @@ class PrivacyPolicy extends StatelessWidget {
                 );
               },
             ),
-
           ),
           FlatButton(
             padding: EdgeInsets.all(0),

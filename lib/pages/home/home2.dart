@@ -492,7 +492,7 @@ class _Home2State extends State<Home2> {
       body: Container(
         child: ListView(
           children: [
-            //swiperImageRow(),
+            swiperImageRow(),
             Padding(
               padding: EdgeInsets.only(left: 20, top: 20),
               child: Container(

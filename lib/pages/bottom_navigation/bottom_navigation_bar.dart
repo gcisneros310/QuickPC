@@ -46,7 +46,5 @@ class _BottomNavState extends State<BottomNav> {
         onTap: _onItemTap,
       ),
     );
-
-
   }
 }
