@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/pages/authenticate/loginscreen.dart';
+import 'package:quick_pc/pages/authenticate/my_password.dart';
 import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/pages/home/home.dart';
@@ -19,7 +20,6 @@ class _ChangePasswordState extends State<ChangePassword> {
   final AuthService _auth = AuthService();
   final controllerPassword = TextEditingController();
   final controllerCPassword = TextEditingController();
-  final controllerMessage = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -62,10 +62,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                           ),
                           SizedBox(height: 35),
                           TextFormField(
+                            obscureText: true,
                             validator: (value) {
                               if(value.isEmpty)
                               {
-                                return 'Enter your current password';
+                                return 'Enter your new password';
                               }
                               else
                               {
@@ -75,7 +76,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             controller: controllerPassword,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                                hintText: "Current Password",
+                                hintText: "Enter new password",
                                 filled: true,
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.lock, color: Colors.white),
@@ -86,10 +87,11 @@ class _ChangePasswordState extends State<ChangePassword> {
 
                           SizedBox(height: 15),
                           TextFormField(
+                            obscureText: true,
                             validator: (value) {
                               if(value.isEmpty)
                               {
-                                return 'Enter a new password';
+                                return 'Enter your new password';
                               }
                               else
                               {
@@ -99,7 +101,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             controller: controllerCPassword,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                                hintText: "Confirm Password",
+                                hintText: "Confirm new password",
                                 filled: true,
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.lock, color: Colors.white),
@@ -124,8 +126,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                           borderRadius: BorderRadius.circular(15),
                                         ),
                                         titleTextStyle: GoogleFonts.exo2(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-                                        title: Text("Send the Message?"),
-                                        content: Text("You will not be able to recover it"),
+                                        title: Text("Confirm password change?"),
+                                        content: Text("You will not be able to login with your old password"),
                                         actions: <Widget>[
                                           TextButton(
                                             child: Text("Cancel"),
@@ -134,9 +136,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                                             },
                                           ),
                                           FlatButton(
-                                            child: Text("Yes, send it"),
+                                            child: Text("Yes, change it"),
                                             textColor: Colors.red,
                                             onPressed: () {
+                                              String passwordOne = controllerPassword.text;
+                                              String passwordTwo = controllerCPassword.text;
+                                              if(passwordOne == passwordTwo){
+                                                changePassword(passwordOne, passwordTwo);
+                                              }
+                                              else{
+                                                print("Different Passwords");
+                                              }
                                             },
                                           ),
                                         ]
@@ -156,6 +166,16 @@ class _ChangePasswordState extends State<ChangePassword> {
         ],
       ),
     );
+
+  }
+  changePassword(String oldPassword, String newPassword)
+  {
+    final User user = FirebaseAuth.instance.currentUser;
+    AuthCredential authCredential = EmailAuthProvider.credential(email: user.email, password: CurrentPassword.userPassword);
+    print(CurrentPassword.userPassword);
+    user.reauthenticateWithCredential(authCredential);
+    user.updatePassword(newPassword);
+
   }
 }
 

@@ -7,6 +7,8 @@ import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/shared/loading.dart';
 
+import 'my_password.dart';
+
 class LoginScreen extends StatefulWidget {
 
   @override
@@ -87,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         //Navigator.push(context,
                             //MaterialPageRoute(builder: (_) => Home()));
                       }
+                      CurrentPassword.setPassword(password);
                       print(loading);
                     },
                     color: logoColor,
