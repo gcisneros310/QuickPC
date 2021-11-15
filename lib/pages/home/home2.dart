@@ -8,6 +8,7 @@ import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
+import 'package:quick_pc/pages/home/notifications.dart';
 import 'package:quick_pc/pages/home/popular_fields.dart';
 import 'package:quick_pc/pages/home/swiperModel.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
@@ -483,10 +484,14 @@ class _Home2State extends State<Home2> {
         iconTheme: IconThemeData(color: Colors.black54),
         elevation: 0.0,
         backgroundColor: Colors.grey[500],
-        title: Text("Home Screen"),
+        title: Text("Home"),
         centerTitle: true,
         actions: [
-          Icon(Icons.notifications_none, color: Colors.black54)
+          InkWell(
+            onTap:(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+          },
+              child: Icon(Icons.notifications, color: Colors.black54))
         ],
       ),
       body: Container(
