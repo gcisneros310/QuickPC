@@ -23,7 +23,7 @@ class Filter {
         checkboxFilters = GPUFilter().checkboxFilters;
         break;
 
-      case 'memory':
+      case 'ram':
         rangeFilters = RAMFilter().rangeFilters;
         checkboxFilters = RAMFilter().checkboxFilters;
         break;
@@ -54,7 +54,7 @@ class Filter {
       case 'gpu':
         return GPUFilter().getList(list, rangeFilters, checkboxFilters);
 
-      case 'memory':
+      case 'ram':
         return null;
 
       case 'motherboard':

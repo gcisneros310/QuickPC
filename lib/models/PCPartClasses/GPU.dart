@@ -49,4 +49,25 @@ class GPU_Part extends Part {
         json['productURL'] as String
     );
   }
+
+  factory GPU_Part.fromJson2(dynamic json) {
+
+    String image;
+    if (json['images'] == null)
+      image = "";
+    else
+      image = json['images'][0];
+
+
+    return GPU_Part.loadData(
+      json['name'] as String,
+      json['manufacturer'] as String,
+      json['price'] as double ?? 0.0,
+      json['productURL'] as String ?? "",
+      image,
+      json['base clock'],
+      json['boost clock'],
+      json['memory']
+    );
+  }
 }

@@ -30,27 +30,29 @@ class _SelectSearchState extends State<SelectSearch> {
     'Storage',
     'Graphics Card',
     'Case',
-    'Power Supply'
+    'Power Supply',
+    'CPU Cooler'
   ];
 
-  var partIcons = [
-    Icons.memory_sharp,
-    Icons.memory_sharp,
-    Icons.memory_sharp,
-    Icons.memory_sharp,
-    Icons.memory_sharp,
-    Icons.memory_sharp,
-    Icons.memory_sharp,
-  ];
+  // var partIcons = [
+  //   Icons.memory_sharp,
+  //   Icons.memory_sharp,
+  //   Icons.memory_sharp,
+  //   Icons.memory_sharp,
+  //   Icons.memory_sharp,
+  //   Icons.memory_sharp,
+  //   Icons.memory_sharp,
+  // ];
 
   var types = [
     'cpu',
-    'memory',
+    'ram',
     'motherboard',
     'storage',
     'gpu',
     'case',
-    'psu'
+    'psu',
+    'cooler'
   ];
 
 
@@ -147,7 +149,7 @@ class _SelectSearchState extends State<SelectSearch> {
 
         return SelectTile(
           title: titles[index],
-          partIcon: partIcons[index],
+          partIcon: Icons.memory_sharp,
           partType: types[index],
 
         );

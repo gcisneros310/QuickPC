@@ -35,4 +35,17 @@ class Storage_Part extends Part {
         json['productURL'] as String
     );
   }
+
+  factory Storage_Part.fromJson2(dynamic json) {
+    return Storage_Part.loadData(
+      json['name'] as String,
+      json['manufacturer'] as String,
+      json['price'] as double ?? 0.0,
+      json['productURL'] as String ?? "",
+      json['images'][0],
+      json['capacity'],
+      json['type'],
+      json['form']
+    );
+  }
 }

@@ -1,8 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
+import 'package:quick_pc/models/PCPartClasses/Case_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
+import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
+import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
+import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
+import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
+import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 
 
 final databaseReference = FirebaseDatabase.instance.reference();
@@ -70,6 +76,18 @@ Future<List<Part>> getPart(String partType) async {
       return getCPUList();
     case 'gpu':
       return getGPUList();
+    case 'ram':
+      return getRamList();
+    case 'motherboard':
+      return getMoboList();
+    case 'storage':
+      return getStorageList();
+    case 'psu':
+      return getPSUList();
+    case 'case':
+      return getCaseList();
+    case 'cooler':
+      return getCoolerList();
 
   }
 
@@ -85,11 +103,10 @@ Future<List<Part>> getCPUList() async {
   if(dataSnapshot.value != null){
 
     dataSnapshot.value.forEach((key, value){
-      CPU_Part c =  CPU_Part().fromDatabase(value);
-      //c.fromDatabase(value);
-      //print(value);
-      //print('CPU Name: ' + c.partName);
+      print(value);
+      CPU_Part c =  CPU_Part.fromJson2(value);
       cpuList.add(c);
+      c.loadMap(value);
     });
   }
 
@@ -103,31 +120,112 @@ Future<List<Part>> getGPUList() async {
   List<Part> gpuList = [];
 
   if(dataSnapshot.value != null){
-
     dataSnapshot.value.forEach((key, value){
-      GPU_Part g = GPU_Part().fromDatabase(value);
+      print(value);
+      GPU_Part g = GPU_Part.fromJson2(value);
       gpuList.add(g);
+      g.loadMap(value);
     });
   }
 
   return gpuList;
 }
 
+//Ram
+Future<List<Part>> getRamList() async {
 
-/*DataSnapshot dataSnapshot = await databaseReference.child('cpu/').get();
-  List<Part> parts = [];
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/ram/').get();
+  List<Part> ramList = [];
 
   if(dataSnapshot.value != null){
-
-    //print(dataSnapshot.value['test2']['name']);
-
-    //each value is a map of the data for this part. value['attribute']
-
-    Part p;
     dataSnapshot.value.forEach((key, value){
-      //p = createPart(value);
-      parts.add(p);
+      RAM_Part r = RAM_Part.fromJson2(value);
+      ramList.add(r);
+      r.loadMap(value);
     });
   }
-  //print(parts);
-  return parts;*/
+
+  return ramList;
+}
+
+//Motherboard
+Future<List<Part>> getMoboList() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/motherboard/').get();
+  List<Part> list = [];
+
+  if(dataSnapshot.value != null){
+    dataSnapshot.value.forEach((key, value){
+      Motherboard_Part p = Motherboard_Part.fromJson2(value);
+      list.add(p);
+      p.loadMap(value);
+    });
+  }
+
+  return list;
+}
+
+Future<List<Part>> getStorageList() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/storage/').get();
+  List<Part> list = [];
+
+  if(dataSnapshot.value != null){
+    dataSnapshot.value.forEach((key, value){
+      Storage_Part p = Storage_Part.fromJson2(value);
+      list.add(p);
+      p.loadMap(value);
+    });
+  }
+
+  return list;
+}
+
+Future<List<Part>> getPSUList() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/psu/').get();
+  List<Part> list = [];
+
+  if(dataSnapshot.value != null){
+    dataSnapshot.value.forEach((key, value){
+      PSU_Part p = PSU_Part.fromJson2(value);
+      list.add(p);
+      p.loadMap(value);
+    });
+  }
+
+  return list;
+}
+
+Future<List<Part>> getCaseList() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/case/').get();
+  List<Part> list = [];
+
+  if(dataSnapshot.value != null){
+    dataSnapshot.value.forEach((key, value){
+      Case_Part p = Case_Part.fromJson2(value);
+      list.add(p);
+      p.loadMap(value);
+    });
+  }
+
+  return list;
+}
+
+Future<List<Part>> getCoolerList() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/cooler/').get();
+  List<Part> list = [];
+
+  if(dataSnapshot.value != null){
+    dataSnapshot.value.forEach((key, value){
+      Cooler_Part p = Cooler_Part.fromJson2(value);
+      list.add(p);
+      p.loadMap(value);
+    });
+  }
+
+  return list;
+}
+
