@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/search/filters/gpu_filter.dart';
 import 'package:quick_pc/pages/search/filters/mobo_filter.dart';
 import 'package:quick_pc/pages/search/filters/ram_filter.dart';
@@ -24,7 +23,7 @@ class Filter {
         checkboxFilters = GPUFilter().checkboxFilters;
         break;
 
-      case 'memory':
+      case 'ram':
         rangeFilters = RAMFilter().rangeFilters;
         checkboxFilters = RAMFilter().checkboxFilters;
         break;
@@ -55,7 +54,7 @@ class Filter {
       case 'gpu':
         return GPUFilter().getList(list, rangeFilters, checkboxFilters);
 
-      case 'memory':
+      case 'ram':
         return null;
 
       case 'motherboard':

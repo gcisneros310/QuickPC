@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_pc/pages/search/compare/compareUI.dart';
 import 'package:quick_pc/pages/search/filters/filterUI.dart';
 import 'package:quick_pc/pages/search/search_list.dart';
 import 'package:quick_pc/services/database.dart';
@@ -30,6 +31,8 @@ class _SearchState extends State<Search> {
 
   SearchList list;
 
+  List<Part> compareList;
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +48,8 @@ class _SearchState extends State<Search> {
 
     fil = Filter(partType);
     filUI = FilterUI(fil);
+
+    compareList = [];
 
     DatabaseService().doSearch(searchTerm);
 
@@ -83,6 +88,12 @@ class _SearchState extends State<Search> {
 
                   IconButton(
                     onPressed: () {
+                      //print(compareList);
+                      String j = "2 x 8GB";
+                      String k = "2 x 16GB";
+
+                      print(k.substring(0,1));
+                      print(k.substring(4));
 
                     },
                     icon: searchIcon,
@@ -107,7 +118,7 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  list = SearchList(partType, fil),
+                  list = SearchList(partType, fil, compareList),
 
 
 
@@ -149,7 +160,7 @@ class _SearchState extends State<Search> {
 
                   //Compare Tab Contents
                   //Icon(Icons.compare_arrows),
-                  Icon(Icons.compare_arrows),
+                  CompareUI(compareList: compareList),
                 ],
               ),
             ),

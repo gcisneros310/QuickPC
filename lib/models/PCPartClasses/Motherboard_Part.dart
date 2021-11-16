@@ -5,6 +5,7 @@ class Motherboard_Part extends Part {
   String cpuSocket;
   String formFactor;
 
+
   Motherboard_Part() : super() {
     this.price = 0.0;
     this.chipset = null;
@@ -32,6 +33,20 @@ class Motherboard_Part extends Part {
         json['price'] as double,
         json['productImageURL'] as String,
         json['productURL'] as String
+    );
+  }
+
+  factory Motherboard_Part.fromJson2(dynamic json) {
+
+    return Motherboard_Part.loadData(
+      json['name'] as String,
+      json['manufacturer'] as String,
+      json['price'] as double ?? 0.0,
+      json['productURL'] as String ?? "",
+      json['images'][0],
+      json['chipset'],
+      json['socket'],
+      json['form']
     );
   }
 

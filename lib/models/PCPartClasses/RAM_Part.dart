@@ -5,6 +5,7 @@ class RAM_Part extends Part {
   String timings;
   String memoryCapacity;
   int stickCount;
+  dynamic info;
 
   RAM_Part() : super() {
     this.price = 0.0;
@@ -37,4 +38,28 @@ class RAM_Part extends Part {
         json['productURL'] as String
     );
   }
+
+  factory RAM_Part.fromJson2(dynamic json) {
+
+    var count = int.parse(json['module'].substring(0,1));
+    var cap = json['module'].substring(4);
+
+    return RAM_Part.loadData(
+        json['name'] as String,
+        json['manufacturer'] as String,
+        json['price'] as double ?? 0.0,
+        json['productURL'] as String ?? "",
+        json['images'][0],
+        json['speed'],
+        json['timing'],
+        cap,
+        count
+    );
+  }
+
+  loadInfo(dynamic json)  {
+    loadMap(json);
+    info = json;
+  }
+
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 
 class RAMFilter{

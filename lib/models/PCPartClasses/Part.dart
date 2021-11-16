@@ -44,4 +44,8 @@ abstract class Part {
 
   static fromJson(e) {}
 
+  loadMap(dynamic json) {
+    partAttributeMap = json;
+  }
+
 }

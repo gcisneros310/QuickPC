@@ -48,26 +48,38 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    CPU_Part cpuObj = widget.part;
-    String partName = "part";
-    double partPrice = 1.0;
-    double clock;
-    double boost;
-    int cores;
 
-    switch (widget.partType) {
-      case 'cpu':
-        CPU_Part cpu = widget.part;
-        partName = cpu.partName;
-        partPrice = cpu.price;
-        clock = cpu.base_clock;
-        boost = cpu.boost_clock;
-        cores = cpu.coreCount;
-        break;
-      case 'gpu':
-        GPU_Part gpu = widget.part;
-        break;
-    }
+
+    var attributes = widget.part.partAttributeMap;
+    print(attributes);
+
+    List attributeTitles = attributes.keys.toList();
+    attributeTitles.remove("images");
+    attributeTitles.remove("stores");
+    attributeTitles.remove("name");
+
+
+
+    // CPU_Part cpuObj = widget.part;
+    // String partName = "part";
+    // double partPrice = 1.0;
+    // double clock;
+    // double boost;
+    // int cores;
+
+    // switch (widget.partType) {
+    //   case 'cpu':
+    //     CPU_Part cpu = widget.part;
+    //     partName = cpu.partName;
+    //     partPrice = cpu.price;
+    //     clock = cpu.base_clock;
+    //     boost = cpu.boost_clock;
+    //     cores = cpu.coreCount;
+    //     break;
+    //   case 'gpu':
+    //     GPU_Part gpu = widget.part;
+    //     break;
+    // }
 
     createAlertDialog(BuildContext context) {
       return showDialog(context: context, builder: (context) {
@@ -80,7 +92,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
               onPressed: (){
                 setState(() {
                   CompletePCBuild tempObj = new CompletePCBuild();
-                  tempObj.partList[0] = cpuObj;
+                  tempObj.partList[0] = widget.part;
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -165,7 +177,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                   child: Image.network(
-                    cpuObj.productImageURL,
+                    widget.part.productImageURL,
                     width: 250,
                     height: 250,
                     fit: BoxFit.cover,
@@ -175,7 +187,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                   child: Text(
-                    cpuObj.partName,
+                    widget.part.partName,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 18,
@@ -186,7 +198,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                   child: Text(
-                    "\$" + cpuObj.price.toString(),
+                    "\$" +  widget.part.price.toString(),
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 16,
@@ -210,7 +222,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
-                        itemCount: cpuObj.partAttributeMap.length,
+                        itemCount: attributeTitles.length,
                         itemBuilder: (BuildContext context, int index) {
                         return Card(
                           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -226,7 +238,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
-                                  attributeNames[index],
+                                  attributeTitles[index].toUpperCase(),
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w700,
@@ -234,7 +246,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                                   ),
                                 ),
                                 Text(
-                                  cpuObj.partAttributeMap[index].toString(),
+                                  attributes[attributeTitles[index]].toString(),
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontStyle: FontStyle.italic,
