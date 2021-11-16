@@ -17,7 +17,7 @@ class Storage_Part extends Part {
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 
   Storage_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, String capacity, String storageType, String formFactor)
-  : super.loadData(partName, manufacturerName, price, productURL, productImageURL){
+      : super.loadData(partName, manufacturerName, price, productURL, productImageURL){
     this.capacity = capacity;
     this.storageType = storageType;
     this.formFactor = formFactor;
@@ -38,14 +38,14 @@ class Storage_Part extends Part {
 
   factory Storage_Part.fromJson2(dynamic json) {
     return Storage_Part.loadData(
-      json['name'] as String,
-      json['manufacturer'] as String,
-      json['price'] as double ?? 0.0,
-      json['productURL'] as String ?? "",
-      json['images'][0],
-      json['capacity'],
-      json['type'],
-      json['form']
+        json['name'] as String,
+        json['manufacturer'] as String,
+        json['price'] as double ?? 0.0,
+        json['productURL'] as String ?? "",
+        json['images'][0],
+        json['capacity'],
+        json['type'],
+        json['form']
     );
   }
 }

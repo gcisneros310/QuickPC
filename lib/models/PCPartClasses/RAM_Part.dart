@@ -17,7 +17,7 @@ class RAM_Part extends Part {
 
   RAM_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
-  
+
   RAM_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, String clockSpeed, String timings, String memoryCapacity, int stickCount) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL){
     this.clockSpeed = clockSpeed;

@@ -331,16 +331,33 @@ class _PartListState extends State<PartList> {
                     elevation: 5.0,
                     child: Text("Save to Account"),
                     onPressed: () async {
-                      buildObj.buildName = _buildNamingController.text;
                       final FirebaseAuth _auth = FirebaseAuth.instance;
-                      buildObj.buildUserID = _auth.currentUser.uid;
-                      print("USER ID: " + buildObj.buildUserID);
-                      Map<String,dynamic> buildObjJSON = buildObj.toJson();
-                      debugPrint(buildObjJSON.toString(), wrapWidth: 2048);
-                      sendListToDatabase(buildObjJSON);
-                      Navigator.of(context).pop();
-                      Fluttertoast.showToast(msg: "List has been saved to your account!",
-                      backgroundColor: Colors.grey);
+
+                      bool texedNamedDefault = false;
+                      if(_buildNamingController.text == "DEFAULT") {
+                        CompletePCBuild temp = new CompletePCBuild();
+                        temp.partList = demoList;
+                        temp.updatePrice();
+                        temp.buildUserID = _auth.currentUser.uid;
+
+                        temp.buildBudget = 4500.00;
+                        Map<String,dynamic> buildObjJSON = temp.toJson();
+                        sendListToDatabase(buildObjJSON);
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(msg: "EXAMPLE LIST has been saved to your account!",
+                            backgroundColor: Colors.grey);
+                      }
+                      else{
+                        buildObj.buildName = _buildNamingController.text;
+                        buildObj.buildUserID = _auth.currentUser.uid;
+                        print("USER ID: " + buildObj.buildUserID);
+                        Map<String,dynamic> buildObjJSON = buildObj.toJson();
+                        debugPrint(buildObjJSON.toString(), wrapWidth: 2048);
+                        sendListToDatabase(buildObjJSON);
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(msg: "List has been saved to your account!",
+                            backgroundColor: Colors.grey);
+                      }
                     },
                   ),
                 ],

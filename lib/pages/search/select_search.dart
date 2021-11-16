@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quick_pc/services/realtimeDatabase.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:quick_pc/presentation/app_icons_icons.dart';
 
 class SelectSearch extends StatefulWidget {
   SelectSearch({Key key}) : super(key: key);
@@ -30,29 +31,27 @@ class _SelectSearchState extends State<SelectSearch> {
     'Storage',
     'Graphics Card',
     'Case',
-    'Power Supply',
-    'CPU Cooler'
+    'Power Supply'
   ];
 
-  // var partIcons = [
-  //   Icons.memory_sharp,
-  //   Icons.memory_sharp,
-  //   Icons.memory_sharp,
-  //   Icons.memory_sharp,
-  //   Icons.memory_sharp,
-  //   Icons.memory_sharp,
-  //   Icons.memory_sharp,
-  // ];
+  var partIcons = [
+    Icons.memory_sharp,
+    Icons.memory_sharp,
+    Icons.memory_sharp,
+    Icons.memory_sharp,
+    Icons.memory_sharp,
+    Icons.memory_sharp,
+    Icons.memory_sharp,
+  ];
 
   var types = [
     'cpu',
-    'ram',
+    'memory',
     'motherboard',
     'storage',
     'gpu',
     'case',
-    'psu',
-    'cooler'
+    'psu'
   ];
 
 
@@ -106,15 +105,10 @@ class _SelectSearchState extends State<SelectSearch> {
 
           IconButton(
             onPressed: () {
-
-              String id = "8wWhlPnAeyQKQ5Dp2ZrdiQE5Ibc2";
-              getBuilds(id);
-
-
-              // if (searchTerm != ""){
-              //   Navigator.pushNamed(
-              //     context, '/search', arguments: {'searchTerm': searchTerm},);
-              // }
+              if (searchTerm != ""){
+                Navigator.pushNamed(
+                  context, '/search', arguments: {'searchTerm': searchTerm},);
+              }
             },
             icon: searchIcon,
           )
@@ -149,7 +143,7 @@ class _SelectSearchState extends State<SelectSearch> {
 
         return SelectTile(
           title: titles[index],
-          partIcon: Icons.memory_sharp,
+          partIcon: partIcons[index],
           partType: types[index],
 
         );

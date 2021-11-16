@@ -39,18 +39,18 @@ dependencies:
   firebase_core: ^1.7.0
   firebase_auth: ^3.1.2
   firebase_messaging: ^10.0.8
+
   cloud_firestore: ^2.5.3
   firebase_database: ^8.0.0
-
 
   google_fonts:
   youtube_player_iframe: ^2.2.2
   shared_preferences_settings: ^1.2.0
   adobe_xd: ^2.0.0+1
-  flutter_markdown: ^0.6.8
   fluttertoast: ^8.0.8
-  image_picker: ^0.8.4+1
-  auto_size_text: ^3.0.0
+  image_picker: ^0.8.4+3
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,7 +70,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
     - assets/images/
     - assets/QuickPCLogo.png
     - assets/buildguideintropc.png

@@ -7,9 +7,9 @@ class CPU_Part extends Part{
 
   var attributeNames = [
     "Manufacturer",
-  "Base Clock",
-  "Boost Clock",
-  "Core Count"
+    "Base Clock",
+    "Boost Clock",
+    "Core Count"
   ];
 
   CPU_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
@@ -68,11 +68,11 @@ class CPU_Part extends Part{
 
   factory CPU_Part.fromJson(Map<dynamic, dynamic> json) {
     return CPU_Part.loadFromDatabase(
-      json['partName'] as String,
-      json['manufacturerName'] as String,
-      json['price'] as double,
-      json['productImageURL'] as String,
-      json['productURL'] as String
+        json['partName'] as String,
+        json['manufacturerName'] as String,
+        json['price'] as double,
+        json['productImageURL'] as String,
+        json['productURL'] as String
     );
   }
 
@@ -82,14 +82,14 @@ class CPU_Part extends Part{
     double boost = double.parse(json['boost clock'].replaceAll(RegExp(" GHz"), ""));
 
     return CPU_Part.loadData(
-      json['name'] as String,
-      json['manufacturer'] as String,
-      json['price'] as double ?? 0.0,
-      json['productURL'] as String ?? "",
-      json['images'][0],
-      base,
-      boost,
-      cores
+        json['name'] as String,
+        json['manufacturer'] as String,
+        json['price'] as double ?? 0.0,
+        json['productURL'] as String ?? "",
+        json['images'][0],
+        base,
+        boost,
+        cores
     );
   }
 }

@@ -41,14 +41,14 @@ class PSU_Part extends Part {
     int wat = int.parse(json['wattage'].replaceAll(RegExp(" W"), ""));
 
     return PSU_Part.loadData(
-      json['name'] as String,
-      json['manufacturer'] as String,
-      json['price'] as double ?? 0.0,
-      json['productURL'] as String ?? "",
-      json['images'][0],
-      wat,
-      json['modular'],
-      json['rating']
+        json['name'] as String,
+        json['manufacturer'] as String,
+        json['price'] as double ?? 0.0,
+        json['productURL'] as String ?? "",
+        json['images'][0],
+        wat,
+        json['modular'],
+        json['rating']
     );
   }
 }

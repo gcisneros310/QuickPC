@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -96,9 +95,9 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                      builder: (context) => PartList(tempObj)
+                          builder: (context) => PartList(tempObj)
 
-                    )
+                      )
                   );
                 });
               },
@@ -220,44 +219,44 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                       color: Color(0xFFEEEEEE),
                     ),
                     child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.vertical,
                         itemCount: attributeTitles.length,
                         itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          color: Color(0xFFF5F5F5),
-                          child: Container(
-                            width: 100,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFEEEEEE),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  attributeTitles[index].toUpperCase(),
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
+                          return Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: Color(0xFFF5F5F5),
+                            child: Container(
+                              width: 100,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFEEEEEE),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    attributeTitles[index].toUpperCase(),
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  attributes[attributeTitles[index]].toString(),
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                )
-                              ],
+                                  Text(
+                                    attributes[attributeTitles[index]].toString(),
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }
+                          );
+                        }
                     ),
                   ),
                 )

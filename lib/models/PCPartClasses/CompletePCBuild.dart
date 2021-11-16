@@ -13,6 +13,7 @@ import 'RAM_Part.dart';
 import 'Storage_Part.dart';
 
 class CompletePCBuild {
+  String buildID;
   String buildUserID;
   String buildName;
   double price;
@@ -88,7 +89,7 @@ class CompletePCBuild {
           json['price'] as double,
           json['buildBudget'] as double,
           _partList
-          );
+      );
     }
     else {
       return CompletePCBuild.fromDatabase(
@@ -104,4 +105,3 @@ class CompletePCBuild {
 
 
 }
-

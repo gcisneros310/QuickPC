@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/pages/terms_of_service/terms_and_policy.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/shared/loading.dart';
 import 'package:quick_pc/services/passwordvalidator.dart';
@@ -101,42 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: GoogleFonts.exo2(color: Colors.white, fontSize: 16)),
                     textColor: Colors.white,
                   ),
-                  SizedBox(height:60),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: "By creating an account, you are agreeing to our \n",
-                      style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
-                      children: [
-                        TextSpan(
-                          text: "Terms of Service",
-                          style: GoogleFonts.exo2(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                          recognizer: TapGestureRecognizer()..onTap =(){
-                            showDialog(context: context, builder: (context){
-                              return PrivacyPolicy(
-                                  mdFileName: 'terms_of_service.md'
-                              );
-                            },);
-                          },
-                        ),
-                        TextSpan(
-                          text: " and ",
-                          style: GoogleFonts.exo2(color: Colors.white, fontSize: 16),
-                        ),
-                        TextSpan(
-                          text: "Privacy Policy",
-                          style: GoogleFonts.exo2(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                          recognizer: TapGestureRecognizer()..onTap =(){
-                            showDialog(context: context, builder: (context){
-                              return PrivacyPolicy(
-                                  mdFileName: 'privacy_policy.md'
-                              );
-                            },);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  SizedBox(height: 20),
                 Text (
                     error,
                     style: GoogleFonts.exo2(color: Colors.red[600], fontSize: 16)

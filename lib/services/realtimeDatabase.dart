@@ -13,6 +13,42 @@ import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
+Future<void> sendListToDatabase(Map<String,dynamic> json) async {
+  await databaseReference.child('build list/').push().update(json);
+}
+
+Future<List<CompletePCBuild>> getUserBuilds(String userID) async {
+  DataSnapshot dataSnapshot = (await databaseReference.child('build list/').orderByChild('buildUserID').equalTo(userID).get());
+  // print('----------');
+  // print('Get keys:');
+  // results.keys.forEach((key) {
+  //   print(key);
+  // });
+  List<CompletePCBuild> savedBuilds = [];
+
+  if(dataSnapshot.value != null){
+    dataSnapshot.value.forEach((key, value){
+      Map<String, dynamic> data = Map.from(value);
+      CompletePCBuild c =  CompletePCBuild.fromJson(data);
+      //c.fromDatabase(value);
+      //print(value);
+      //print('CPU Name: ' + c.partName);
+      if(c.buildUserID == userID){
+        c.buildID = key.toString();
+        print(c.buildID);
+        savedBuilds.add(c);
+      }
+
+    });
+  }
+
+  return savedBuilds;
+}
+
+void removeUserList(String buildID) async {
+  databaseReference.child('build list/').child(buildID).remove();
+}
+
 getTest(){
   databaseReference.child('cpu/').get().then((DataSnapshot data){
     print(data.value);
@@ -24,11 +60,6 @@ getCPU(){
   databaseReference.child('cpu/').get().then((DataSnapshot data){
   });
 }
-
-Future<void> sendListToDatabase(Map<String,dynamic> json) async {
-  await databaseReference.child('build list/').push().update(json);
-}
-
 
 Future<List<CompletePCBuild>> getSavedUserBuilds(int userID) async {
   List<CompletePCBuild> savedBuildLists = [];
@@ -44,7 +75,7 @@ Future<List<CompletePCBuild>> getSavedUserBuilds(int userID) async {
     });
 
   }
-  }
+}
 
 getBuilds(String id){
 

@@ -9,8 +9,7 @@ class SearchList extends StatefulWidget {
   String partType;
   Filter fil;
   bool clearFilter = true;
-  List<Part> compareList;
-  SearchList(this.partType, this.fil, this.compareList);
+  SearchList(this.partType, this.fil);
 
   @override
   _SearchListState createState() => _SearchListState();
@@ -24,13 +23,14 @@ class _SearchListState extends State<SearchList> {
 
     final parts = Provider.of<List<Part>>(context);
 
+
     if (widget.clearFilter) {
 
       return ListView.builder(
 
         itemCount: parts.length,
         itemBuilder: (context, index){
-          return PartTile(part: parts[index], partType: widget.partType, compareList: widget.compareList);
+          return PartTile(part: parts[index], partType: widget.partType,);
         },
       );
 
@@ -43,7 +43,7 @@ class _SearchListState extends State<SearchList> {
 
         itemCount: filteredParts.length,
         itemBuilder: (context, index){
-          return PartTile(part: filteredParts[index], partType: widget.partType, compareList: widget.compareList);
+          return PartTile(part: filteredParts[index], partType: widget.partType,);
 
         },
       );

@@ -45,8 +45,8 @@ class GPU_Part extends Part {
         json['partName'] as String,
         json['manufacturerName'] as String,
         json['price'] as double,
-        json['productImageURL'] as String,
-        json['productURL'] as String
+      json['productURL'] as String,
+      json['productImageURL'] as String,
     );
   }
 
@@ -60,14 +60,14 @@ class GPU_Part extends Part {
 
 
     return GPU_Part.loadData(
-      json['name'] as String,
-      json['manufacturer'] as String,
-      json['price'] as double ?? 0.0,
-      json['productURL'] as String ?? "",
-      image,
-      json['base clock'],
-      json['boost clock'],
-      json['memory']
+        json['name'] as String,
+        json['manufacturer'] as String,
+        json['price'] as double ?? 0.0,
+        json['productURL'] as String ?? "",
+        image,
+        json['base clock'],
+        json['boost clock'],
+        json['memory']
     );
   }
 }
