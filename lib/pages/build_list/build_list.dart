@@ -587,7 +587,9 @@ class _PartListState extends State<PartList> {
                                         print('Search button pressed ...');
                                         Navigator.pushNamed(
                                           context, '/search', arguments: {
-                                          'partType': partTypes[index]},);
+                                          'partType': partTypes[index],
+                                          'buildObject': buildObj},
+                                        );
                                       },
                                       icon: Icon(Icons.search),
                                       label: Text('Search Part'),

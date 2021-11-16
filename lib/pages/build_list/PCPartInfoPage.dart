@@ -25,8 +25,8 @@ class MenuItems {
 class PCPartInfoPage extends StatefulWidget {
   final Part part;
   final String partType;
-
-  PCPartInfoPage({Key key, this.part, this.partType}) : super(key: key);
+  CompletePCBuild buildObj;
+  PCPartInfoPage({Key key, this.part, this.partType, this.buildObj}) : super(key: key);
 
   PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {}
 
@@ -90,8 +90,9 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
               child: Text("Yes"),
               onPressed: (){
                 setState(() {
-                  CompletePCBuild tempObj = new CompletePCBuild();
-                  tempObj.partList[0] = widget.part;
+                  CompletePCBuild tempObj = widget.buildObj;
+                  print(tempObj.partList);
+                  tempObj.partList[returnPartIndex(widget.partType)] = widget.part;
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -282,4 +283,46 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
         ]
     ),
   );
+
+  int returnPartIndex(String partType) {
+    switch(partType) {
+      case "cpu":
+        return 0;
+        break;
+      case "motherboard":
+        return 1;
+        break;
+      case "memory":
+        return 2;
+        break;
+      case "gpu":
+        return 3;
+        break;
+      case "psu":
+        return 4;
+        break;
+      case "cooler":
+        return 5;
+        break;
+      case "storage":
+        return 6;
+        break;
+      case "case":
+        return 7;
+        break;
+      default:
+        return null;
+    }
+  }
 }
+
+var partTypes = [
+  'cpu',
+  'motherboard',
+  'memory',
+  'gpu',
+  'psu',
+  'cooler',
+  'storage',
+  'case'
+];

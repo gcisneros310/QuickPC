@@ -54,7 +54,6 @@ class _FilterUIState extends State<FilterUI> {
                               optionGroup[keys[index]] = val;
                             },);
 
-
                           },
                         );
                       }
@@ -138,7 +137,7 @@ class _FilterUIState extends State<FilterUI> {
 
       children: <Widget>[
 
-        getSliderGroup(sliderOptions),
+        if (sliderOptions != null) getSliderGroup(sliderOptions),
         getCheckBoxGroup(checkBoxOptions),
         SizedBox(
           height: 120,

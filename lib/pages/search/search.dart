@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_pc/pages/search/compare/compareUI.dart';
 import 'package:quick_pc/pages/search/filters/filterUI.dart';
 import 'package:quick_pc/pages/search/search_list.dart';
 import 'package:quick_pc/services/database.dart';
@@ -21,7 +23,7 @@ class _SearchState extends State<Search> {
 
   Icon searchIcon = const Icon(Icons.search, color: Colors.white,
       size: 28);
-
+  CompletePCBuild buildObject;
   String searchTerm;
   String partType = "";
   bool clearFilter = true;
@@ -29,6 +31,8 @@ class _SearchState extends State<Search> {
   FilterUI filUI;
 
   SearchList list;
+
+  List<Part> compareList;
 
 
   @override
@@ -41,10 +45,13 @@ class _SearchState extends State<Search> {
     if (arguments != null){
       searchTerm = arguments['searchTerm'];
       partType = arguments['partType'];
+      buildObject = arguments['buildObject'];
     }
 
     fil = Filter(partType);
     filUI = FilterUI(fil);
+
+    compareList = [];
 
     DatabaseService().doSearch(searchTerm);
 
@@ -83,6 +90,12 @@ class _SearchState extends State<Search> {
 
                   IconButton(
                     onPressed: () {
+                      //print(compareList);
+                      String j = "2 x 8GB";
+                      String k = "2 x 16GB";
+
+                      print(k.substring(0,1));
+                      print(k.substring(4));
 
                     },
                     icon: searchIcon,
@@ -107,7 +120,7 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  list = SearchList(partType, fil),
+                  list = SearchList(partType, fil, compareList, buildObject),
 
 
 
@@ -149,7 +162,7 @@ class _SearchState extends State<Search> {
 
                   //Compare Tab Contents
                   //Icon(Icons.compare_arrows),
-                  Icon(Icons.compare_arrows),
+                  CompareUI(compareList: compareList),
                 ],
               ),
             ),

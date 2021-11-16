@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
-import 'package:quick_pc/models/PCPartClasses/Part.dart';
 
 class GPUFilter{
 
