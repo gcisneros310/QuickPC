@@ -15,7 +15,7 @@ class CompareUI extends StatelessWidget {
 
     print(compareList);
 
-
+    //testing
     List keys;
 
     if (compareList.isNotEmpty){
