@@ -127,7 +127,7 @@ class _SavedListsPageState extends State<SavedListsPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text("Your Saved Lists",
-            textAlign: TextAlign.center,),
+              textAlign: TextAlign.center,),
             backgroundColor: Colors.greenAccent,
           ),
           body: Padding(
@@ -145,7 +145,7 @@ class _SavedListsPageState extends State<SavedListsPage> {
                           context,
                           MaterialPageRoute(builder: (context) => SavedListInfoPage.sendListInfo(projectSnap.data[index]))
                       );
-                      },
+                    },
                     child: Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       color: Color(0xFFC8C8C8),

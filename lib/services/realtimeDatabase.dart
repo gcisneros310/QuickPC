@@ -13,8 +13,9 @@ import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
-Future<void> sendListToDatabase(Map<String,dynamic> json) async {
-  await databaseReference.child('build list/').push().update(json);
+
+void removeUserList(String buildID) async {
+  databaseReference.child('build list/').child(buildID).remove();
 }
 
 Future<List<CompletePCBuild>> getUserBuilds(String userID) async {
@@ -45,10 +46,6 @@ Future<List<CompletePCBuild>> getUserBuilds(String userID) async {
   return savedBuilds;
 }
 
-void removeUserList(String buildID) async {
-  databaseReference.child('build list/').child(buildID).remove();
-}
-
 getTest(){
   databaseReference.child('cpu/').get().then((DataSnapshot data){
     print(data.value);
@@ -60,6 +57,11 @@ getCPU(){
   databaseReference.child('cpu/').get().then((DataSnapshot data){
   });
 }
+
+Future<void> sendListToDatabase(Map<String,dynamic> json) async {
+  await databaseReference.child('build list/').push().update(json);
+}
+
 
 Future<List<CompletePCBuild>> getSavedUserBuilds(int userID) async {
   List<CompletePCBuild> savedBuildLists = [];
@@ -259,4 +261,3 @@ Future<List<Part>> getCoolerList() async {
 
   return list;
 }
-

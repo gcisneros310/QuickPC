@@ -17,7 +17,7 @@ class RAM_Part extends Part {
 
   RAM_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
-
+  
   RAM_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, String clockSpeed, String timings, String memoryCapacity, int stickCount) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL){
     this.clockSpeed = clockSpeed;
@@ -31,11 +31,11 @@ class RAM_Part extends Part {
 
   factory RAM_Part.fromJson(dynamic json) {
     return RAM_Part.loadFromDatabase(
-        json['partName'] as String,
-        json['manufacturerName'] as String,
-        json['price'] as double,
-        json['productImageURL'] as String,
-        json['productURL'] as String
+      json['partName'] as String,
+      json['manufacturerName'] as String,
+      json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+      json['productURL'] as String,
+      json['productImageURL'] as String,
     );
   }
 
@@ -47,7 +47,7 @@ class RAM_Part extends Part {
     return RAM_Part.loadData(
         json['name'] as String,
         json['manufacturer'] as String,
-        json['price'] as double ?? 0.0,
+        json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
         json['productURL'] as String ?? "",
         json['images'][0],
         json['speed'],

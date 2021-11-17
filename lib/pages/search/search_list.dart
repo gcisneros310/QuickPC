@@ -25,7 +25,6 @@ class _SearchListState extends State<SearchList> {
 
   @override
   Widget build(BuildContext context) {
-    CompletePCBuild buildObject = widget.buildObject;
     final parts = Provider.of<List<Part>>(context);
 
     if (widget.clearFilter) {

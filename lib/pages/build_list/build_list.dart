@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quick_pc/models/users.dart';
@@ -203,7 +202,7 @@ class _PartListState extends State<PartList> {
             keyboardType: TextInputType.number,
             controller: _budgetEntryController,
             decoration: InputDecoration(
-              labelText: "Enter new price here (dollars)"
+                labelText: "Enter new price here (dollars)"
             ),
           ),
           actions: <Widget>[
@@ -270,9 +269,9 @@ class _PartListState extends State<PartList> {
                             )
                           ],
                           legend: Legend(
-                            height: "100",
-                            orientation: LegendItemOrientation.auto,
-                            position: LegendPosition.bottom,
+                              height: "100",
+                              orientation: LegendItemOrientation.auto,
+                              position: LegendPosition.bottom,
                               isVisible: true,
                               overflowMode: LegendItemOverflowMode.scroll
                           ),
@@ -310,11 +309,11 @@ class _PartListState extends State<PartList> {
                     child: Column(
                       children: [
                         TextField(
-                          controller: _buildNamingController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Enter build title here',
-                          )
+                            controller: _buildNamingController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Enter build title here',
+                            )
                         )
                       ],
                     )
@@ -466,33 +465,33 @@ class _PartListState extends State<PartList> {
             color: Color(0xFFEEEEEE),
           ),
           child: ListView.builder(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.vertical,
-            itemCount: 8,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
-                child: InkWell(
-                  onTap: () {
-                    print("INDEX FOR PART $partTitles[index]");
-                    if(buildObj.partList[index].partIsChosen) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[index], "cpu"))
-                      );
-                    }
-                    else {
-                      String partTitle = partTitles[index];
-                      Fluttertoast.showToast(
-                        fontSize: 18,
-                        backgroundColor: Colors.grey,
-                          msg:
-                          "You havent chosen a $partTitle!\nChoose a part to view its info");
-                    }
-                  },
-                  child: Expanded(
-                    child: Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      elevation: 8.0,
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.vertical,
+              itemCount: 8,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
+                  child: InkWell(
+                    onTap: () {
+                      print("INDEX FOR PART $partTitles[index]");
+                      if(buildObj.partList[index].partIsChosen) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[index], "cpu"))
+                        );
+                      }
+                      else {
+                        String partTitle = partTitles[index];
+                        Fluttertoast.showToast(
+                            fontSize: 18,
+                            backgroundColor: Colors.grey,
+                            msg:
+                            "You havent chosen a $partTitle!\nChoose a part to view its info");
+                      }
+                    },
+                    child: Expanded(
+                      child: Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        elevation: 8.0,
                         child: Container(
                           width: 100,
                           height: 280,
@@ -662,7 +661,7 @@ class _PartListState extends State<PartList> {
                                               keyboardType: TextInputType.number,
                                               controller: _priceEditingController,
                                               decoration: InputDecoration(
-                                                  labelText: "Enter new price here (dollars)",
+                                                labelText: "Enter new price here (dollars)",
                                                 enabledBorder: const OutlineInputBorder(
                                                   borderSide: const BorderSide(color: Colors.teal, width: 0.0),
                                                 ),
@@ -705,8 +704,8 @@ class _PartListState extends State<PartList> {
                                       onPressed: () {
                                         print("BUTTON INDEX : " + index.toString());
                                         Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => AddCustomPartPage.partConstructor(buildObj, index))
+                                            context,
+                                            MaterialPageRoute(builder: (context) => AddCustomPartPage.partConstructor(buildObj, index))
                                         );
                                       },
                                       icon: Icon(Icons.add),
@@ -726,8 +725,8 @@ class _PartListState extends State<PartList> {
                       ),
                     ),
                   ),
-              );
-            }
+                );
+              }
           ),
         ),
       ),

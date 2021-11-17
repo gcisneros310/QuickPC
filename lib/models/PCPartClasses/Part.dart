@@ -36,7 +36,7 @@ abstract class Part {
     return {
       "partName": partName.toString(),
       "manufacturerName": manufacturerName.toString(),
-      "price": price.toStringAsFixed(2),
+      "price": price,
       "productURL": productURL.toString(),
       "productImageURL": productImageURL.toString(),
     };

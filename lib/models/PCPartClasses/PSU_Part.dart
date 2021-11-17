@@ -28,11 +28,11 @@ class PSU_Part extends Part {
 
   factory PSU_Part.fromJson(dynamic json) {
     return PSU_Part.loadFromDatabase(
-        json['partName'] as String,
-        json['manufacturerName'] as String,
-        json['price'] as double,
-        json['productImageURL'] as String,
-        json['productURL'] as String
+      json['partName'] as String,
+      json['manufacturerName'] as String,
+      json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+      json['productURL'] as String,
+      json['productImageURL'] as String,
     );
   }
 
@@ -41,14 +41,14 @@ class PSU_Part extends Part {
     int wat = int.parse(json['wattage'].replaceAll(RegExp(" W"), ""));
 
     return PSU_Part.loadData(
-        json['name'] as String,
-        json['manufacturer'] as String,
-        json['price'] as double ?? 0.0,
-        json['productURL'] as String ?? "",
-        json['images'][0],
-        wat,
-        json['modular'],
-        json['rating']
+      json['name'] as String,
+      json['manufacturer'] as String,
+        json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+      json['productURL'] as String ?? "",
+      json['images'][0],
+      wat,
+      json['modular'],
+      json['rating']
     );
   }
 }
