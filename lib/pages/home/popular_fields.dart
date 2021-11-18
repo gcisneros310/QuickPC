@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
@@ -9,6 +10,7 @@ import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/pages/home/trending_popular.dart';
+import 'package:quick_pc/services/realtimeDatabase.dart';
 
 class PopularFields extends StatefulWidget {
   @override
@@ -93,14 +95,19 @@ class _PageNotImplemented extends State<PopularFields> {
   final controllerMessage = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  //Future<List<Part>> cpuList = getPart("cpu");
+
+
   Widget testWidget(int partIndex, String partType ){
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
     //buildObj = widget.buildObject;
     buildObj.partList = demoList;
     return Container(
+
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: InkWell(
         onTap:(){
+          //print(cpuList);
           Navigator.push(context, MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[partIndex], partType)));
         },
         child: Column(

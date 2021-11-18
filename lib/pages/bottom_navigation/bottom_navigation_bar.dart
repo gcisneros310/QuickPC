@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/pages/account/account.dart';
+import 'package:quick_pc/pages/account/account2.dart';
 import 'package:quick_pc/pages/build_list/SavedListsPage.dart';
 import 'package:quick_pc/pages/home/home2.dart';
 
@@ -14,7 +15,8 @@ class _BottomNavState extends State<BottomNav> {
   List<Widget> _widgetOptions = <Widget>[
     Home2(),
     SavedListsPage(),
-    Account(),
+    //Account(),
+    Account2()
   ];
 
   void _onItemTap(int index) {

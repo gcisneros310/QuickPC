@@ -39,7 +39,7 @@ Future<List<Part>> getPart(String partType) async {
 }
 
 //CPU list from realtime database
-Future<List<Part>> getCPUList() async {
+Future<List<Part>> getCPUList()  async {
 
   DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').get();
   List<Part> cpuList = [];
@@ -53,6 +53,7 @@ Future<List<Part>> getCPUList() async {
       //print('CPU Name: ' + c.partName);
       cpuList.add(c);
     });
+    print(cpuList);
   }
 
   return cpuList;
@@ -74,6 +75,7 @@ Future<List<Part>> getGPUList() async {
 
   return gpuList;
 }
+
 
 
 /*DataSnapshot dataSnapshot = await databaseReference.child('cpu/').get();
