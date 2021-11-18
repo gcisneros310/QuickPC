@@ -35,10 +35,11 @@ class Case_Part extends Part {
   }
 
   factory Case_Part.fromJson2(dynamic json) {
+    double price = getLowestPrice(json['stores']);
     return Case_Part.loadData(
       json['name'] as String,
       json['manufacturer'] as String,
-        json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+        price,
       json['productURL'] as String ?? "",
       json['images'][0],
       json['form'],

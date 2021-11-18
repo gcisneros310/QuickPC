@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:quick_pc/models/users.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -15,15 +12,11 @@ import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 import 'package:quick_pc/pages/build_list/AddCustomPartPage.dart';
+import 'package:quick_pc/pages/build_list/BuildChartInfo.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
-import 'package:quick_pc/pages/build_list/PartCardInfo.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
-import 'package:quick_pc/services/auth.dart';
-import 'package:quick_pc/pages/build_guide/step.dart';
-import 'package:quick_pc/presentation/app_icons_icons.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'SavedListsPage.dart';
 
@@ -72,12 +65,7 @@ var partTitles = [
   'Cooler', 'Hard Drive', 'Case'
 ];
 
-var iconsList = [
-  StepIcons.question_mark, StepIcons.power_supply, StepIcons.processor,
-  StepIcons.ram, StepIcons.motherboard, StepIcons.cooler,
-  StepIcons.gpu, StepIcons.gpu, StepIcons.slave_hard_drive,
-  StepIcons.power_plug, StepIcons.power_button,
-];
+
 
 List<Part> demoList = [
   CPU_Part.valueConstructors(
@@ -162,18 +150,6 @@ class _PartListState extends State<PartList> {
 
   TextEditingController _buildNamingController = new TextEditingController();
 
-
-  List<BudgetData> loadPrices() {
-    List<BudgetData> tempList = [];
-    for(int x = 0; x < 8; x++)
-    {
-      BudgetData tempObj = BudgetData.loadData(partTitles[x], 2.0 * (x + 1));
-      tempList.add(tempObj);
-    }
-    return tempList;
-  }
-
-
   var partTypes = [
     'cpu',
     'motherboard',
@@ -188,11 +164,15 @@ class _PartListState extends State<PartList> {
   @override
   Widget build(BuildContext context) {
     buildObj = widget.buildObject;
-
     buildObj.updatePrice();
+    buildObj.calculatePowerDraw();
+
+    // print("\n\n\n\n\n\n\n");
+    // print(buildObj.totalPowerDraw);
+    // print("\n\n\n\n\n\n\n");
+
     List<BudgetData> pieChartInfo = buildObj.getPriceList();
     _toolTipBehavior = TooltipBehavior(enable: true);
-
 
     createAlertDialog(BuildContext context) {
       return showDialog(context: context, builder: (context) {
@@ -231,8 +211,6 @@ class _PartListState extends State<PartList> {
       );
     }
 
-
-
     AlertDialog onSelected(BuildContext context, MenuItem item) {
       switch(item) {
         case MenuItems.setBudgetMenuItem:
@@ -243,57 +221,63 @@ class _PartListState extends State<PartList> {
           // );
           break;
         case MenuItems.showPieChartMenuItem:
-          createAlertDialog(BuildContext context) {
-            return showDialog(context: context, builder: (context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Constants.padding),
-                ),
-                title: Text("PC Part Price Pie Chart"),
-                content: Container(
-                    height: 350,
-                    width: 400,
-                    child: Column(
-                      children: [
-                        SfCircularChart(
-                          series: <CircularSeries>[
-                            PieSeries<BudgetData, String>(
-                                dataSource: pieChartInfo,
-                                xValueMapper: (BudgetData data, _) => data.partTitle,
-                                yValueMapper: (BudgetData data, _) => data.totalPrice,
-                                radius: '100%',
-                                dataLabelMapper: (BudgetData data, _) => data.totalPrice.toString(),
-                                dataLabelSettings: DataLabelSettings(
-                                    isVisible: true
-                                )
-                            )
-                          ],
-                          legend: Legend(
-                              height: "100",
-                              orientation: LegendItemOrientation.auto,
-                              position: LegendPosition.bottom,
-                              isVisible: true,
-                              overflowMode: LegendItemOverflowMode.scroll
-                          ),
-                          tooltipBehavior: _toolTipBehavior,
-                        ),
-                      ],
-                    )
-                ),
-                actions: <Widget>[
-                  MaterialButton(
-                    elevation: 5.0,
-                    child: Text("Exit"),
-                    onPressed: (){
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              );
-            }
-            );
-          }
-          createAlertDialog(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BuildChartsPage.passInfo(buildObj)
+              )
+          );
+          // createAlertDialog(BuildContext context) {
+          //   return showDialog(context: context, builder: (context) {
+          //     return AlertDialog(
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(Constants.padding),
+          //       ),
+          //       title: Text("PC Part Price Pie Chart"),
+          //       content: Container(
+          //           height: 350,
+          //           width: 400,
+          //           child: Column(
+          //             children: [
+          //               SfCircularChart(
+          //                 series: <CircularSeries>[
+          //                   PieSeries<BudgetData, String>(
+          //                       dataSource: pieChartInfo,
+          //                       xValueMapper: (BudgetData data, _) => data.partTitle,
+          //                       yValueMapper: (BudgetData data, _) => data.totalPrice,
+          //                       radius: '100%',
+          //                       dataLabelMapper: (BudgetData data, _) => data.totalPrice.toString(),
+          //                       dataLabelSettings: DataLabelSettings(
+          //                           isVisible: true
+          //                       )
+          //                   )
+          //                 ],
+          //                 legend: Legend(
+          //                     height: "100",
+          //                     orientation: LegendItemOrientation.auto,
+          //                     position: LegendPosition.bottom,
+          //                     isVisible: true,
+          //                     overflowMode: LegendItemOverflowMode.scroll
+          //                 ),
+          //                 tooltipBehavior: _toolTipBehavior,
+          //               ),
+          //             ],
+          //           )
+          //       ),
+          //       actions: <Widget>[
+          //         MaterialButton(
+          //           elevation: 5.0,
+          //           child: Text("Exit"),
+          //           onPressed: (){
+          //             Navigator.of(context).pop();
+          //           },
+          //         )
+          //       ],
+          //     );
+          //   }
+          //   );
+          // }
+          // createAlertDialog(context);
           break;
         case MenuItems.saveListToAccountMenuItem:
           createAlertDialog(BuildContext context) {

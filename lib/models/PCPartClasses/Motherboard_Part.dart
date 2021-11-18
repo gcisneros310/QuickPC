@@ -37,12 +37,12 @@ class Motherboard_Part extends Part {
   }
 
   factory Motherboard_Part.fromJson2(dynamic json) {
-
+    double price = getLowestPrice(json['stores']);
     return Motherboard_Part.loadData(
       json['name'] as String,
       json['manufacturer'] as String,
-        json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
-      json['productURL'] as String ?? "",
+        price,
+        json['productURL'] as String ?? "",
       json['images'][0],
       json['chipset'],
       json['socket'],

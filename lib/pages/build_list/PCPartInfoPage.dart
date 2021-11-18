@@ -93,7 +93,8 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                   CompletePCBuild tempObj = widget.buildObj;
                   print(tempObj.partList);
                   tempObj.partList[returnPartIndex(widget.partType)] = widget.part;
-                  Navigator.push(
+                  tempObj.calculatePowerDraw();
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => PartList(tempObj)

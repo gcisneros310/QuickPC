@@ -1,3 +1,4 @@
+import 'package:quick_pc/models/ChartModels/WattageData.dart';
 import 'package:quick_pc/pages/build_list/build_list.dart';
 import 'dart:convert';
 import 'CPU.dart';
@@ -17,6 +18,7 @@ class CompletePCBuild {
   String buildUserID;
   String buildName;
   double price;
+  int totalPowerDraw;
   double buildBudget;
   List<Part> partList;
   List<double> priceList;
@@ -26,8 +28,14 @@ class CompletePCBuild {
     this.price = 0;
     this.buildBudget = 0;
     this.partList = [
-      CPU_Part(), Motherboard_Part(), RAM_Part(), GPU_Part(),
-      PSU_Part(), Cooler_Part(), Storage_Part(), Case_Part(),
+      CPU_Part(),
+      Motherboard_Part(),
+      RAM_Part(),
+      GPU_Part(),
+      PSU_Part(),
+      Cooler_Part(),
+      Storage_Part(),
+      Case_Part(),
     ];
     this.updatePrice();
   }
@@ -39,12 +47,13 @@ class CompletePCBuild {
     this.buildBudget = buildBudget;
     this.partList = partList;
     this.updatePrice();
+    this.calculatePowerDraw();
   }
 
   CompletePCBuild.demoConstructor() {
     this.partList = demoList;
     this.updatePrice();
-
+    this.calculatePowerDraw();
   }
 
   List<BudgetData> getPriceList() {
@@ -54,6 +63,20 @@ class CompletePCBuild {
       temp.add(tempObj);
     }
     return temp;
+  }
+
+  List<WattageData> getWattageList() {
+    PSU_Part temp;
+    if (this.partList[4] is PSU_Part) {
+       temp = this.partList[4];
+
+    }
+    return [
+      WattageData(graphTitle: "CPU", wattage: this.partList[0].tdp),
+      WattageData(graphTitle: "GPU", wattage: this.partList[3].tdp),
+      WattageData(graphTitle: "PSU Limit", wattage: temp.wattage),
+      WattageData(graphTitle: "Build TDP", wattage: this.totalPowerDraw)
+    ];
   }
 
   void updatePrice() {
@@ -127,6 +150,10 @@ class CompletePCBuild {
     }
   }
 
+  void calculatePowerDraw() {
+     this.totalPowerDraw = this.partList[0].tdp + this.partList[3].tdp;
+    print(this.totalPowerDraw);
+  }
 
 
 }

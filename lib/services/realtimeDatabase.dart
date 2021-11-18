@@ -136,7 +136,7 @@ Future<List<Part>> getCPUList() async {
   if(dataSnapshot.value != null){
 
     dataSnapshot.value.forEach((key, value){
-      print(value);
+      // print(value);
       CPU_Part c =  CPU_Part.fromJson2(value);
       cpuList.add(c);
       c.loadMap(value);
