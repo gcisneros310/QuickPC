@@ -48,4 +48,22 @@ abstract class Part {
     partAttributeMap = json;
   }
 
+
+}
+
+double getLowestPrice(Map<dynamic, dynamic> stores){
+
+  double lowestPrice = double.maxFinite;
+
+  stores.forEach((key, value) {
+
+    double p = double.parse(value['price'].replaceAll("\$", ""));
+    //print(p);
+    if (p < lowestPrice){
+      lowestPrice = p;
+    }
+
+  });
+
+  return lowestPrice;
 }

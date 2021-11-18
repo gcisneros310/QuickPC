@@ -32,7 +32,7 @@ class _PartTileState extends State<PartTile>  {
 
     String name = widget.part.partName;
     String imageURL = widget.part.productImageURL ?? "";
-    double lowestPrice = 0.0;
+    double lowestPrice = widget.part.price;
     String data1 = "";
     String data2 = "";
     String data3 = "";
@@ -115,7 +115,7 @@ class _PartTileState extends State<PartTile>  {
                       },
                     ),
                     title: Text(name),
-                    subtitle: Text('Price: ${lowestPrice}'
+                    subtitle: Text('Price: \$${lowestPrice}'
                         + "   " +  data1 + "   " + data2),
 
                     onTap: () {

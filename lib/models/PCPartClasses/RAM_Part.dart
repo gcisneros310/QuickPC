@@ -41,13 +41,15 @@ class RAM_Part extends Part {
 
   factory RAM_Part.fromJson2(dynamic json) {
 
+    double price = getLowestPrice(json['stores']);
+
     var count = int.parse(json['module'].substring(0,1));
     var cap = json['module'].substring(4);
 
     return RAM_Part.loadData(
         json['name'] as String,
         json['manufacturer'] as String,
-        json['price'] as double ?? 0.0,
+        price,
         json['productURL'] as String ?? "",
         json['images'][0],
         json['speed'],

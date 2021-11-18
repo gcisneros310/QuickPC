@@ -52,6 +52,8 @@ class GPU_Part extends Part {
 
   factory GPU_Part.fromJson2(dynamic json) {
 
+    double price = getLowestPrice(json['stores']);
+
     String image;
     if (json['images'] == null)
       image = "";
@@ -62,7 +64,7 @@ class GPU_Part extends Part {
     return GPU_Part.loadData(
       json['name'] as String,
       json['manufacturer'] as String,
-      json['price'] as double ?? 0.0,
+        price,
       json['productURL'] as String ?? "",
       image,
       json['base clock'],

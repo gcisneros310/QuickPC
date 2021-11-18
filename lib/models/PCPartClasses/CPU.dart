@@ -77,6 +77,9 @@ class CPU_Part extends Part{
   }
 
   factory CPU_Part.fromJson2(dynamic json) {
+
+    double price = getLowestPrice(json['stores']);
+
     int cores = int.parse(json['cores']);
     double base = double.parse(json['core clock'].replaceAll(RegExp(" GHz"), ""));
     double boost = double.parse(json['boost clock'].replaceAll(RegExp(" GHz"), ""));
@@ -84,7 +87,7 @@ class CPU_Part extends Part{
     return CPU_Part.loadData(
       json['name'] as String,
       json['manufacturer'] as String,
-      json['price'] as double ?? 0.0,
+      price,
       json['productURL'] as String ?? "",
       json['images'][0],
       base,
