@@ -9,6 +9,7 @@ import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/pages/home/trending_popular.dart';
+import 'package:quick_pc/services/realtimeDatabase.dart';
 
 class PopularFields extends StatefulWidget {
   @override
@@ -85,6 +86,14 @@ List<Part> demoList = [
   ),
 ];
 
+//HERE
+List<Part> list;
+
+Future getList() async {
+  list = await getPopCPU();
+  return list;
+}
+
 class _PageNotImplemented extends State<PopularFields> {
   final Color logoColor = Color(0xff66c290);
   final Color greyout = Colors.grey;
@@ -95,7 +104,11 @@ class _PageNotImplemented extends State<PopularFields> {
 
   Widget testWidget(int partIndex, String partType ){
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
-    //buildObj = widget.buildObject;
+
+    //HERE
+    getList();
+    print(list);
+
     buildObj.partList = demoList;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),

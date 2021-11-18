@@ -20,9 +20,21 @@ getTest(){
   });
 }
 
-getCPU(){
-  databaseReference.child('cpu/').get().then((DataSnapshot data){
-  });
+Future<List<Part>> getPopCPU() async {
+
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').limitToFirst(7).once();
+  List<Part> cpuList = [];
+
+  if(dataSnapshot.value != null){
+
+    dataSnapshot.value.forEach((key, value){
+      CPU_Part c =  CPU_Part.fromJson2(value);
+      cpuList.add(c);
+      c.loadMap(value);
+    });
+  }
+
+  return cpuList;
 }
 
 Future<void> sendListToDatabase(Map<String,dynamic> json) async {

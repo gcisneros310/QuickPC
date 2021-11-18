@@ -57,6 +57,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
     attributeTitles.remove("images");
     attributeTitles.remove("stores");
     attributeTitles.remove("name");
+    attributeTitles.remove("part number");
 
 
 
