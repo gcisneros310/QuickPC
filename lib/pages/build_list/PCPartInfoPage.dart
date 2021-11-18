@@ -1,15 +1,12 @@
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/presentation/p_c_part_info_icons_icons.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import 'build_list.dart';
 class MenuItem {
@@ -21,19 +18,10 @@ class MenuItem {
 
 class MenuItems {
   static const addPartMenuItem = MenuItem(text: 'Add Part to List', icon: Icons.money);
-  static const priceHistory = MenuItem(text: 'View Price History', icon: Icons.bar_chart);
   static const List<MenuItem> menuItemsList = [
     addPartMenuItem,
-    priceHistory,
   ];
 }
-
-class SalesData {
-  SalesData(this.year, this.sales);
-  final double year;
-  final double sales;
-}
-
 
 class PCPartInfoPage extends StatefulWidget {
   final Part part;
@@ -47,28 +35,9 @@ class PCPartInfoPage extends StatefulWidget {
   _PCPartInfoPageState createState() => _PCPartInfoPageState();
 }
 
-
-
-List<DataColumn> getColumns(List<String> columns) => columns.map((String column) => DataColumn(label: Text(column),)).toList();
-
-Widget buildDataTable(){
-  final columns = ['Type', 'Price', 'Date'];
-
-}
-
-
 class _PCPartInfoPageState extends State<PCPartInfoPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final Color logoColor = Color(0xff66c290);
-
-
-  List<SalesData> _chartData;
-
-  @override
-  void initState() {
-   _chartData =  getChartData();
-   super.initState();
-  }
 
   var attributeNames = [
     "Manufacturer",
@@ -77,61 +46,41 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
     "Core Count"
   ];
 
-  List<SalesData> getChartData() {
-    final List<SalesData> chartData = [
-      SalesData(1, 1198.88),
-      SalesData(2, 1499.99),
-      SalesData(3, 1320.22),
-      SalesData(4, 1499.99),
-      SalesData(5, 1235.99),
-      SalesData(6, 1279.99),
-      SalesData(7, 1100.99),
-      SalesData(8, 1150.99),
-      SalesData(9, 1250.99),
-      SalesData(10, 1227.99),
-      SalesData(11, 1289.99),
-
-
-   /*   SalesData("Jan", 35),
-      SalesData("Feb", 28),
-      SalesData("Mar", 40),
-      SalesData("Apr", 40),
-      SalesData("May", 34),
-      SalesData("Jun", 32),
-      SalesData("Jul", 40),
-      SalesData("Aug", 40),
-      SalesData("Sep", 40),
-      SalesData("Oct", 40),
-      SalesData("Nov", 40),
-      SalesData("Dec", 40),*/
-    ];
-    return chartData;
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    CPU_Part cpuObj = widget.part;
-    String partName = "part";
-    double partPrice = 1.0;
-    double clock;
-    double boost;
-    int cores;
 
 
-    switch (widget.partType) {
-      case 'cpu':
-        CPU_Part cpu = widget.part;
-        partName = cpu.partName;
-        partPrice = cpu.price;
-        clock = cpu.base_clock;
-        boost = cpu.boost_clock;
-        cores = cpu.coreCount;
-        break;
-      case 'gpu':
-        GPU_Part gpu = widget.part;
-        break;
-    }
+    var attributes = widget.part.partAttributeMap;
+    print(attributes);
+
+    List attributeTitles = attributes.keys.toList();
+    attributeTitles.remove("images");
+    attributeTitles.remove("stores");
+    attributeTitles.remove("name");
+    attributeTitles.remove("part number");
+
+
+
+    // CPU_Part cpuObj = widget.part;
+    // String partName = "part";
+    // double partPrice = 1.0;
+    // double clock;
+    // double boost;
+    // int cores;
+
+    // switch (widget.partType) {
+    //   case 'cpu':
+    //     CPU_Part cpu = widget.part;
+    //     partName = cpu.partName;
+    //     partPrice = cpu.price;
+    //     clock = cpu.base_clock;
+    //     boost = cpu.boost_clock;
+    //     cores = cpu.coreCount;
+    //     break;
+    //   case 'gpu':
+    //     GPU_Part gpu = widget.part;
+    //     break;
+    // }
 
     createAlertDialog(BuildContext context) {
       return showDialog(context: context, builder: (context) {
@@ -144,7 +93,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
               onPressed: (){
                 setState(() {
                   CompletePCBuild tempObj = new CompletePCBuild();
-                  tempObj.partList[0] = cpuObj;
+                  tempObj.partList[0] = widget.part;
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -177,111 +126,6 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
           //   title: Text("FUCK THIS"),
           // );
           break;
-        case MenuItems.priceHistory:
-          createAlertDialog(BuildContext context) {
-            return showDialog(context: context, builder: (context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Constants.padding),
-                ),
-                title: Text("Price History"),
-                content: Container(
-                    height: 700,
-                    width: 500,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 200,
-                          width: 350,
-                          child: SfCartesianChart(
-                            //primaryXAxis: DateTimeAxis(),
-                            series: <ChartSeries>[
-                              LineSeries<SalesData, double>(
-                                  dataSource: getChartData(),
-                                  xValueMapper: (SalesData sales, _) => sales.year,
-                                  yValueMapper: (SalesData sales, _) => sales.sales,
-                              ),
-
-                            ],
-                          ),
-                        ),
-                        DataTable(
-                          columns: getColumns(["Type", "Price", "Date"]),
-                          rows: [
-                            DataRow(
-                              cells: <DataCell>[
-                                DataCell(Text('Current')),
-                                DataCell(Text('\$1,289.99')),
-                                DataCell(Text('-')),
-                              ],
-                            ),
-                            DataRow(
-                              cells: <DataCell>[
-                                DataCell(Text('Highest',style: TextStyle(color: Colors.red))),
-                                DataCell(Text('\$1,499.99',style: TextStyle(color: Colors.red))),
-                                DataCell(Text('-')),
-                              ],
-                            ),
-                            DataRow(
-                              cells: <DataCell>[
-                                DataCell(Text('Lowest',style: TextStyle(color: Colors.green)),),
-                                DataCell(Text('\$1073.93',style: TextStyle(color: Colors.green))),
-                                DataCell(Text('-')),
-                              ],
-                            ),
-                            DataRow(
-                              cells: <DataCell>[
-                                DataCell(Text('Average')),
-                                DataCell(Text('\$1,209.66')),
-                                DataCell(Text('-')),
-                              ],
-                            ),
-                          ],
-                        ),
-
-
-                   /*    Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              "Test123",
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "Text123",
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          ],
-                        ),*/
-
-                      ],
-                    )
-                ),
-                actions: <Widget>[
-                  MaterialButton(
-                    elevation: 5.0,
-                    child: Text("Exit"),
-                    onPressed: (){
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              );
-            }
-            );
-          }
-          createAlertDialog(context);
-          break;
-
 
       }
     }
@@ -334,7 +178,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                   child: Image.network(
-                    cpuObj.productImageURL,
+                    widget.part.productImageURL,
                     width: 250,
                     height: 250,
                     fit: BoxFit.cover,
@@ -344,7 +188,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                   child: Text(
-                    cpuObj.partName,
+                    widget.part.partName,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 18,
@@ -355,7 +199,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                   child: Text(
-                    "\$" + cpuObj.price.toString(),
+                    "\$" +  widget.part.price.toString(),
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 16,
@@ -379,7 +223,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
-                        itemCount: cpuObj.partAttributeMap.length,
+                        itemCount: attributeTitles.length,
                         itemBuilder: (BuildContext context, int index) {
                         return Card(
                           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -395,7 +239,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
-                                  attributeNames[index],
+                                  attributeTitles[index].toUpperCase(),
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w700,
@@ -403,7 +247,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                                   ),
                                 ),
                                 Text(
-                                  cpuObj.partAttributeMap[index].toString(),
+                                  attributes[attributeTitles[index]].toString(),
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontStyle: FontStyle.italic,

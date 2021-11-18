@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_pc/pages/search/compare/compareUI.dart';
+import 'package:quick_pc/pages/search/filters/filterUI.dart';
 import 'package:quick_pc/pages/search/search_list.dart';
 import 'package:quick_pc/services/database.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
+import 'package:quick_pc/pages/search/filters/part_filter.dart';
 
 
 class Search extends StatefulWidget {
@@ -21,8 +24,15 @@ class _SearchState extends State<Search> {
       size: 28);
 
   String searchTerm;
-  //List<Part> parts = [];
-  String partType = '';
+  String partType = "";
+  bool clearFilter = true;
+  Filter fil;
+  FilterUI filUI;
+
+  SearchList list;
+
+  List<Part> compareList;
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +40,18 @@ class _SearchState extends State<Search> {
     //Getting arguments
     final arguments = ModalRoute.of(context).settings.arguments as Map;
 
+
     if (arguments != null){
       searchTerm = arguments['searchTerm'];
       partType = arguments['partType'];
-      //parts = arguments['partsList'];
     }
 
+    fil = Filter(partType);
+    filUI = FilterUI(fil);
+
+    compareList = [];
+
     DatabaseService().doSearch(searchTerm);
-
-
 
     //return FutureProvider<List<Part>>.value(
     //value: DatabaseService(searchTerm: searchTerm).cpus,
@@ -75,6 +88,12 @@ class _SearchState extends State<Search> {
 
                   IconButton(
                     onPressed: () {
+                      //print(compareList);
+                      String j = "2 x 8GB";
+                      String k = "2 x 16GB";
+
+                      print(k.substring(0,1));
+                      print(k.substring(4));
 
                     },
                     icon: searchIcon,
@@ -99,14 +118,49 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  SearchList(partType),
+                  list = SearchList(partType, fil, compareList),
+
+
 
                   //Filter Tab Contents
-                  Icon(Icons.filter_alt),
+
+                  Scaffold(
+
+                    body: filUI,
+                    
+                    floatingActionButton: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FloatingActionButton.extended(
+                            onPressed: (){
+                              list.clearFilter = true;
+                              fil = new Filter(partType);
+                              },
+                            label: const Text('Clear'),
+                            backgroundColor: logoColor,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          FloatingActionButton.extended(
+                            onPressed: (){
+                              list.clearFilter = false;
+                              },
+                            label: const Text('Apply'),
+                            backgroundColor: logoColor,
+                          )
+                        ]
+                    )
+
+
+
+
+                  ),
+
 
                   //Compare Tab Contents
                   //Icon(Icons.compare_arrows),
-                  Icon(Icons.compare_arrows),
+                  CompareUI(compareList: compareList),
                 ],
               ),
             ),

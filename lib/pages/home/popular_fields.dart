@@ -6,7 +6,7 @@ import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/pages/home/trending_popular.dart';
@@ -87,6 +87,14 @@ List<Part> demoList = [
   ),
 ];
 
+//HERE
+List<Part> list;
+
+Future getList() async {
+  list = await getPopCPU();
+  return list;
+}
+
 class _PageNotImplemented extends State<PopularFields> {
   final Color logoColor = Color(0xff66c290);
   final Color greyout = Colors.grey;
@@ -100,7 +108,11 @@ class _PageNotImplemented extends State<PopularFields> {
 
   Widget testWidget(int partIndex, String partType ){
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
-    //buildObj = widget.buildObject;
+
+    //HERE
+    getList();
+    print(list);
+
     buildObj.partList = demoList;
     return Container(
 

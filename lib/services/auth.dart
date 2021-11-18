@@ -6,6 +6,11 @@ class AuthService {
   // Instance of Firebase
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  String getUserID() {
+    if(_auth.currentUser.uid != null) {
+      return _auth.currentUser.uid;
+    }
+  }
   // create user object based on firebase user
   PCUser _useFromFirebaseUser(User user) {
     // return user id if it exists, if not return null

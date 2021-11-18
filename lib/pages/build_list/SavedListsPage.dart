@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -6,11 +7,13 @@ import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
-import 'package:quick_pc/models/PCPartClasses/PCPart.dart';
+import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 List<Part> demoList = [
   CPU_Part.valueConstructors(
@@ -89,6 +92,7 @@ class _SavedListsPageState extends State<SavedListsPage> {
 
   @override
   Widget build(BuildContext context) {
+
     tempBuild.partList = demoList;
     tempBuild.buildName = "TEST BUILD NAME";
     tempBuild.updatePrice();

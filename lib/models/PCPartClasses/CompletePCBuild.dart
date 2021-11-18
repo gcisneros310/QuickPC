@@ -5,8 +5,10 @@ import 'Case_Part.dart';
 import 'Cooler_Part.dart';
 import 'GPU.dart';
 import 'Motherboard_Part.dart';
-import 'PCPart.dart';
+import 'Part.dart';
 import 'PSU_Part.dart';
+import 'Part.dart';
+import 'Part.dart';
 import 'RAM_Part.dart';
 import 'Storage_Part.dart';
 
@@ -27,6 +29,17 @@ class CompletePCBuild {
       PSU_Part(), Cooler_Part(), Storage_Part(), Case_Part(),
     ];
     this.updatePrice();
+  }
+
+  CompletePCBuild.fromDatabase(String buildUserID, String buildName, double price, double buildBudget, List<Part> partList) {
+    this.buildUserID = buildUserID;
+    this.buildName = buildName;
+    this.price = price;
+    this.buildBudget = buildBudget;
+    this.partList = partList;
+
+    this.updatePrice();
+
   }
 
   CompletePCBuild.demoConstructor() {
@@ -53,14 +66,40 @@ class CompletePCBuild {
   }
 
   Map<String, dynamic> toJson() {
+    List<Map> partList =
+    this.partList != null ? this.partList.map((i) => i.toJson()).toList() : null;
     return {
-      "buildUserID": buildUserID,
-      "buildName" : buildName,
-      "price" : price,
-      "buildBudget": buildBudget,
+      "buildUserID": buildUserID.toString(),
+      "buildName" : buildName.toString(),
+      "price" : price.toString(),
+      "buildBudget": buildBudget.toString(),
       "partList" : partList,
-      "priceList" : priceList,
     };
+  }
+
+  factory CompletePCBuild.fromJson(Map<dynamic, dynamic> json) {
+    if(json['partList'] != null) {
+      var templist = json['partList'] as List;
+      List<Part> _partList = templist.map((e) => Part.fromJson(e)).toList();
+
+      return CompletePCBuild.fromDatabase(
+          json['buildUserID'] as String,
+          json['buildName'] as String,
+          json['price'] as double,
+          json['buildBudget'] as double,
+          _partList
+          );
+    }
+    else {
+      return CompletePCBuild.fromDatabase(
+          json['buildUserID'] as String,
+          json['buildName'] as String,
+          json['price'] as double,
+          json['buildBudget'] as double,
+          null
+      );
+    }
+    return null;
   }
 
 

@@ -32,6 +32,38 @@ abstract class Part {
     this.productImageURL = productImageURL;
   }
 
-  void setPartAttributeMapData(){}
+  Map toJson() {
+    return {
+      "partName": partName.toString(),
+      "manufacturerName": manufacturerName.toString(),
+      "price": price.toStringAsFixed(2),
+      "productURL": productURL.toString(),
+      "productImageURL": productImageURL.toString(),
+    };
+  }
 
+  static fromJson(e) {}
+
+  loadMap(dynamic json) {
+    partAttributeMap = json;
+  }
+
+
+}
+
+double getLowestPrice(Map<dynamic, dynamic> stores){
+
+  double lowestPrice = double.maxFinite;
+
+  stores.forEach((key, value) {
+
+    double p = double.parse(value['price'].replaceAll("\$", ""));
+    //print(p);
+    if (p < lowestPrice){
+      lowestPrice = p;
+    }
+
+  });
+
+  return lowestPrice;
 }
