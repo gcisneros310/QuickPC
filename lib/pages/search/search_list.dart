@@ -3,12 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/search/filters/part_filter.dart';
 import 'package:quick_pc/pages/search/part_tile.dart';
+import 'package:quick_pc/shared/loading.dart';
 
 class SearchList extends StatefulWidget {
 
   String partType;
   Filter fil;
   bool clearFilter = true;
+  String name;
+  bool searchByName = false;
   List<Part> compareList;
   SearchList(this.partType, this.fil, this.compareList);
 
@@ -24,6 +27,26 @@ class _SearchListState extends State<SearchList> {
 
     final parts = Provider.of<List<Part>>(context);
 
+    while(parts == null) {
+      return Loading();
+    }
+
+    if (widget.searchByName){
+      final nameList = widget.fil.filterByName(parts, widget.name);
+
+      print(nameList);
+
+      return ListView.builder(
+
+        itemCount: nameList.length,
+        itemBuilder: (context, index){
+          return PartTile(part: nameList[index], partType: widget.partType, compareList: widget.compareList);
+
+        },
+      );
+    }
+
+
     if (widget.clearFilter) {
 
       return ListView.builder(
@@ -36,7 +59,7 @@ class _SearchListState extends State<SearchList> {
 
     } else {
       // Creating Filtered list
-      final filteredParts = widget.fil.getFilteredList(parts, widget.partType);
+      List filteredParts = widget.fil.getFilteredList(parts, widget.partType);
 
 
       return ListView.builder(

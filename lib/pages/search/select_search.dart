@@ -71,53 +71,54 @@ class _SelectSearchState extends State<SelectSearch> {
         automaticallyImplyLeading: true,
         title: Container(
           width: 250,
-          child: TextFormField(
-            controller: textController,
-            obscureText: false,
-            decoration: InputDecoration(
-              hintText: 'Select or Search by name...',
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontStyle: FontStyle.italic,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Color(0xFFFAFAFA),
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Color(0xFFFAFAFA),
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              filled: true,
-              contentPadding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-            ),
-
-            textAlign: TextAlign.start,
-          ),
+          child: Text("Select a part to search for")
+          // child: TextFormField(
+          //   controller: textController,
+          //   obscureText: false,
+          //   decoration: InputDecoration(
+          //     hintText: 'Select or Search by name...',
+          //     hintStyle: TextStyle(
+          //       color: Colors.white,
+          //       fontSize: 16,
+          //       fontStyle: FontStyle.italic,
+          //     ),
+          //     enabledBorder: UnderlineInputBorder(
+          //       borderSide: BorderSide(
+          //         color: Color(0xFFFAFAFA),
+          //         width: 1,
+          //       ),
+          //       borderRadius: BorderRadius.circular(20),
+          //     ),
+          //     focusedBorder: UnderlineInputBorder(
+          //       borderSide: BorderSide(
+          //         color: Color(0xFFFAFAFA),
+          //         width: 1,
+          //       ),
+          //       borderRadius: BorderRadius.circular(20),
+          //     ),
+          //     filled: true,
+          //     contentPadding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+          //   ),
+          //
+          //   textAlign: TextAlign.start,
+          // ),
         ),
-        actions: [
-
-          IconButton(
-            onPressed: () {
-
-              String id = "8wWhlPnAeyQKQ5Dp2ZrdiQE5Ibc2";
-              getBuilds(id);
-
-
-              // if (searchTerm != ""){
-              //   Navigator.pushNamed(
-              //     context, '/search', arguments: {'searchTerm': searchTerm},);
-              // }
-            },
-            icon: searchIcon,
-          )
+        // actions: [
+        //
+        //   IconButton(
+        //     onPressed: () {
+        //
+        //       String id = "8wWhlPnAeyQKQ5Dp2ZrdiQE5Ibc2";
+        //       getBuilds(id);
+        //
+        //
+        //       // if (searchTerm != ""){
+        //       //   Navigator.pushNamed(
+        //       //     context, '/search', arguments: {'searchTerm': searchTerm},);
+        //       // }
+        //     },
+        //     icon: searchIcon,
+        //   )
 
 
 
@@ -135,7 +136,7 @@ class _SelectSearchState extends State<SelectSearch> {
               print('IconButton pressed ...');
             },
           )*/
-        ],
+        // ],
         centerTitle: true,
         elevation: 4,
       ),

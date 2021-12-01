@@ -107,7 +107,7 @@ class _PageNotImplemented extends State<PopularFields> {
 
     //HERE
     getList();
-    print(list);
+    print(list[0].partAttributeMap);
 
     buildObj.partList = demoList;
     return Container(

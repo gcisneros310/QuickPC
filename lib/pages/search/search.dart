@@ -42,7 +42,7 @@ class _SearchState extends State<Search> {
 
 
     if (arguments != null){
-      searchTerm = arguments['searchTerm'];
+      //searchTerm = arguments['searchTerm'];
       partType = arguments['partType'];
     }
 
@@ -56,6 +56,7 @@ class _SearchState extends State<Search> {
     //return FutureProvider<List<Part>>.value(
     //value: DatabaseService(searchTerm: searchTerm).cpus,
 
+
     return FutureProvider<List<Part>>.value(
         value: getPart(partType),
         child: Scaffold(
@@ -68,19 +69,39 @@ class _SearchState extends State<Search> {
               appBar: AppBar(
                 backgroundColor: logoColor,
 
-                title: TextField(
-                  autofocus: false,
-                  onChanged: (val) {
-                    setState(() => searchTerm = val);
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Filter search list by text...',
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
+                title: Container(
+                  width: 250,
+                  child: TextFormField(
+                    onChanged: (val) {
+                      setState(() => searchTerm = val);
+                    },
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      hintText: 'Filter by Name...',
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFFAFAFA),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFFAFAFA),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      filled: true,
+                      contentPadding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                     ),
-                    border: InputBorder.none,
+
+                    textAlign: TextAlign.start,
                   ),
                 ),
 
@@ -88,12 +109,13 @@ class _SearchState extends State<Search> {
 
                   IconButton(
                     onPressed: () {
-                      //print(compareList);
-                      String j = "2 x 8GB";
-                      String k = "2 x 16GB";
 
-                      print(k.substring(0,1));
-                      print(k.substring(4));
+                      //list = fil.filterByName(list, searchTerm);
+
+                      list.searchByName = true;
+                      list.name = searchTerm;
+
+
 
                     },
                     icon: searchIcon,
@@ -127,7 +149,7 @@ class _SearchState extends State<Search> {
                   Scaffold(
 
                     body: filUI,
-                    
+
                     floatingActionButton: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -145,7 +167,9 @@ class _SearchState extends State<Search> {
                           FloatingActionButton.extended(
                             onPressed: (){
                               list.clearFilter = false;
-                              },
+                              //DefaultTabController.of(context).animateTo(1);
+
+                            },
                             label: const Text('Apply'),
                             backgroundColor: logoColor,
                           )
@@ -153,13 +177,10 @@ class _SearchState extends State<Search> {
                     )
 
 
-
-
                   ),
 
 
                   //Compare Tab Contents
-                  //Icon(Icons.compare_arrows),
                   CompareUI(compareList: compareList),
                 ],
               ),

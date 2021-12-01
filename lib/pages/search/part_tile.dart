@@ -29,6 +29,9 @@ class _PartTileState extends State<PartTile>  {
 
     bool isChecked = false;
 
+    if (widget.compareList.contains(widget.part)){
+      isChecked = true;
+    }
 
     String name = widget.part.partName;
     String imageURL = widget.part.productImageURL ?? "";

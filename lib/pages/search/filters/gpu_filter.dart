@@ -15,7 +15,7 @@ class GPUFilter{
 
   Map<String, dynamic> checkboxFilters = {
 
-    'Manufacturers': {"AMD": false, "AsRock": false, "Asus": false, "Biostar": false,
+    'Manufacturers': {"All": true, "AMD": false, "AsRock": false, "Asus": false, "Biostar": false,
       "Colorful": false, "ECS": false, "EVGA": false, "Gigabyte": false,
       "MSI": false, "NVIDIA": false, "PowerColor": false, "Sapphire": false,
       "XFX": false, "Zotac": false},

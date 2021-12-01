@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quick_pc/pages/search/filters/gpu_filter.dart';
 import 'package:quick_pc/pages/search/filters/part_filter.dart';
 
 
@@ -33,6 +32,8 @@ class _FilterUIState extends State<FilterUI> {
 
       var keys = optionGroup.keys.toList();
 
+      //bool x = optionGroup["All"];
+
       showModalBottomSheet(context: context, builder: (context){
 
         return ListView.builder(
@@ -40,18 +41,33 @@ class _FilterUIState extends State<FilterUI> {
                 itemCount: optionGroup.length,
                 itemBuilder: (context, index){
 
+
+
                   return StatefulBuilder(
                       builder: (BuildContext context, StateSetter setState) {
+
+                        if(optionGroup["All"] == true){
+                          for (var i = 1; i < optionGroup.length - 1; i++)
+                            optionGroup[keys[index]] = true;
+                        }
+
                         return CheckboxListTile(
                           controlAffinity: ListTileControlAffinity.leading,
                           activeColor: Color(0xff66c290),
 
                           title: Text(keys[index]),
                           value: optionGroup[keys[index]],
+                          //onChanged: x? null:(bool val)
                           onChanged: (bool val)
                           {
                             setState(() {
-                              optionGroup[keys[index]] = val;
+                              if(keys[index] != "All" && optionGroup["All"] == true){
+                                for (var i = 1; i < optionGroup.length - 1; i++)
+                                  optionGroup[keys[index]] = true;
+                              }
+                              else
+                                optionGroup[keys[index]] = val;
+
                             },);
 
                           },

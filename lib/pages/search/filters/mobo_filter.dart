@@ -26,7 +26,11 @@ class MotherboardFilter{
       "AM4": false, "FM1": false, "FM2": false, "FM2+": false, "LGA775": false,
       "LGA1150": false, "LGA1151": false, "LGA1155": false, "LGA1156": false,
       "LGA1200": false, "LGA1366": false, "LGA1700": false, "LGA2011": false,
-      "LGA2011-3": false, "LGA2011-3 Narrow": false, "LGA2066": false,}
+      "LGA2011-3": false, "LGA2011-3 Narrow": false, "LGA2066": false,},
+
+    'Memory Type': {},
+    'Chipset':{}
+
   };
 
   getList(List<Part> list ,var ranges, var checks){

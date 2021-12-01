@@ -49,7 +49,7 @@ class Filter {
 
     switch (partType){
       case 'cpu':
-        return null;
+        return CPUFilter().getList(list, rangeFilters, checkboxFilters);
 
       case 'gpu':
         return GPUFilter().getList(list, rangeFilters, checkboxFilters);
@@ -69,6 +69,12 @@ class Filter {
       case 'psu':
         return null;
     }
+
+  }
+
+  filterByName(List<Part> list, String name){
+
+    return list.where((part) => (part.partName.contains(name))).toList();
 
   }
 
