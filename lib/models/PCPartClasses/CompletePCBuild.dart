@@ -125,6 +125,7 @@ class CompletePCBuild {
         if(x == 7)
           tempPart = Case_Part.fromJson(data);
 
+        tempPart.loadMap(data);
         temp.add(tempPart);
         print(tempPart.partName);
         print(tempPart.runtimeType);
@@ -151,7 +152,12 @@ class CompletePCBuild {
   }
 
   void calculatePowerDraw() {
-     this.totalPowerDraw = this.partList[0].tdp + this.partList[3].tdp;
+    if(this.partList[0].tdp == null || this.partList[3].tdp == null) {
+      this.totalPowerDraw = 0;
+    }
+    else {
+      this.totalPowerDraw = this.partList[0].tdp + this.partList[3].tdp;
+    }
     print(this.totalPowerDraw);
   }
 

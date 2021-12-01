@@ -153,7 +153,7 @@ class _PartListState extends State<PartList> {
   var partTypes = [
     'cpu',
     'motherboard',
-    'memory',
+    'ram',
     'gpu',
     'psu',
     'cooler',
@@ -333,6 +333,7 @@ class _PartListState extends State<PartList> {
                       else{
                         buildObj.buildName = _buildNamingController.text;
                         buildObj.buildUserID = _auth.currentUser.uid;
+                        buildObj.calculatePowerDraw();
                         print("USER ID: " + buildObj.buildUserID);
                         Map<String,dynamic> buildObjJSON = buildObj.toJson();
                         debugPrint(buildObjJSON.toString(), wrapWidth: 2048);

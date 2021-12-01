@@ -20,11 +20,6 @@ void removeUserList(String buildID) async {
 
 Future<List<CompletePCBuild>> getUserBuilds(String userID) async {
   DataSnapshot dataSnapshot = (await databaseReference.child('build list/').orderByChild('buildUserID').equalTo(userID).get());
-  // print('----------');
-  // print('Get keys:');
-  // results.keys.forEach((key) {
-  //   print(key);
-  // });
   List<CompletePCBuild> savedBuilds = [];
 
   if(dataSnapshot.value != null){
@@ -83,7 +78,7 @@ getBuilds(String id){
 
   //id = "8wWhlPnAeyQKQ5Dp2ZrdiQE5Ibc2";
 
-  databaseReference.child('build list/').orderByChild("buildUserID").equalTo(id)
+  databaseReference.child('User Builds/').orderByChild("buildUserID").equalTo(id)
       .once().then((DataSnapshot data){
 
     data.value.forEach((key, value){

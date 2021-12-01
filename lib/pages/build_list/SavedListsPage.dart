@@ -14,6 +14,7 @@ import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
+import 'package:quick_pc/shared/loading.dart';
 
 
 List<Part> demoList = [
@@ -88,7 +89,6 @@ class SavedListsPage extends StatefulWidget {
 Future<List<CompletePCBuild>> retrieveBuilds()  async {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String currentUserID = _auth.currentUser.uid;
-
   List<CompletePCBuild> userBuilds = await getUserBuilds(currentUserID);
   return userBuilds;
 }
@@ -101,11 +101,6 @@ class _SavedListsPageState extends State<SavedListsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var savedBuilds = retrieveBuilds();
-    print("RUNTYPE OF savedBuilds: " + savedBuilds.runtimeType.toString());
-
-    print("HERE IS WHERE THE LONG ASS PRINT STATEMENT STARTS\n\n\n\n\n");
-    print(savedBuilds.toString());
 
     tempBuild.partList = demoList;
     tempBuild.buildName = "TEST BUILD NAME";
@@ -114,146 +109,151 @@ class _SavedListsPageState extends State<SavedListsPage> {
 
     return FutureBuilder(
       future: retrieveBuilds(),
-      builder: (context,projectSnap) {
+      builder: (context, projectSnap) {
         if (projectSnap.connectionState == ConnectionState.none &&
-            projectSnap.hasData == null) {
+            projectSnap.hasData == null && projectSnap.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
-          return Container();
+          return Loading();
         }
-        if(projectSnap.hasData) {
+        if(projectSnap.data == null) {
           print("IF PROJECTSNAP.HASDATA");
           print(projectSnap.data.runtimeType);
+          return Loading();
         }
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("Your Saved Lists",
-              textAlign: TextAlign.center,),
-            backgroundColor: Colors.greenAccent,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-                itemCount: projectSnap.data.length,
-                itemBuilder: (context, index) {
-                  CompletePCBuild testBuild = projectSnap.data[index];
-                  return InkWell(
-                    onTap: () {
-                      print("CLICKED A SAVED LIST AT INDEX $index");
-                      CompletePCBuild temp = projectSnap.data[index];
-                      print(temp.partList[0].productURL);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SavedListInfoPage.sendListInfo(projectSnap.data[index]))
-                      );
-                    },
-                    child: Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Color(0xFFC8C8C8),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFC8C8C8),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: 250,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFC8C8C8),
+        else{
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Your Saved Lists",
+                textAlign: TextAlign.center,),
+              backgroundColor: Colors.greenAccent,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                  itemCount: projectSnap.data.length,
+                  itemBuilder: (context, index) {
+                    CompletePCBuild testBuild = projectSnap.data[index];
+                    return InkWell(
+                      onTap: () {
+                        print("CLICKED A SAVED LIST AT INDEX $index");
+                        CompletePCBuild temp = projectSnap.data[index];
+
+                        print(temp.partList[0].productURL);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SavedListInfoPage.sendListInfo(projectSnap.data[index]))
+                        );
+                      },
+                      child: Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: Color(0xFFC8C8C8),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFC8C8C8),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: 250,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFC8C8C8),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        testBuild.buildName,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          fontStyle: FontStyle.normal,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Price Total: \$' + testBuild.price.toStringAsFixed(2),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Text(
+                                        'BudgetTotal: \$' + testBuild.buildBudget.toStringAsFixed(2),
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      testBuild.buildName,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        fontStyle: FontStyle.normal,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Price Total: \$' + testBuild.price.toStringAsFixed(2),
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 14,
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    Text(
-                                      'BudgetTotal: \$' + testBuild.buildBudget.toStringAsFixed(2),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 14,
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              TextButton.icon(
-                                onPressed:() {
-                                  return showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: Text("Are you sure you want to delete the list?"),
-                                          actions: [
-                                            MaterialButton(
-                                              elevation: 8.0,
-                                              child: Text("No"),
-                                              onPressed: (){
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            MaterialButton(
-                                              elevation: 8.0,
-                                              child: Text("Yes"),
-                                              onPressed: (){
-                                                setState(() {
-                                                  CompletePCBuild temp = projectSnap.data[index];
-                                                  removeUserList(temp.buildID);
+                                TextButton.icon(
+                                  onPressed:() {
+                                    return showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text("Are you sure you want to delete the list?"),
+                                            actions: [
+                                              MaterialButton(
+                                                elevation: 8.0,
+                                                child: Text("No"),
+                                                onPressed: (){
                                                   Navigator.of(context).pop();
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                  );
-                                },
-                                icon: Icon(Icons.delete),
-                                label: Text('Remove'),
-                                style: TextButton.styleFrom(
-                                  primary: Colors.white,
-                                  backgroundColor: Colors.redAccent,
-                                  onSurface: Colors.grey,
+                                                },
+                                              ),
+                                              MaterialButton(
+                                                elevation: 8.0,
+                                                child: Text("Yes"),
+                                                onPressed: (){
+                                                  setState(() {
+                                                    CompletePCBuild temp = projectSnap.data[index];
+                                                    removeUserList(temp.buildID);
+                                                    Navigator.of(context).pop();
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                    );
+                                  },
+                                  icon: Icon(Icons.delete),
+                                  label: Text('Remove'),
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.white,
+                                    backgroundColor: Colors.redAccent,
+                                    onSurface: Colors.grey,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
+
+
                       ),
-
-
-                    ),
-                  );
-                }
+                    );
+                  }
+              ),
             ),
-          ),
-        );
+          );
+
+        }
       },
     );
 

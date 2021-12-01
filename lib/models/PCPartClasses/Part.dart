@@ -41,6 +41,7 @@ abstract class Part {
       "price": price,
       "productURL": productURL.toString(),
       "productImageURL": productImageURL.toString(),
+      "tdp" : tdp
     };
   }
 
@@ -56,6 +57,7 @@ abstract class Part {
 
 double getLowestPrice(Map<dynamic, dynamic> stores) {
   double lowestPrice = double.maxFinite;
+
   stores.forEach((key, value) {
     double p = double.parse(value['price'].replaceAll("\$", ""));
     if (p < lowestPrice){
@@ -65,3 +67,4 @@ double getLowestPrice(Map<dynamic, dynamic> stores) {
 
   return lowestPrice;
 }
+

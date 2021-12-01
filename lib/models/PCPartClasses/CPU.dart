@@ -15,6 +15,7 @@ class CPU_Part extends Part{
   CPU_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL, int tdp) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL) {
     this.tdp = tdp;
+    this.setPartAttributeMapData();
   }
 
   CPU_Part() : super() {
@@ -65,20 +66,22 @@ class CPU_Part extends Part{
       1: this.base_clock,
       2: this.boost_clock,
       3: this.coreCount,
-      4: this.tdp
+      4: this.tdp,
     };
   }
 
 
   factory CPU_Part.fromJson(Map<dynamic, dynamic> json) {
+
     return CPU_Part.loadFromDatabase(
-      json['partName'] as String,
-      json['manufacturerName'] as String,
-      json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
-      json['productURL'] as String,
-      json['productImageURL'] as String,
-      int.parse(json['tdp']) ?? 0
+        json['partName'] as String,
+        json['manufacturerName'] as String,
+        json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+        json['productURL'] as String,
+        json['productImageURL'] as String,
+        json['tdp'] as int ?? 0
     );
+
   }
 
   factory CPU_Part.fromJson2(dynamic json) {
@@ -99,5 +102,9 @@ class CPU_Part extends Part{
         cores,
         tdp
     );
+  }
+
+  loadMap(dynamic json) {
+    partAttributeMap = json;
   }
 }

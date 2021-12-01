@@ -28,7 +28,9 @@ class PCPartInfoPage extends StatefulWidget {
   CompletePCBuild buildObj;
   PCPartInfoPage({Key key, this.part, this.partType, this.buildObj}) : super(key: key);
 
-  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {}
+  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {
+
+  }
 
   @override
   _PCPartInfoPageState createState() => _PCPartInfoPageState();
@@ -47,8 +49,6 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     var attributes = widget.part.partAttributeMap;
     print(attributes);
 
@@ -293,7 +293,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
       case "motherboard":
         return 1;
         break;
-      case "memory":
+      case "ram":
         return 2;
         break;
       case "gpu":
