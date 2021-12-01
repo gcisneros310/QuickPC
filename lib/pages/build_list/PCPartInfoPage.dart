@@ -1,9 +1,13 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
+import 'package:quick_pc/pages/part_review/Create_Star.dart';
+import 'package:quick_pc/pages/part_review/review_list.dart';
+import 'package:quick_pc/pages/part_review/star.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/presentation/p_c_part_info_icons_icons.dart';
 
@@ -37,6 +41,7 @@ class PCPartInfoPage extends StatefulWidget {
 class _PCPartInfoPageState extends State<PCPartInfoPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final Color logoColor = Color(0xff66c290);
+  final fb = FirebaseDatabase.instance;
 
   var attributeNames = [
     "Manufacturer",
@@ -44,6 +49,9 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
     "Boost Clock",
     "Core Count"
   ];
+
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +203,30 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                       fontWeight: FontWeight.w800,
                     ),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => ReviewlistWidget(
+                            partName: widget.part.partName.toString())));},
+                    child: Text(
+                      "View Reviews",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 18,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                    child: StarRating(
+                      rating: 5,
+                    ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
