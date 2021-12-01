@@ -137,7 +137,6 @@ class _SavedListsPageState extends State<SavedListsPage> {
                       onTap: () {
                         print("CLICKED A SAVED LIST AT INDEX $index");
                         CompletePCBuild temp = projectSnap.data[index];
-
                         print(temp.partList[0].productURL);
                         Navigator.push(
                             context,
