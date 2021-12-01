@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
@@ -14,8 +15,11 @@ import 'package:quick_pc/pages/home/swiperModel.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:quick_pc/services/realtimeDatabase.dart';
 import 'dashboard_card.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
+
+import 'notifications2.dart';
 
 
 
@@ -101,7 +105,7 @@ class _Home2State extends State<Home2> {
   int _currentIndex = 0;
   String currentPage;
   final List _children = [];
-  
+
   List<T> map<T>(List list, Function handler){
     List<T> result = [];
     for( var i =0; i< list.length; i++){
@@ -474,10 +478,18 @@ class _Home2State extends State<Home2> {
     //orientation = _mediaQueryData.orientation;
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
     buildObj.partList = demoList;
+    //HERE
+    List<Part> list;
 
+    Future getList() async {
+      list = await getPopCPU();
+      return list;
+    }
+    getList();
     drawer: Drawer();
 
-    return Scaffold(
+    return FutureProvider<List<Part>>.value(
+      child: Scaffold(
       backgroundColor: Colors.grey[300],
       drawer: NavigationDrawer(),
       appBar: AppBar(
@@ -489,7 +501,7 @@ class _Home2State extends State<Home2> {
         actions: [
           InkWell(
             onTap:(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications2()));
           },
               child: Icon(Icons.notifications, color: Colors.black54))
         ],
@@ -559,6 +571,7 @@ class _Home2State extends State<Home2> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
+                          //popularPictureRow(list[0].partName, list[0].price, list[0].productImageURL, 3),
                           popularPictureRow(demoList[3].partName, demoList[3].price, demoList[3].productImageURL, 3),
                           popularPictureRow(demoList[2].partName, demoList[2].price, demoList[2].productImageURL, 2),
                           popularPictureRow(demoList[1].partName, demoList[1].price, demoList[1].productImageURL, 1),
@@ -588,9 +601,8 @@ class _Home2State extends State<Home2> {
         ),
       ),
 
-
+      ),
     );
-
 
   }
 }

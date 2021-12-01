@@ -359,8 +359,6 @@ class _Account2State extends State<Account2> {
       ),
     );
   }
-
-
 }
 
 

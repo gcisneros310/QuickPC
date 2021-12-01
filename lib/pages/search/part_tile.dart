@@ -28,8 +28,8 @@ class _PartTileState extends State<PartTile>  {
   Widget build(BuildContext context){
 
     bool isChecked = false;
-
-
+    print("this is");
+    print(widget.partType);
     String name = widget.part.partName;
     String imageURL = widget.part.productImageURL ?? "";
     double lowestPrice = widget.part.price;

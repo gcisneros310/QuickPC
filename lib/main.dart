@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
 
-        home: firstTime ? Welcome() : Wrapper(),
+        //home: firstTime ? Welcome() : Wrapper(),
+        home: Welcome(),
         //home: Wrapper(),
 
         routes: {

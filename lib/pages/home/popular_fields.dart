@@ -109,18 +109,24 @@ class _PageNotImplemented extends State<PopularFields> {
   Widget testWidget(int partIndex, String partType ){
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
 
-    //HERE
-    getList();
-    print(list);
-
     buildObj.partList = demoList;
     return Container(
 
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: InkWell(
         onTap:(){
-          //print(cpuList);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[partIndex], partType)));
+          getList();
+          //print(list[0].partAttributeMap);
+          //print(list.length);
+         // int index = 0;
+         /* while(index <= 7 )
+            {
+              print(list[index].partAttributeMap);
+              ++index;
+            }*/
+          //Navigator.push(context, MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[partIndex], partType)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>PCPartInfoPage(part: list[partIndex], partType: partType)));
+
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
