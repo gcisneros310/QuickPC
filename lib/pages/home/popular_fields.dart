@@ -11,6 +11,7 @@ import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/pages/home/trending_popular.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
+import 'package:quick_pc/shared/loading.dart';
 
 class PopularFields extends StatefulWidget {
   @override
@@ -106,7 +107,7 @@ class _PageNotImplemented extends State<PopularFields> {
   //Future<List<Part>> cpuList = getPart("cpu");
 
 
-  Widget testWidget(int partIndex, String partType ){
+  Widget testWidget(CPU_Part cpuList, String partType ){
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
 
     buildObj.partList = demoList;
@@ -125,7 +126,7 @@ class _PageNotImplemented extends State<PopularFields> {
               ++index;
             }*/
           //Navigator.push(context, MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[partIndex], partType)));
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>PCPartInfoPage(part: list[partIndex], partType: partType)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>PCPartInfoPage(part: cpuList, partType: partType)));
 
         },
         child: Column(
@@ -154,7 +155,7 @@ class _PageNotImplemented extends State<PopularFields> {
                       decoration: BoxDecoration(
                           image:DecorationImage(
                               //fit: BoxFit.fill,
-                              image: NetworkImage(demoList[partIndex].productImageURL),
+                              image: NetworkImage(cpuList.productImageURL),
                           ),
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
                       ),
@@ -169,11 +170,11 @@ class _PageNotImplemented extends State<PopularFields> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Flexible(
-                                  child: Text(demoList[partIndex].partName, style: GoogleFonts.exo2(color: Colors.black54, fontSize: 15, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
+                                  child: Text(cpuList.partName, style: GoogleFonts.exo2(color: Colors.black54, fontSize: 15, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
                               //Icon(Icons.add_circle)
                             ],
                           ),
-                          Text("\$${demoList[partIndex].price.toString()}", style: GoogleFonts.exo2(color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w500)),
+                          Text("\$${cpuList.price.toString()}", style: GoogleFonts.exo2(color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ),
@@ -189,35 +190,45 @@ class _PageNotImplemented extends State<PopularFields> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        title: Text("Popular"),
-        titleTextStyle: GoogleFonts.exo2(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
-        backgroundColor: Colors.grey[500],
-        centerTitle: true,
-        // title: Text("Contact Us"),
-        elevation: 0.0,
-      ),
-      body: Container(
-        child: GridView(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //crossAxisSpacing: 15,
-            mainAxisSpacing: 15,
-            crossAxisCount: 2,
+    return FutureBuilder(
+      future: getPopCPU(),
+      builder: (context, projectSnap) {
+        if (projectSnap.connectionState == ConnectionState.none &&
+            projectSnap.hasData == null && projectSnap.data == null) {
+          //print('project snapshot data is: ${projectSnap.data}');
+          return Loading();
+        }
+        if(projectSnap.data == null) {
+          print("IF PROJECTSNAP.HASDATA");
+          print(projectSnap.data.runtimeType);
+          return Loading();
+        }
+        return Scaffold(
+          backgroundColor: Colors.grey[300],
+          appBar: AppBar(
+            title: Text("Popular"),
+            titleTextStyle: GoogleFonts.exo2(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+            backgroundColor: Colors.grey[500],
+            centerTitle: true,
+            // title: Text("Contact Us"),
+            elevation: 0.0,
           ),
-          children: [
-            testWidget(0, "cpu"),
-            testWidget(1, "cpu"),
-            testWidget(2, "cpu"),
-            testWidget(3, "cpu"),
-            testWidget(4, "cpu"),
-            testWidget(5, "cpu"),
-            testWidget(3, "cpu"),
-            testWidget(3, "cpu"),
-          ],
-        ),
-      ),
+          body: Container(
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+                crossAxisCount: 2,
+              ),
+              children: [
+                for(int i = 0; i<50; ++i)
+                  testWidget(projectSnap.data[i], "cpu"),
+
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 
