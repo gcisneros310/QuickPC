@@ -5,6 +5,7 @@ import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
+import 'package:quick_pc/models/review_data.dart';
 import 'package:quick_pc/pages/part_review/Create_Star.dart';
 import 'package:quick_pc/pages/part_review/review_list.dart';
 import 'package:quick_pc/pages/part_review/star.dart';
@@ -50,7 +51,27 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
     "Core Count"
   ];
 
-  
+  Future<List<Review_Data>> getUserReviews() async {
+    List<Review_Data> temp_reviews = [];
+    await fb
+        .reference()
+        .child("reviews")
+        .child(widget.part.partName.hashCode.toString())
+        .orderByKey()
+        .once().then((result) async {
+      if (result.value != null) {
+        result.value.forEach((key, childSnapshot) {
+          temp_reviews.add(Review_Data.fromJson(Map.from(childSnapshot)));
+        });
+      } else {
+        print("get didn't work for reviews");
+      }
+    }).catchError((e) {
+      print("error on reviews: $e");
+    });
+
+    return temp_reviews;
+  }
 
 
   @override
