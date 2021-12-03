@@ -1,20 +1,28 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
+import 'package:quick_pc/models/PCPartClasses/Notifications.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
+import 'package:quick_pc/pages/home/notifications.dart';
 import 'package:quick_pc/pages/home/popular_fields.dart';
 import 'package:quick_pc/pages/home/swiperModel.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:quick_pc/services/realtimeDatabase.dart';
+import 'package:quick_pc/shared/loading.dart';
 import 'dashboard_card.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
+
+import 'notifications2.dart';
 
 
 
@@ -100,7 +108,7 @@ class _Home2State extends State<Home2> {
   int _currentIndex = 0;
   String currentPage;
   final List _children = [];
-  
+
   List<T> map<T>(List list, Function handler){
     List<T> result = [];
     for( var i =0; i< list.length; i++){
@@ -237,7 +245,7 @@ class _Home2State extends State<Home2> {
       ),
     );
   }
-  Widget popularPictureRow(String itemType, double price, String imageAsset,int demoIndex){
+  Widget popularPictureRow(String itemType, double price, String imageAsset,int demoIndex, CPU_Part cpuList){
 
     //Delete these later
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
@@ -247,7 +255,7 @@ class _Home2State extends State<Home2> {
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: InkWell(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[demoIndex], "cpu")));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, cpuList, "cpu")));
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -473,119 +481,149 @@ class _Home2State extends State<Home2> {
     //orientation = _mediaQueryData.orientation;
     CompletePCBuild buildObj = new CompletePCBuild.demoConstructor();
     buildObj.partList = demoList;
+    //HERE
+    List<Part> list;
 
+    Future getList() async {
+      list = await getPopCPU();
+      return list;
+    }
+    //getList();
     drawer: Drawer();
 
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      drawer: NavigationDrawer(),
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black54),
-        elevation: 0.0,
-        backgroundColor: Colors.grey[500],
-        title: Text("Home Screen"),
-        centerTitle: true,
-        actions: [
-          Icon(Icons.notifications_none, color: Colors.black54)
-        ],
-      ),
-      body: Container(
-        child: ListView(
-          children: [
-            swiperImageRow(),
-            Padding(
-              padding: EdgeInsets.only(left: 20, top: 20),
-              child: Container(
-                child: dashboardRow(),
-              )
-            ),
-            //dashboardRowButtons(),
-            Padding(
-              padding: EdgeInsets.only(left:10),
-              child: Container(
-                width: double.infinity,
-                height: 110.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  children: <Widget> [
-                    DashboardCard(
-                      name: "Search PC",
-                      color: colorBlue,
-                      totalParts: "27",
-                      icon: "assets/desktop.png",
-                      userChoice: 0,
-                    ),
-                    DashboardCard(
-                      name: "Build PC",
-                      color: colorPurple,
-                      totalParts: "27",
-                      icon: "assets/build.png",
-                      userChoice: 1,
-                    ),
-                    DashboardCard(
-                      name: "Suggest PC",
-                      color: colorOrange,
-                      totalParts: "27",
-                      icon: "assets/suggest.png",
-                      userChoice: 5,
-                    ),
-                    DashboardCard(
-                      name: "Build Guide",
-                      color: colorGreen,
-                      totalParts: "27",
-                      icon: "assets/guide.png",
-                      userChoice: 3,
-                    ),
-                  ],
+
+
+
+      return FutureBuilder(
+        future: getPopCPU(),
+        builder: (context, projectSnap) {
+          if (projectSnap.connectionState == ConnectionState.none &&
+              projectSnap.hasData == null && projectSnap.data == null) {
+            //print('project snapshot data is: ${projectSnap.data}');
+            return Loading();
+          }
+          if(projectSnap.data == null) {
+            print("IF PROJECTSNAP.HASDATA");
+            print(projectSnap.data.runtimeType);
+            return Loading();
+          }
+          return Scaffold(
+          backgroundColor: Colors.grey[300],
+          drawer: NavigationDrawer(),
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.black54),
+            elevation: 0.0,
+            backgroundColor: Colors.grey[500],
+            title: Text("Home"),
+            centerTitle: true,
+            actions: [
+              InkWell(
+                onTap:() async{
+                 /* final fb = FirebaseDatabase.instance;
+                  final ref = fb.reference();
+                  Notifications_Data nData = new Notifications_Data();
+                  nData.name = "No GF";
+                  nData.imageURL = "https://i.gyazo.com/c2a391a8cb95873621103c038562e3db.gif";
+                  nData.message="Hehe";
+                  await ref.child("notifications/").push().update(nData.toJson());*/
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications2()));
+              },
+                  child: Icon(Icons.notifications, color: Colors.black54))
+            ],
+          ),
+          body: Container(
+            child: ListView(
+              children: [
+                swiperImageRow(),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, top: 20),
+                  child: Container(
+                    child: dashboardRow(),
+                  )
                 ),
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(left:10),
-              child: Container(
-                child: Column(
-                  children: [
-                    //searchBar(),
-                    featuredRow(),
-                    SingleChildScrollView(
+                //dashboardRowButtons(),
+                Padding(
+                  padding: EdgeInsets.only(left:10),
+                  child: Container(
+                    width: double.infinity,
+                    height: 110.0,
+                    child: ListView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          popularPictureRow(demoList[3].partName, demoList[3].price, demoList[3].productImageURL, 3),
-                          popularPictureRow(demoList[2].partName, demoList[2].price, demoList[2].productImageURL, 2),
-                          popularPictureRow(demoList[1].partName, demoList[1].price, demoList[1].productImageURL, 1),
-                          popularPictureRow(demoList[0].partName, demoList[0].price, demoList[0].productImageURL, 0),
-                        ],
-                      ),
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      children: <Widget> [
+                        DashboardCard(
+                          name: "Search PC",
+                          color: colorBlue,
+                          totalParts: "27",
+                          icon: "assets/desktop.png",
+                          userChoice: 0,
+                        ),
+                        DashboardCard(
+                          name: "Build PC",
+                          color: colorPurple,
+                          totalParts: "27",
+                          icon: "assets/build.png",
+                          userChoice: 1,
+                        ),
+                        DashboardCard(
+                          name: "Suggest PC",
+                          color: colorOrange,
+                          totalParts: "27",
+                          icon: "assets/suggest.png",
+                          userChoice: 5,
+                        ),
+                        DashboardCard(
+                          name: "Build Guide",
+                          color: colorGreen,
+                          totalParts: "27",
+                          icon: "assets/guide.png",
+                          userChoice: 3,
+                        ),
+                      ],
                     ),
-                    popularRow(),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          popularPictureRow(demoList[0].partName, demoList[0].price, demoList[0].productImageURL, 0),
-                          popularPictureRow(demoList[1].partName, demoList[1].price, demoList[1].productImageURL, 1),
-                          popularPictureRow(demoList[2].partName, demoList[2].price, demoList[2].productImageURL, 2),
-                          popularPictureRow(demoList[3].partName, demoList[3].price, demoList[3].productImageURL, 3),
-                          SizedBox(height:100),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height:15),
-                  ],
+                  ),
                 ),
-              ),
+
+                Padding(
+                  padding: EdgeInsets.only(left:10),
+                  child: Container(
+                    child: Column(
+                      children: [
+                        //searchBar(),
+                        featuredRow(),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              for(int i = 8; i < 16; ++i)
+                                popularPictureRow(projectSnap.data[i].partName, projectSnap.data[i].price, projectSnap.data[i].productImageURL, 3,projectSnap.data[i]),
+                              SizedBox(height:100),
+                            ],
+                          ),
+                        ),
+                        popularRow(),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              for(int i = 7; i != -1; --i)
+                              popularPictureRow(projectSnap.data[i].partName, projectSnap.data[i].price, projectSnap.data[i].productImageURL, 3,projectSnap.data[i]),
+                              SizedBox(height:100),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height:15),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+          );
+        }
+      );
+      }
 
-
-    );
-
-
-  }
 }

@@ -5,6 +5,7 @@ import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
+import 'package:quick_pc/models/PCPartClasses/Notifications.dart';
 import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
@@ -22,7 +23,7 @@ getTest(){
 
 Future<List<Part>> getPopCPU() async {
 
-  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').limitToFirst(7).once();
+  DataSnapshot dataSnapshot = await databaseReference.child('parts/cpu/').limitToFirst(50).once();
   List<Part> cpuList = [];
 
   if(dataSnapshot.value != null){
@@ -36,6 +37,7 @@ Future<List<Part>> getPopCPU() async {
 
   return cpuList;
 }
+
 
 Future<void> sendListToDatabase(Map<String,dynamic> json) async {
   await databaseReference.child('build list/').push().update(json);
@@ -105,6 +107,8 @@ Future<List<Part>> getPart(String partType) async {
 
   return partList;
 }
+
+
 
 //CPU list from realtime database
 Future<List<Part>> getCPUList() async {

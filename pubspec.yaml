@@ -51,6 +51,8 @@ dependencies:
   fluttertoast: ^8.0.8
   image_picker: ^0.8.4+1
   auto_size_text: ^3.0.0
+  settings_ui: ^1.0.0
+  fl_chart: ^0.40.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
