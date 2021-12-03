@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
+import 'package:quick_pc/models/PCPartClasses/Notifications.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
@@ -516,7 +518,14 @@ class _Home2State extends State<Home2> {
             centerTitle: true,
             actions: [
               InkWell(
-                onTap:(){
+                onTap:() async{
+                 /* final fb = FirebaseDatabase.instance;
+                  final ref = fb.reference();
+                  Notifications_Data nData = new Notifications_Data();
+                  nData.name = "No GF";
+                  nData.imageURL = "https://i.gyazo.com/c2a391a8cb95873621103c038562e3db.gif";
+                  nData.message="Hehe";
+                  await ref.child("notifications/").push().update(nData.toJson());*/
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications2()));
               },
                   child: Icon(Icons.notifications, color: Colors.black54))
