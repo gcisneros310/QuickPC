@@ -289,7 +289,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                           child: Text(
-                            "\$" +  widget.part.price.toString(),
+                            "\$" +  widget.part.price.toStringAsFixed(2).toString(),
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 16,
