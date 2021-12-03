@@ -11,6 +11,7 @@ import 'package:quick_pc/pages/part_review/review_list.dart';
 import 'package:quick_pc/pages/part_review/star.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/presentation/p_c_part_info_icons_icons.dart';
+import 'package:quick_pc/shared/loading.dart';
 
 import 'build_list.dart';
 class MenuItem {
@@ -51,7 +52,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
     "Core Count"
   ];
 
-  Future<List<Review_Data>> getUserReviews() async {
+  Future<List<Review_Data>> getPartRating() async {
     List<Review_Data> temp_reviews = [];
     await fb
         .reference()
@@ -76,7 +77,6 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-
 
     var attributes = widget.part.partAttributeMap;
     print(attributes);
@@ -159,168 +159,209 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
       }
     }
 
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: SafeArea(child: NavigationDrawer()),
-      appBar: AppBar(
-        title: (Text("Info Page")),
-        backgroundColor: logoColor,
-        automaticallyImplyLeading: true,
-        centerTitle: true,
-        elevation: 4,
+    return FutureBuilder(
+        future: getPartRating(),
+        builder: (context, projectSnap) {
 
-        actions: [
-          PopupMenuButton<MenuItem>(
-            onSelected: (item) => onSelected(context, item),
-            itemBuilder: (context) => [
-              ...MenuItems.menuItemsList.map(buildItem).toList(),
-            ],
-          )
-        ],
+          if (projectSnap.connectionState == ConnectionState.none &&
+              projectSnap.hasData == null && projectSnap.data == null) {
+            //print('project snapshot data is: ${projectSnap.data}');
+            return Loading();
+          }
+          if (projectSnap.data == null) {
+            print("IF PROJECTSNAP.HASDATA");
+            print(projectSnap.data.runtimeType);
+            return Loading();
+          }
+          else {
 
-      ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //     // Navigator.push(
-      //     //     context,
-      //     //     // MaterialPageRoute(builder: (context) => BuildGuideList())
-      //     // );
-      //   },
-      //   icon: Icon(Icons.arrow_forward),
-      //   label: const Text("Go to Guide"),
-      //   backgroundColor: logoColor,
-      // ),
-      backgroundColor: Color(0xFFF5F5F5),
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: Color(0xFFEEEEEE),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: Image.network(
-                    widget.part.productImageURL,
-                    width: 250,
-                    height: 250,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
+            double result = 0;
+            for (int i = 0; i < projectSnap.data.length; i++)
+            {
+              result += projectSnap.data[i].partRating;
+            }
+            double average_rating = result/projectSnap.data.length;
+            if (average_rating.isNaN){
+              average_rating = 0;
+            }
+            print(average_rating);
+
+            return Scaffold(
+              key: scaffoldKey,
+              drawer: SafeArea(child: NavigationDrawer()),
+              appBar: AppBar(
+                title: (Text("Info Page")),
+                backgroundColor: logoColor,
+                automaticallyImplyLeading: true,
+                centerTitle: true,
+                elevation: 4,
+
+                actions: [
+                  PopupMenuButton<MenuItem>(
+                    onSelected: (item) => onSelected(context, item),
+                    itemBuilder: (context) => [
+                      ...MenuItems.menuItemsList.map(buildItem).toList(),
+                    ],
+                  )
+                ],
+
+              ),
+              // floatingActionButton: FloatingActionButton.extended(
+              //   onPressed: () {
+              //     // Navigator.push(
+              //     //     context,
+              //     //     // MaterialPageRoute(builder: (context) => BuildGuideList())
+              //     // );
+              //   },
+              //   icon: Icon(Icons.arrow_forward),
+              //   label: const Text("Go to Guide"),
+              //   backgroundColor: logoColor,
+              // ),
+              backgroundColor: Color(0xFFF5F5F5),
+              body: SafeArea(
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFEEEEEE),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: Text(
-                    widget.part.partName,
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => ReviewlistWidget(
-                            partName: widget.part.partName.toString())));},
-                    child: Text(
-                      "View Reviews",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 18,
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                    child: StarRating(
-                      rating: 5,
-                    ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: Text(
-                    "\$" +  widget.part.price.toString(),
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
-                Divider(
-                  height: 5,
-                  thickness: 4,
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: Container(
-                    width: double.infinity,
-                    height: 260,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEEEEEE),
-                    ),
-                    child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        itemCount: attributeTitles.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                            child: Container(
-                              width: 100,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEEEEEE),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    attributeTitles[index].toUpperCase(),
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    attributes[attributeTitles[index]].toString(),
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  )
-                                ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Image.network(
+                            widget.part.productImageURL,
+                            width: 250,
+                            height: 250,
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Text(
+                            widget.part.partName,
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => ReviewlistWidget(
+                                    partName: widget.part.partName.toString())));},
+                            child: Text(
+                              "View Reviews",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 18,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
-                          );
-                        }
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Row(
+                            children: <Widget>[
+                              StarRating(rating: average_rating,),
+                              Text(
+                                average_rating.toStringAsFixed(1).toString(),
+                                style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.italic,
+                              ),)
+                            ],
+                          )
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Text(
+                            "\$" +  widget.part.price.toString(),
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          height: 5,
+                          thickness: 4,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Container(
+                            width: double.infinity,
+                            height: 260,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEEEE),
+                            ),
+                            child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                scrollDirection: Axis.vertical,
+                                itemCount: attributeTitles.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Card(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    color: Color(0xFFF5F5F5),
+                                    child: Container(
+                                      width: 100,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFEEEEEE),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            attributeTitles[index].toUpperCase(),
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            attributes[attributeTitles[index]].toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+                ),
+              ),
+            );
+          }
+        }
+
+          );
   }
 
   PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem<MenuItem>(
