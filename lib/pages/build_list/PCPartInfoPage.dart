@@ -35,10 +35,12 @@ class SalesData {
 class PCPartInfoPage extends StatefulWidget {
   final Part part;
   final String partType;
+  CompletePCBuild buildObj;
+  PCPartInfoPage({Key key, this.part, this.partType, this.buildObj}) : super(key: key);
 
-  PCPartInfoPage({Key key, this.part, this.partType}) : super(key: key);
+  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {
 
-  PCPartInfoPage.loadPartInfo(CompletePCBuild buildObject, this.part, this.partType) :super() {}
+  }
 
   @override
   _PCPartInfoPageState createState() => _PCPartInfoPageState();
@@ -132,14 +134,16 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
               child: Text("Yes"),
               onPressed: (){
                 setState(() {
-                  CompletePCBuild tempObj = new CompletePCBuild();
-                  tempObj.partList[0] = widget.part;
-                  Navigator.push(
+                  CompletePCBuild tempObj = widget.buildObj;
+                  print(tempObj.partList);
+                  tempObj.partList[returnPartIndex(widget.partType)] = widget.part;
+                  tempObj.calculatePowerDraw();
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                      builder: (context) => PartList(tempObj)
+                          builder: (context) => PartList(tempObj)
 
-                    )
+                      )
                   );
                 });
               },
@@ -365,44 +369,44 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                       color: Color(0xFFEEEEEE),
                     ),
                     child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.vertical,
                         itemCount: attributeTitles.length,
                         itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          color: Color(0xFFF5F5F5),
-                          child: Container(
-                            width: 100,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFEEEEEE),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  attributeTitles[index].toUpperCase(),
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
+                          return Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: Color(0xFFF5F5F5),
+                            child: Container(
+                              width: 100,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFEEEEEE),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    attributeTitles[index].toUpperCase(),
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  attributes[attributeTitles[index]].toString(),
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                )
-                              ],
+                                  Text(
+                                    attributes[attributeTitles[index]].toString(),
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }
+                          );
+                        }
                     ),
                   ),
                 )
@@ -428,4 +432,46 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
         ]
     ),
   );
+
+  int returnPartIndex(String partType) {
+    switch(partType) {
+      case "cpu":
+        return 0;
+        break;
+      case "motherboard":
+        return 1;
+        break;
+      case "ram":
+        return 2;
+        break;
+      case "gpu":
+        return 3;
+        break;
+      case "psu":
+        return 4;
+        break;
+      case "cooler":
+        return 5;
+        break;
+      case "storage":
+        return 6;
+        break;
+      case "case":
+        return 7;
+        break;
+      default:
+        return null;
+    }
+  }
 }
+
+var partTypes = [
+  'cpu',
+  'motherboard',
+  'memory',
+  'gpu',
+  'psu',
+  'cooler',
+  'storage',
+  'case'
+];

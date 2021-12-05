@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Case_Part.dart';
+import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
@@ -15,8 +16,9 @@ class PartTile extends StatefulWidget {
 
   final Part part;
   final String partType;
+  CompletePCBuild buildObject;
   List<Part> compareList;
-  PartTile({this.part, this.partType, this.compareList});
+  PartTile({this.part, this.partType, this.compareList, this.buildObject});
 
   @override
   _PartTileState createState() => _PartTileState();
@@ -127,7 +129,7 @@ class _PartTileState extends State<PartTile>  {
                           MaterialPageRoute(
                             builder: (context) =>
                                 PCPartInfoPage(
-                                    part: widget.part, partType: widget.partType),
+                                    part: widget.part, partType: widget.partType, buildObj: widget.buildObject,),
                           )
                       );
                     },

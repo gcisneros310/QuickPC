@@ -35,9 +35,7 @@ class Case_Part extends Part {
   }
 
   factory Case_Part.fromJson2(dynamic json) {
-
     double price = getLowestPrice(json['stores']);
-
     return Case_Part.loadData(
       json['name'] as String,
       json['manufacturer'] as String,

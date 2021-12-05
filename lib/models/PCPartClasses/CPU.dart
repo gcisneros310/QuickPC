@@ -62,10 +62,11 @@ class CPU_Part extends Part{
 
   void setPartAttributeMapData() {
     this.partAttributeMap = {
-      'Manufacturer': this.manufacturerName,
-      'Base Clock': this.base_clock,
-      'Boost Clock': this.boost_clock,
-      'Cores': this.coreCount,
+      0: this.manufacturerName,
+      1: this.base_clock,
+      2: this.boost_clock,
+      3: this.coreCount,
+      4: this.tdp,
     };
   }
 

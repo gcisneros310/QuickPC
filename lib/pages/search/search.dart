@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_pc/pages/search/compare/compareUI.dart';
@@ -22,7 +23,7 @@ class _SearchState extends State<Search> {
 
   Icon searchIcon = const Icon(Icons.search, color: Colors.white,
       size: 28);
-
+  CompletePCBuild buildObject;
   String searchTerm;
   String partType = "";
   bool clearFilter = true;
@@ -44,6 +45,7 @@ class _SearchState extends State<Search> {
     if (arguments != null){
       //searchTerm = arguments['searchTerm'];
       partType = arguments['partType'];
+      buildObject = arguments['buildObject'];
     }
 
     fil = Filter(partType);
@@ -55,7 +57,6 @@ class _SearchState extends State<Search> {
 
     //return FutureProvider<List<Part>>.value(
     //value: DatabaseService(searchTerm: searchTerm).cpus,
-
 
     return FutureProvider<List<Part>>.value(
         value: getPart(partType),
@@ -140,7 +141,7 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  list = SearchList(partType, fil, compareList),
+                  list = SearchList(partType, fil, compareList, buildObject),
 
 
 
