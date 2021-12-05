@@ -58,7 +58,6 @@ class _AccountState extends State<Account> {
                 ),
                 Divider(height: 20, thickness:1),
                 SizedBox(height:10),
-                //buildToSOption((context), "Terms of Service"),
                 buildReportOption((context), "Report a Bug"),
                 buildFeedbackOption((context), "Send Feedback"),
                 buildTermsOption((context), "Terms of Service"),

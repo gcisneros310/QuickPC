@@ -2,12 +2,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
+import 'package:quick_pc/pages/account/account.dart';
 import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/bottom_navigation/bottom_navigation_bar.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/build_list/build_list.dart';
+import 'package:quick_pc/pages/contact_us/contact_us.dart';
 import 'package:quick_pc/pages/home/home.dart';
-import 'package:quick_pc/pages/search/pick_search.dart';
+import 'package:quick_pc/pages/search/select_search.dart';
 import 'package:quick_pc/services/auth.dart';
 
 class NavigationDrawer extends StatelessWidget{
@@ -164,12 +166,12 @@ class NavigationDrawer extends StatelessWidget{
         ));
         break;
       case 0:
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => PickSearch(),
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SelectSearch(),
         ));
         break;
       case 1:
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => PartList(CompletePCBuild()),
         ));
         break;
@@ -177,18 +179,21 @@ class NavigationDrawer extends StatelessWidget{
 
         break;
       case 3:
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => BuildGuideIntro(),
         ));
         break;
       case 4:
-
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Account(),
+        ));
         break;
       case 5:
-
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ContactUs(),
+        ));
         break;
       case 6:
-
         break;
       case 7:
 

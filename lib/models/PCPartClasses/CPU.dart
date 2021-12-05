@@ -66,7 +66,7 @@ class CPU_Part extends Part{
       1: this.base_clock,
       2: this.boost_clock,
       3: this.coreCount,
-      4: this.tdp,
+      4: this.tdp
     };
   }
 

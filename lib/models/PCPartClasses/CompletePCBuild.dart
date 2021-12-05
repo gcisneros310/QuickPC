@@ -8,8 +8,6 @@ import 'GPU.dart';
 import 'Motherboard_Part.dart';
 import 'Part.dart';
 import 'PSU_Part.dart';
-import 'Part.dart';
-import 'Part.dart';
 import 'RAM_Part.dart';
 import 'Storage_Part.dart';
 
