@@ -136,8 +136,6 @@ Future<List<Part>> getPart(String partType) async {
   return partList;
 }
 
-
-
 //CPU list from realtime database
 Future<List<Part>> getCPUList() async {
 
@@ -147,7 +145,7 @@ Future<List<Part>> getCPUList() async {
   if(dataSnapshot.value != null){
 
     dataSnapshot.value.forEach((key, value){
-      //print(value);
+      // print(value);
       CPU_Part c =  CPU_Part.fromJson2(value);
       cpuList.add(c);
       c.loadMap(value);
@@ -272,4 +270,3 @@ Future<List<Part>> getCoolerList() async {
 
   return list;
 }
-

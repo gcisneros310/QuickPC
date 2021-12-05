@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Case_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
@@ -12,8 +13,9 @@ import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
+import 'package:quick_pc/services/realtimeDatabase.dart';
+import 'package:quick_pc/shared/loading.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 List<Part> demoList = [
   CPU_Part.valueConstructors(
@@ -84,8 +86,15 @@ class SavedListsPage extends StatefulWidget {
   _SavedListsPageState createState() => _SavedListsPageState();
 }
 
+Future<List<CompletePCBuild>> retrieveBuilds()  async {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String currentUserID = _auth.currentUser.uid;
+  List<CompletePCBuild> userBuilds = await getUserBuilds(currentUserID);
+  return userBuilds;
+}
+
 class _SavedListsPageState extends State<SavedListsPage> {
-  List<CompletePCBuild> savedBuilds = [];
+
   CompletePCBuild tempBuild = new CompletePCBuild();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -97,118 +106,155 @@ class _SavedListsPageState extends State<SavedListsPage> {
     tempBuild.buildName = "TEST BUILD NAME";
     tempBuild.updatePrice();
     tempBuild.buildBudget = 3000.00;
-    
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.grey,
-        automaticallyImplyLeading: true,
-        title: Text(
-          'Saved Builds',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 4,
-      ),
-      backgroundColor: Color(0xFFF5F5F5),
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: Color(0xFFEEEEEE),
-          ),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.vertical,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                child: InkWell(
-                  onTap: (){
-                    print("THIS GOT CLICKED");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SavedListInfoPage.sendListInfo(tempBuild))
-                    );
-                  },
-                  child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: Color(0xFFC8C8C8),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFC8C8C8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 320,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFC8C8C8),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    tempBuild.buildName,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Price Total: \$' + tempBuild.price.toStringAsFixed(2),
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 16,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  Text(
-                                    'BudgetTotal: \$' + tempBuild.buildBudget.toStringAsFixed(2),
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 16,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  )
-                                ],
-                              ),
+
+    return FutureBuilder(
+      future: retrieveBuilds(),
+      builder: (context, projectSnap) {
+        if (projectSnap.connectionState == ConnectionState.none &&
+            projectSnap.hasData == null && projectSnap.data == null) {
+          //print('project snapshot data is: ${projectSnap.data}');
+          return Loading();
+        }
+        if(projectSnap.data == null) {
+          print("IF PROJECTSNAP.HASDATA");
+          print(projectSnap.data.runtimeType);
+          return Loading();
+        }
+        else{
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Your Saved Lists",
+                textAlign: TextAlign.center,),
+              backgroundColor: Colors.greenAccent,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                  itemCount: projectSnap.data.length,
+                  itemBuilder: (context, index) {
+                    CompletePCBuild testBuild = projectSnap.data[index];
+                    return InkWell(
+                      onTap: () {
+                        print("CLICKED A SAVED LIST AT INDEX $index");
+                        CompletePCBuild temp = projectSnap.data[index];
+                        print(temp.partList[0].productURL);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SavedListInfoPage.sendListInfo(projectSnap.data[index]))
+                        );
+                      },
+                      child: Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: Color(0xFFC8C8C8),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFC8C8C8),
                             ),
-                            Icon(
-                              Icons.arrow_right,
-                              color: Colors.black,
-                              size: 32,
-                            )
-                          ],
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: 250,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFC8C8C8),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        testBuild.buildName,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          fontStyle: FontStyle.normal,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Price Total: \$' + testBuild.price.toStringAsFixed(2),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Text(
+                                        'BudgetTotal: \$' + testBuild.buildBudget.toStringAsFixed(2),
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                TextButton.icon(
+                                  onPressed:() {
+                                    return showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text("Are you sure you want to delete the list?"),
+                                            actions: [
+                                              MaterialButton(
+                                                elevation: 8.0,
+                                                child: Text("No"),
+                                                onPressed: (){
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              MaterialButton(
+                                                elevation: 8.0,
+                                                child: Text("Yes"),
+                                                onPressed: (){
+                                                  setState(() {
+                                                    CompletePCBuild temp = projectSnap.data[index];
+                                                    removeUserList(temp.buildID);
+                                                    Navigator.of(context).pop();
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                    );
+                                  },
+                                  icon: Icon(Icons.delete),
+                                  label: Text('Remove'),
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.white,
+                                    backgroundColor: Colors.redAccent,
+                                    onSurface: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
+
+
                       ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+                    );
+                  }
+              ),
+            ),
+          );
+
+        }
+      },
     );
+
   }
 }

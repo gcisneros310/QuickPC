@@ -30,22 +30,23 @@ class _SavedListInfoPageState extends State<SavedListInfoPage> {
         title: Text("Edit this list?"),
         actions: <Widget>[
           MaterialButton(
-        elevation: 5.0,
-        child: Text("No"),
-        onPressed: (){
-          Navigator.of(context).pop();
-          },
-      ),
-      MaterialButton(
-      elevation: 5.0,
-      child: Text("Yes"),
-      onPressed: (){
-      Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (context) => PartList(widget.buildObject)));
-      },
-      ),
-
-      ],
+            elevation: 5.0,
+            child: Text("No"),
+            onPressed: (){
+              Navigator.of(context).pop();
+              },
+          ),
+          MaterialButton(
+            elevation: 5.0,
+            child: Text("Yes"),
+            onPressed: (){
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(
+                      builder:
+                          (context) => PartList(widget.buildObject)));
+              },
+          ),
+        ],
       );
     }
     );
@@ -147,7 +148,7 @@ class _SavedListInfoPageState extends State<SavedListInfoPage> {
                               ),
                             ),
                             Text(
-                                widget.buildObject.price.toStringAsFixed(2),
+                                widget.buildObject.partList[index].price.toStringAsFixed(2),
                                 style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                 )

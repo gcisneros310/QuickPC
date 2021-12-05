@@ -1,8 +1,4 @@
-
-import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:quick_pc/models/users.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
@@ -16,15 +12,11 @@ import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 import 'package:quick_pc/pages/build_list/AddCustomPartPage.dart';
+import 'package:quick_pc/pages/build_list/BuildChartInfo.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
-import 'package:quick_pc/pages/build_list/PartCardInfo.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
-import 'package:quick_pc/services/auth.dart';
-import 'package:quick_pc/pages/build_guide/step.dart';
-import 'package:quick_pc/presentation/app_icons_icons.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'SavedListsPage.dart';
 
@@ -73,12 +65,7 @@ var partTitles = [
   'Cooler', 'Hard Drive', 'Case'
 ];
 
-var iconsList = [
-  StepIcons.question_mark, StepIcons.power_supply, StepIcons.processor,
-  StepIcons.ram, StepIcons.motherboard, StepIcons.cooler,
-  StepIcons.gpu, StepIcons.gpu, StepIcons.slave_hard_drive,
-  StepIcons.power_plug, StepIcons.power_button,
-];
+
 
 List<Part> demoList = [
   CPU_Part.valueConstructors(
@@ -163,22 +150,10 @@ class _PartListState extends State<PartList> {
 
   TextEditingController _buildNamingController = new TextEditingController();
 
-
-  List<BudgetData> loadPrices() {
-    List<BudgetData> tempList = [];
-    for(int x = 0; x < 8; x++)
-    {
-      BudgetData tempObj = BudgetData.loadData(partTitles[x], 2.0 * (x + 1));
-      tempList.add(tempObj);
-    }
-    return tempList;
-  }
-
-
   var partTypes = [
     'cpu',
     'motherboard',
-    'memory',
+    'ram',
     'gpu',
     'psu',
     'cooler',
@@ -189,11 +164,15 @@ class _PartListState extends State<PartList> {
   @override
   Widget build(BuildContext context) {
     buildObj = widget.buildObject;
-
     buildObj.updatePrice();
+    buildObj.calculatePowerDraw();
+
+    // print("\n\n\n\n\n\n\n");
+    // print(buildObj.totalPowerDraw);
+    // print("\n\n\n\n\n\n\n");
+
     List<BudgetData> pieChartInfo = buildObj.getPriceList();
     _toolTipBehavior = TooltipBehavior(enable: true);
-
 
     createAlertDialog(BuildContext context) {
       return showDialog(context: context, builder: (context) {
@@ -203,7 +182,7 @@ class _PartListState extends State<PartList> {
             keyboardType: TextInputType.number,
             controller: _budgetEntryController,
             decoration: InputDecoration(
-              labelText: "Enter new price here (dollars)"
+                labelText: "Enter new price here (dollars)"
             ),
           ),
           actions: <Widget>[
@@ -232,8 +211,6 @@ class _PartListState extends State<PartList> {
       );
     }
 
-
-
     AlertDialog onSelected(BuildContext context, MenuItem item) {
       switch(item) {
         case MenuItems.setBudgetMenuItem:
@@ -244,57 +221,63 @@ class _PartListState extends State<PartList> {
           // );
           break;
         case MenuItems.showPieChartMenuItem:
-          createAlertDialog(BuildContext context) {
-            return showDialog(context: context, builder: (context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Constants.padding),
-                ),
-                title: Text("PC Part Price Pie Chart"),
-                content: Container(
-                    height: 350,
-                    width: 400,
-                    child: Column(
-                      children: [
-                        SfCircularChart(
-                          series: <CircularSeries>[
-                            PieSeries<BudgetData, String>(
-                                dataSource: pieChartInfo,
-                                xValueMapper: (BudgetData data, _) => data.partTitle,
-                                yValueMapper: (BudgetData data, _) => data.totalPrice,
-                                radius: '100%',
-                                dataLabelMapper: (BudgetData data, _) => data.totalPrice.toString(),
-                                dataLabelSettings: DataLabelSettings(
-                                    isVisible: true
-                                )
-                            )
-                          ],
-                          legend: Legend(
-                            height: "100",
-                            orientation: LegendItemOrientation.auto,
-                            position: LegendPosition.bottom,
-                              isVisible: true,
-                              overflowMode: LegendItemOverflowMode.scroll
-                          ),
-                          tooltipBehavior: _toolTipBehavior,
-                        ),
-                      ],
-                    )
-                ),
-                actions: <Widget>[
-                  MaterialButton(
-                    elevation: 5.0,
-                    child: Text("Exit"),
-                    onPressed: (){
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              );
-            }
-            );
-          }
-          createAlertDialog(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BuildChartsPage.passInfo(buildObj)
+              )
+          );
+          // createAlertDialog(BuildContext context) {
+          //   return showDialog(context: context, builder: (context) {
+          //     return AlertDialog(
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(Constants.padding),
+          //       ),
+          //       title: Text("PC Part Price Pie Chart"),
+          //       content: Container(
+          //           height: 350,
+          //           width: 400,
+          //           child: Column(
+          //             children: [
+          //               SfCircularChart(
+          //                 series: <CircularSeries>[
+          //                   PieSeries<BudgetData, String>(
+          //                       dataSource: pieChartInfo,
+          //                       xValueMapper: (BudgetData data, _) => data.partTitle,
+          //                       yValueMapper: (BudgetData data, _) => data.totalPrice,
+          //                       radius: '100%',
+          //                       dataLabelMapper: (BudgetData data, _) => data.totalPrice.toString(),
+          //                       dataLabelSettings: DataLabelSettings(
+          //                           isVisible: true
+          //                       )
+          //                   )
+          //                 ],
+          //                 legend: Legend(
+          //                     height: "100",
+          //                     orientation: LegendItemOrientation.auto,
+          //                     position: LegendPosition.bottom,
+          //                     isVisible: true,
+          //                     overflowMode: LegendItemOverflowMode.scroll
+          //                 ),
+          //                 tooltipBehavior: _toolTipBehavior,
+          //               ),
+          //             ],
+          //           )
+          //       ),
+          //       actions: <Widget>[
+          //         MaterialButton(
+          //           elevation: 5.0,
+          //           child: Text("Exit"),
+          //           onPressed: (){
+          //             Navigator.of(context).pop();
+          //           },
+          //         )
+          //       ],
+          //     );
+          //   }
+          //   );
+          // }
+          // createAlertDialog(context);
           break;
         case MenuItems.saveListToAccountMenuItem:
           createAlertDialog(BuildContext context) {
@@ -310,11 +293,11 @@ class _PartListState extends State<PartList> {
                     child: Column(
                       children: [
                         TextField(
-                          controller: _buildNamingController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Enter build title here',
-                          )
+                            controller: _buildNamingController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Enter build title here',
+                            )
                         )
                       ],
                     )
@@ -331,16 +314,34 @@ class _PartListState extends State<PartList> {
                     elevation: 5.0,
                     child: Text("Save to Account"),
                     onPressed: () async {
-                      buildObj.buildName = _buildNamingController.text;
                       final FirebaseAuth _auth = FirebaseAuth.instance;
-                      buildObj.buildUserID = _auth.currentUser.uid;
-                      print("USER ID: " + buildObj.buildUserID);
-                      Map<String,dynamic> buildObjJSON = buildObj.toJson();
-                      debugPrint(buildObjJSON.toString(), wrapWidth: 2048);
-                      sendListToDatabase(buildObjJSON);
-                      Navigator.of(context).pop();
-                      Fluttertoast.showToast(msg: "List has been saved to your account!",
-                      backgroundColor: Colors.grey);
+
+                      bool texedNamedDefault = false;
+                      if(_buildNamingController.text == "DEFAULT") {
+                        CompletePCBuild temp = new CompletePCBuild();
+                        temp.partList = demoList;
+                        temp.updatePrice();
+                        temp.buildUserID = _auth.currentUser.uid;
+
+                        temp.buildBudget = 4500.00;
+                        Map<String,dynamic> buildObjJSON = temp.toJson();
+                        sendListToDatabase(buildObjJSON);
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(msg: "EXAMPLE LIST has been saved to your account!",
+                            backgroundColor: Colors.grey);
+                      }
+                      else{
+                        buildObj.buildName = _buildNamingController.text;
+                        buildObj.buildUserID = _auth.currentUser.uid;
+                        buildObj.calculatePowerDraw();
+                        print("USER ID: " + buildObj.buildUserID);
+                        Map<String,dynamic> buildObjJSON = buildObj.toJson();
+                        debugPrint(buildObjJSON.toString(), wrapWidth: 2048);
+                        sendListToDatabase(buildObjJSON);
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(msg: "List has been saved to your account!",
+                            backgroundColor: Colors.grey);
+                      }
                     },
                   ),
                 ],
@@ -449,33 +450,33 @@ class _PartListState extends State<PartList> {
             color: Color(0xFFEEEEEE),
           ),
           child: ListView.builder(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.vertical,
-            itemCount: 8,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
-                child: InkWell(
-                  onTap: () {
-                    print("INDEX FOR PART $partTitles[index]");
-                    if(buildObj.partList[index].partIsChosen) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[index], "cpu"))
-                      );
-                    }
-                    else {
-                      String partTitle = partTitles[index];
-                      Fluttertoast.showToast(
-                        fontSize: 18,
-                        backgroundColor: Colors.grey,
-                          msg:
-                          "You havent chosen a $partTitle!\nChoose a part to view its info");
-                    }
-                  },
-                  child: Expanded(
-                    child: Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      elevation: 8.0,
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.vertical,
+              itemCount: 8,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
+                  child: InkWell(
+                    onTap: () {
+                      print("INDEX FOR PART $partTitles[index]");
+                      if(buildObj.partList[index].partIsChosen) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => PCPartInfoPage.loadPartInfo(buildObj, buildObj.partList[index], "cpu"))
+                        );
+                      }
+                      else {
+                        String partTitle = partTitles[index];
+                        Fluttertoast.showToast(
+                            fontSize: 18,
+                            backgroundColor: Colors.grey,
+                            msg:
+                            "You havent chosen a $partTitle!\nChoose a part to view its info");
+                      }
+                    },
+                    child: Expanded(
+                      child: Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        elevation: 8.0,
                         child: Container(
                           width: 100,
                           height: 280,
@@ -570,7 +571,9 @@ class _PartListState extends State<PartList> {
                                         print('Search button pressed ...');
                                         Navigator.pushNamed(
                                           context, '/search', arguments: {
-                                          'partType': partTypes[index]},);
+                                          'partType': partTypes[index],
+                                          'buildObject': buildObj},
+                                        );
                                       },
                                       icon: Icon(Icons.search),
                                       label: Text('Search Part'),
@@ -643,7 +646,7 @@ class _PartListState extends State<PartList> {
                                               keyboardType: TextInputType.number,
                                               controller: _priceEditingController,
                                               decoration: InputDecoration(
-                                                  labelText: "Enter new price here (dollars)",
+                                                labelText: "Enter new price here (dollars)",
                                                 enabledBorder: const OutlineInputBorder(
                                                   borderSide: const BorderSide(color: Colors.teal, width: 0.0),
                                                 ),
@@ -686,8 +689,8 @@ class _PartListState extends State<PartList> {
                                       onPressed: () {
                                         print("BUTTON INDEX : " + index.toString());
                                         Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => AddCustomPartPage.partConstructor(buildObj, index))
+                                            context,
+                                            MaterialPageRoute(builder: (context) => AddCustomPartPage.partConstructor(buildObj, index))
                                         );
                                       },
                                       icon: Icon(Icons.add),
@@ -707,8 +710,8 @@ class _PartListState extends State<PartList> {
                       ),
                     ),
                   ),
-              );
-            }
+                );
+              }
           ),
         ),
       ),
