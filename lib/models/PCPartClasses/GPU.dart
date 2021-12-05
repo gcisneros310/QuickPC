@@ -17,11 +17,12 @@ class GPU_Part extends Part {
   GPU_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 
-  GPU_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, baseclock, boostclock, vram)
+  GPU_Part.loadData(String partName, String manufacturerName, double price,String productURL, String productImageURL, baseclock, boostclock, vram, int tdp)
       : super.loadData(partName, manufacturerName, price, productURL, productImageURL) {
     this.base_clock = baseclock;
     this.boost_clock = boostclock;
     this.vram = vram;
+    this.tdp = tdp;
   }
 
 
@@ -34,7 +35,9 @@ class GPU_Part extends Part {
         data['image_URL'],
         data['base clock'],
         data['boost clock'],
-        data['vram']);
+        data['vram'],
+        data['tdp'] ?? 0
+    );
   }
 
   GPU_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
@@ -42,18 +45,16 @@ class GPU_Part extends Part {
 
   factory GPU_Part.fromJson(dynamic json) {
     return GPU_Part.loadFromDatabase(
-        json['partName'] as String,
-        json['manufacturerName'] as String,
-        json['price'] as double,
-        json['productImageURL'] as String,
-        json['productURL'] as String
+      json['partName'] as String,
+      json['manufacturerName'] as String,
+      json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+      json['productURL'] as String,
+      json['productImageURL'] as String,
     );
   }
 
   factory GPU_Part.fromJson2(dynamic json) {
-
     double price = getLowestPrice(json['stores']);
-
     String image;
     if (json['images'] == null)
       image = "";
@@ -64,12 +65,13 @@ class GPU_Part extends Part {
     return GPU_Part.loadData(
       json['name'] as String,
       json['manufacturer'] as String,
-        price,
+      price,
       json['productURL'] as String ?? "",
       image,
       json['base clock'],
       json['boost clock'],
-      json['memory']
+      json['memory'],
+      int.parse(json['tdp'].replaceAll(RegExp(" W"), "")) ?? 0,
     );
   }
 }

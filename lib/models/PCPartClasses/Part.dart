@@ -9,6 +9,7 @@ abstract class Part {
   bool deviceImagePresent;
   File deviceImage;
   bool partIsChosen;
+  int tdp;
   Map partAttributeMap = {};
 
   Part() {
@@ -19,6 +20,7 @@ abstract class Part {
     this.productImageURL = 'https://static.wikia.nocookie.net/roblox-phantom-forces/images/a/a9/Photo-here.png/revision/latest?cb=20180710181254';
     this.deviceImagePresent = false;
     this.partIsChosen = false;
+    this.tdp = 0;
   }
 
   // non-default constructors are defined by classname.<nameofconstructor>, weird as shit
@@ -36,9 +38,10 @@ abstract class Part {
     return {
       "partName": partName.toString(),
       "manufacturerName": manufacturerName.toString(),
-      "price": price.toStringAsFixed(2),
+      "price": price,
       "productURL": productURL.toString(),
       "productImageURL": productImageURL.toString(),
+      "tdp" : tdp
     };
   }
 
@@ -49,21 +52,19 @@ abstract class Part {
   }
 
 
+
 }
 
-double getLowestPrice(Map<dynamic, dynamic> stores){
-
+double getLowestPrice(Map<dynamic, dynamic> stores) {
   double lowestPrice = double.maxFinite;
 
   stores.forEach((key, value) {
-
     double p = double.parse(value['price'].replaceAll("\$", ""));
-    //print(p);
     if (p < lowestPrice){
       lowestPrice = p;
     }
-
   });
 
   return lowestPrice;
 }
+

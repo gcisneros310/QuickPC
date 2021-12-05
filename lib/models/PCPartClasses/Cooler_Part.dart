@@ -23,17 +23,15 @@ class Cooler_Part extends Part {
 
   factory Cooler_Part.fromJson(dynamic json) {
     return Cooler_Part.loadFromDatabase(
-        json['partName'] as String,
-        json['manufacturerName'] as String,
-        json['price'] as double,
-        json['productImageURL'] as String,
-        json['productURL'] as String
+      json['partName'] as String,
+      json['manufacturerName'] as String,
+      json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+      json['productURL'] as String,
+      json['productImageURL'] as String,
     );
   }
   factory Cooler_Part.fromJson2(dynamic json) {
-
     double price = getLowestPrice(json['stores']);
-
     return Cooler_Part.loadData(
       json['name'] as String,
       json['manufacturer'] as String,

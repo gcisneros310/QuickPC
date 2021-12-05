@@ -12,8 +12,11 @@ class CPU_Part extends Part{
   "Core Count"
   ];
 
-  CPU_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
-        super.loadData(partName, manufacturerName, price, productURL, productImageURL);
+  CPU_Part.loadFromDatabase(String partName, String manufacturerName, double price, String productURL, String productImageURL, int tdp) :
+        super.loadData(partName, manufacturerName, price, productURL, productImageURL) {
+    this.tdp = tdp;
+    this.setPartAttributeMapData();
+  }
 
   CPU_Part() : super() {
     this.price = 0;
@@ -35,11 +38,12 @@ class CPU_Part extends Part{
   CPU_Part.demoConstructor(String partName, String manufacturerName, double price, String productURL, String productImageURL) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL);
 
-  CPU_Part.loadData(String partName, String manufacturerName, double price, String productURL, String productImageURL, double baseclk, double boostclk, int coreCount) :
+  CPU_Part.loadData(String partName, String manufacturerName, double price, String productURL, String productImageURL, double baseclk, double boostclk, int coreCount, int tdp) :
         super.loadData(partName, manufacturerName, price, productURL, productImageURL){
     this.base_clock = baseclk;
     this.boost_clock = boostclk;
     this.coreCount = coreCount;
+    this.tdp = tdp;
   }
 
 
@@ -67,32 +71,39 @@ class CPU_Part extends Part{
 
 
   factory CPU_Part.fromJson(Map<dynamic, dynamic> json) {
+
     return CPU_Part.loadFromDatabase(
-      json['partName'] as String,
-      json['manufacturerName'] as String,
-      json['price'] as double,
-      json['productImageURL'] as String,
-      json['productURL'] as String
+        json['partName'] as String,
+        json['manufacturerName'] as String,
+        json['price'] == null ? 0.0 : json['price'].toDouble(), // forcefully convert int to double,
+        json['productURL'] as String,
+        json['productImageURL'] as String,
+        json['tdp'] as int ?? 0
     );
+
   }
 
   factory CPU_Part.fromJson2(dynamic json) {
-
     double price = getLowestPrice(json['stores']);
-
     int cores = int.parse(json['cores']);
     double base = double.parse(json['core clock'].replaceAll(RegExp(" GHz"), ""));
     double boost = double.parse(json['boost clock'].replaceAll(RegExp(" GHz"), ""));
+    int tdp = int.parse(json['tdp'].replaceAll(RegExp(" W"), ""));
 
     return CPU_Part.loadData(
-      json['name'] as String,
-      json['manufacturer'] as String,
-      price,
-      json['productURL'] as String ?? "",
-      json['images'][0],
-      base,
-      boost,
-      cores
+        json['name'] as String,
+        json['manufacturer'] as String,
+        price, // forcefully convert int to double
+        json['productURL'] as String ?? "",
+        json['images'][0],
+        base,
+        boost,
+        cores,
+        tdp
     );
+  }
+
+  loadMap(dynamic json) {
+    partAttributeMap = json;
   }
 }
