@@ -32,6 +32,7 @@ dependencies:
   http: ^0.13.3
   any_link_preview: ^1.0.7
   flutter_swiper: ^1.1.6
+  smooth_star_rating: ^1.1.1
 
 
   syncfusion_flutter_charts: ^19.3.45+1
