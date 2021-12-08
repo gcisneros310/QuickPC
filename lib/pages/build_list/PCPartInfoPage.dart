@@ -80,6 +80,11 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
   @override
   Widget build(BuildContext context) {
 
+    if (widget.buildObj == null)
+      {
+        widget.buildObj = new CompletePCBuild();
+      }
+
     var attributes = widget.part.partAttributeMap;
     print(attributes);
 
@@ -330,22 +335,23 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
-                                          Text(
+                                          Flexible(child: Text(
                                             attributeTitles[index].toUpperCase(),
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w700,
                                               fontSize: 16,
                                             ),
-                                          ),
-                                          Text(
+                                          ),),
+                                          Flexible(
+                                              child: Text(
                                             attributes[attributeTitles[index]].toString(),
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.italic,
                                               fontWeight: FontWeight.w400,
                                             ),
-                                          )
+                                          ))
                                         ],
                                       ),
                                     ),
@@ -389,7 +395,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
       case "motherboard":
         return 1;
         break;
-      case "memory":
+      case "ram":
         return 2;
         break;
       case "gpu":
@@ -416,7 +422,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
 var partTypes = [
   'cpu',
   'motherboard',
-  'memory',
+  'ram',
   'gpu',
   'psu',
   'cooler',
