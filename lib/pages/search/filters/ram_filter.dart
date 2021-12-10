@@ -12,10 +12,10 @@ class RAMFilter{
 
   Map<String, dynamic> checkboxFilters = {
 
-    'Manufacturers': {"AMD": false, "Intel": false},
+    // 'Manufacturers': {"AMD": false, "Intel": false},
 
-    'Type': {"DDR": false, "DDR2": false, "DDR3": false, "DDR4": false,
-      "DDR5": false},
+    // 'Type': {"DDR": false, "DDR2": false, "DDR3": false, "DDR4": false,
+    //   "DDR5": false},
 
     'Modules': {"1 x 512MB": false, "1 x 1GB": false, "2 x 512MB": false,
       "1 x 2GB": false, "2 x 1GB": false, "3 x 1GB": false, "1 x 4GB": false,
@@ -34,6 +34,7 @@ class RAMFilter{
     rangeFilters = ranges;
     checkboxFilters = checks;
 
+
     return ramList.where((part) =>
     (part.price <= rangeFilters['Price \$']['range'].end)
         &&
@@ -42,8 +43,10 @@ class RAMFilter{
         ( double.parse(part.clockSpeed) <= rangeFilters['Speed']['range'].end)
         &&
         ( double.parse(part.clockSpeed) >= rangeFilters['Speed']['range'].start)
+        // &&
+        // (checkboxFilters['Manufacturers'][part.manufacturerName] == true)
         &&
-        (checkboxFilters['Manufacturers'][part.manufacturerName] == true)
+        (checkboxFilters['Modules'][part.getModule()] == true)
 
     ).toList();
   }

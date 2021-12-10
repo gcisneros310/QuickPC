@@ -55,10 +55,10 @@ class Filter {
         return GPUFilter().getList(list, rangeFilters, checkboxFilters);
 
       case 'ram':
-        return null;
+        return RAMFilter().getList(list, rangeFilters, checkboxFilters);
 
       case 'motherboard':
-        return null;
+        return MotherboardFilter().getList(list, rangeFilters, checkboxFilters);
 
       case 'storage':
         return null;

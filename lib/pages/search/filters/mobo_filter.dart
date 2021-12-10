@@ -28,8 +28,8 @@ class MotherboardFilter{
       "LGA1200": false, "LGA1366": false, "LGA1700": false, "LGA2011": false,
       "LGA2011-3": false, "LGA2011-3 Narrow": false, "LGA2066": false,},
 
-    'Memory Type': {},
-    'Chipset':{}
+    // 'Memory Type': {},
+    // 'Chipset':{}
 
   };
 

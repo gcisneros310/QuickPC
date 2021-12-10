@@ -62,7 +62,7 @@ class _Step3_PageState extends State<Step3_Page> {
                   Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: Image(
-                        image: AssetImage('assets/images/ram sticks.jpg'),
+                        image: AssetImage('assets/images/ram_sticks.jpg'),
                       )
                   ),
                   Padding(

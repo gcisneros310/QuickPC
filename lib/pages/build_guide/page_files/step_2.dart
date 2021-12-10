@@ -131,7 +131,7 @@ class _Step2_PageState extends State<Step2_Page> {
                   Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: Image(
-                        image: AssetImage('assets/images/PLACING CPU.gif'),
+                        image: AssetImage('assets/images/PLACING_CPU.gif'),
                       )
                   ),
                   Padding(
@@ -149,7 +149,7 @@ class _Step2_PageState extends State<Step2_Page> {
                   Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: Image(
-                        image: AssetImage('assets/images/AMD CPU.jpg'),
+                        image: AssetImage('assets/images/AMD_CPU.jpg'),
                       )
                   ),
                   Padding(
@@ -167,7 +167,7 @@ class _Step2_PageState extends State<Step2_Page> {
                   Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: Image(
-                        image: AssetImage('assets/images/INTEL CPU.jpg'),
+                        image: AssetImage('assets/images/INTEL_CPU.jpg'),
                       )
                   ),
                   Padding(

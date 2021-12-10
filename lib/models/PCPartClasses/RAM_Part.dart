@@ -45,6 +45,7 @@ class RAM_Part extends Part {
     var count = int.parse(json['module'].substring(0,1));
     var cap = json['module'].substring(4);
 
+
     return RAM_Part.loadData(
         json['name'] as String,
         json['manufacturer'] as String,
@@ -57,6 +58,11 @@ class RAM_Part extends Part {
         count
     );
   }
+
+  String getModule(){
+    return stickCount.toString() + " x " + memoryCapacity;
+  }
+
 
   loadInfo(dynamic json)  {
     loadMap(json);

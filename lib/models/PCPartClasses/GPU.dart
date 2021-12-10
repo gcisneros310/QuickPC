@@ -74,4 +74,8 @@ class GPU_Part extends Part {
       int.parse(json['tdp'].replaceAll(RegExp(" W"), "")) ?? 0,
     );
   }
+
+  double getSpeed(String s){
+    return double.parse(s.replaceAll(RegExp(" MHz"), ""));
+  }
 }

@@ -12,6 +12,7 @@ import 'package:quick_pc/pages/part_review/star.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/presentation/p_c_part_info_icons_icons.dart';
 import 'package:quick_pc/shared/loading.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'build_list.dart';
 class MenuItem {
@@ -23,9 +24,17 @@ class MenuItem {
 
 class MenuItems {
   static const addPartMenuItem = MenuItem(text: 'Add Part to List', icon: Icons.money);
+  static const priceHistory = MenuItem(text: 'View Price History', icon: Icons.bar_chart);
   static const List<MenuItem> menuItemsList = [
     addPartMenuItem,
+    priceHistory,
   ];
+}
+
+class SalesData {
+  SalesData(this.year, this.sales);
+  final double year;
+  final double sales;
 }
 
 class PCPartInfoPage extends StatefulWidget {
@@ -46,6 +55,37 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final Color logoColor = Color(0xff66c290);
   final fb = FirebaseDatabase.instance;
+
+  List<DataColumn> getColumns(List<String> columns) => columns.map((String column) => DataColumn(label: Text(column),)).toList();
+
+  Widget buildDataTable(){
+    final columns = ['Type', 'Price', 'Date'];
+
+  }
+
+  List<SalesData> _chartData;
+  @override
+  void initState() {
+    _chartData =  getChartData();
+    super.initState();
+  }
+
+  List<SalesData> getChartData() {
+    final List<SalesData> chartData = [
+      SalesData(1, 1198.88),
+      SalesData(2, 1499.99),
+      SalesData(3, 1320.22),
+      SalesData(4, 1499.99),
+      SalesData(5, 1235.99),
+      SalesData(6, 1279.99),
+      SalesData(7, 1100.99),
+      SalesData(8, 1150.99),
+      SalesData(9, 1250.99),
+      SalesData(10, 1227.99),
+      SalesData(11, 1289.99),
+    ];
+    return chartData;
+  }
 
   var attributeNames = [
     "Manufacturer",
@@ -79,6 +119,11 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    if (widget.buildObj == null)
+      {
+        widget.buildObj = new CompletePCBuild();
+      }
 
     var attributes = widget.part.partAttributeMap;
     print(attributes);
@@ -157,6 +202,111 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
           //   title: Text("FUCK THIS"),
           // );
           break;
+        case MenuItems.priceHistory:
+          createAlertDialog(BuildContext context) {
+            return showDialog(context: context, builder: (context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Constants.padding),
+                ),
+                title: Text("Price History"),
+                content: Container(
+                    height: 700,
+                    width: 500,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 200,
+                          width: 350,
+                          child: SfCartesianChart(
+                            //primaryXAxis: DateTimeAxis(),
+                            series: <ChartSeries>[
+                              LineSeries<SalesData, double>(
+                                dataSource: getChartData(),
+                                xValueMapper: (SalesData sales, _) => sales.year,
+                                yValueMapper: (SalesData sales, _) => sales.sales,
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        DataTable(
+                          columns: getColumns(["Type", "Price", "Date"]),
+                          rows: [
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Current')),
+                                DataCell(Text('\$1,289.99')),
+                                DataCell(Text('-')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Highest',style: TextStyle(color: Colors.red))),
+                                DataCell(Text('\$1,499.99',style: TextStyle(color: Colors.red))),
+                                DataCell(Text('-')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Lowest',style: TextStyle(color: Colors.green)),),
+                                DataCell(Text('\$1073.93',style: TextStyle(color: Colors.green))),
+                                DataCell(Text('-')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Average')),
+                                DataCell(Text('\$1,209.66')),
+                                DataCell(Text('-')),
+                              ],
+                            ),
+                          ],
+                        ),
+
+
+                        /*    Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "Test123",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(
+                              "Text123",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ],
+                        ),*/
+
+                      ],
+                    )
+                ),
+                actions: <Widget>[
+                  MaterialButton(
+                    elevation: 5.0,
+                    child: Text("Exit"),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            }
+            );
+          }
+          createAlertDialog(context);
+          break;
+
 
       }
     }
@@ -330,22 +480,23 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
-                                          Text(
+                                          Flexible(child: Text(
                                             attributeTitles[index].toUpperCase(),
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w700,
                                               fontSize: 16,
                                             ),
-                                          ),
-                                          Text(
+                                          ),),
+                                          Flexible(
+                                              child: Text(
                                             attributes[attributeTitles[index]].toString(),
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.italic,
                                               fontWeight: FontWeight.w400,
                                             ),
-                                          )
+                                          ))
                                         ],
                                       ),
                                     ),
@@ -389,7 +540,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
       case "motherboard":
         return 1;
         break;
-      case "memory":
+      case "ram":
         return 2;
         break;
       case "gpu":
@@ -416,7 +567,7 @@ class _PCPartInfoPageState extends State<PCPartInfoPage> {
 var partTypes = [
   'cpu',
   'motherboard',
-  'memory',
+  'ram',
   'gpu',
   'psu',
   'cooler',

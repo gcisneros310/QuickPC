@@ -15,14 +15,14 @@ class CPUFilter{
 
   Map<String, dynamic> checkboxFilters = {
 
-    'Manufacturers': {"AMD": false, "Intel": false},
+    'Manufacturers': {"AMD": true, "Intel": true},
 
-    'Socket': {"AM1": false, "AM2+": false, "AM3": false, "AM3+": false,
-      "AM4": false, "C32": false, "FM1": false, "FM2": false, "FM2+": false,
-      "G34": false, "LGA771": false, "LGA775": false, "LGA1150": false,
-      "LGA1151": false, "LGA1155": false, "LGA1156": false, "LGA1200": false,
-      "LGA1356": false, "LGA1366": false, "LGA2011": false, "LGA2011-3": false,
-      "LGA2066": false, "sTR4": false, "sTRX4": false}
+    // 'Socket': {"AM1": false, "AM2+": false, "AM3": false, "AM3+": false,
+    //   "AM4": false, "C32": false, "FM1": false, "FM2": false, "FM2+": false,
+    //   "G34": false, "LGA771": false, "LGA775": false, "LGA1150": false,
+    //   "LGA1151": false, "LGA1155": false, "LGA1156": false, "LGA1200": false,
+    //   "LGA1356": false, "LGA1366": false, "LGA2011": false, "LGA2011-3": false,
+    //   "LGA2066": false, "sTR4": false, "sTRX4": false}
   };
 
   getList(List<Part> list ,var ranges, var checks){
@@ -39,6 +39,18 @@ class CPUFilter{
         ( part.coreCount <= rangeFilters['Core Count']['range'].end)
         &&
         ( part.coreCount >= rangeFilters['Core Count']['range'].start)
+        &&
+        ( part.base_clock <= rangeFilters['Core Clock GHz']['range'].end)
+        &&
+        ( part.base_clock >= rangeFilters['Core Clock GHz']['range'].start)
+        &&
+        ( part.boost_clock <= rangeFilters['Boost Clock GHz']['range'].end)
+        &&
+        ( part.boost_clock >= rangeFilters['Boost Clock GHz']['range'].start)
+        &&
+        ( part.tdp <= rangeFilters['TDP W']['range'].end)
+        &&
+        ( part.tdp >= rangeFilters['TDP W']['range'].start)
         &&
         (checkboxFilters['Manufacturers'][part.manufacturerName] == true)
 
