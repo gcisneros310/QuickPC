@@ -7,6 +7,10 @@ class RAM_Part extends Part {
   int stickCount;
   dynamic info;
 
+  //String form
+  //int latency
+  //double voltage
+
   RAM_Part() : super() {
     this.price = 0.0;
     this.clockSpeed = null;

@@ -6,30 +6,30 @@ class MotherboardFilter{
 
   Map<String, dynamic> rangeFilters = {
     'Price \$' : {'min': 0.0, 'max': 12000.0, 'range': RangeValues(0.0, 12000.0)},
-    'Max Memory': {'min': 2.0, 'max': 2000.0, 'range': RangeValues(2.0, 2000.0)},
-    'Memory Slots': {'min': 1.0, 'max': 16.0, 'range': RangeValues(1.0, 16.0)},
+    'Max Memory': {'min': 2.0, 'max': 512.0, 'range': RangeValues(2.0, 512.0)},
+    // 'Memory Slots': {'min': 1.0, 'max': 16.0, 'range': RangeValues(1.0, 16.0)},
   };
 
   Map<String, dynamic> checkboxFilters = {
 
-    'Manufacturers': {"AsRock": false, "Asus": false, "Biostar": false,
-      "Colorful": false, "ECS": false, "EVGA": false, "Foxconn": false,
-      "Gigabyte": false, "Intel": false, "Jetway": false, "MSI""NZXT": false,
-      "Sapphire": false, "Supermicro": false, "XFX": false, "Zotac": false},
+    // 'Manufacturers': {"AsRock": true, "Asus": true, "Biostar": true,
+    //   "Colorful": true, "ECS": true, "EVGA": true, "Foxconn": true,
+    //   "Gigabyte": true, "Intel": true, "Jetway": true, "MSI""NZXT": true,
+    //   "Sapphire": true, "Supermicro": true, "XFX": true, "Zotac": true},
 
-    'Form Factor': {"ATX": false, "EATX": false, "Flex ATX": false, "HPTX": false,
-      "Micro ATX": false, "Mini ITX": false, "Thin Mini ITX": false, "Mini DTX": false,
-      "SSI CEB": false, "SSI EEB": false, "XL ATX": false},
+    'Form Factor': {"ATX": true, "EATX": true, "Flex ATX": true, "HPTX": true,
+      "Micro ATX": true, "Mini ITX": true, "Thin Mini ITX": true, "Mini DTX": true,
+      "SSI CEB": true, "SSI EEB": true, "XL ATX": true},
 
-    'Socket': {"AM1": false, "AM2": false, "AM2+/AM2": false, "AM3": false,
-      "AM3+": false, "AM3+/AM3": false, "AM3/AM2+": false, "AM3/AM2+/AM2": false,
-      "AM4": false, "FM1": false, "FM2": false, "FM2+": false, "LGA775": false,
-      "LGA1150": false, "LGA1151": false, "LGA1155": false, "LGA1156": false,
-      "LGA1200": false, "LGA1366": false, "LGA1700": false, "LGA2011": false,
-      "LGA2011-3": false, "LGA2011-3 Narrow": false, "LGA2066": false,},
+    'Socket': {"AM1": true, "AM2": true, "AM2+": true, "AM3": true,
+      "AM3+": true, "AM4": true,  "FM1": true, "FM2": true, "FM2+": true,
+      "LGA775": true, "LGA1150": true, "LGA1151": true, "LGA1155": true, "LGA1156": true,
+      "LGA1200": true, "LGA1366": true, "LGA1700": true, "LGA2011": true,
+      "LGA2011-3": true, "LGA2011-3 Narrow": true, "LGA2066": true,
+      "sTR4": true, "sTRX4": true},
 
-    // 'Memory Type': {},
-    // 'Chipset':{}
+      'Memory Type': {"DDR": true, "DDR2": true, "DDR3": true, "DDR4": true,
+        "DDR5": true},
 
   };
 
@@ -44,9 +44,26 @@ class MotherboardFilter{
         &&
         (part.price >= rangeFilters['Price \$']['range'].start)
         &&
-        (checkboxFilters['Manufacturers'][part.manufacturerName] == true)
+
+        (int.parse(part.partAttributeMap['max memory'].replaceAll(" GB", ""))
+            <= rangeFilters['Max Memory']['range'].end)
         &&
+        (int.parse(part.partAttributeMap['max memory'].replaceAll(" GB", ""))
+            >= rangeFilters['Max Memory']['range'].start)
+        &&
+
+        // (int.parse(part.partAttributeMap['max slots'])
+        //     <= rangeFilters['Memory Slots']['range'].end)
+        // &&
+        // (int.parse(part.partAttributeMap['max slots'])
+        //     >= rangeFilters['Memory Slots']['range'].start)
+        // &&
+
         (checkboxFilters['Socket'][part.cpuSocket] == true)
+        &&
+        (checkboxFilters['Form Factor'][part.formFactor] == true)
+        &&
+        (checkboxFilters['Memory Type'][part.partAttributeMap['memory type']] == true)
 
     ).toList();
   }

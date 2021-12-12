@@ -5,6 +5,10 @@ class CPU_Part extends Part{
   double boost_clock;
   int coreCount;
 
+  //String socket;
+  //String series;
+  //String integrated;
+
   var attributeNames = [
     "Manufacturer",
   "Base Clock",

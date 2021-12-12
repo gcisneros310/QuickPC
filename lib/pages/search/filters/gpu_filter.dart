@@ -10,7 +10,7 @@ class GPUFilter{
     'Memory GB': {'min': 0.0, 'max': 64.0, 'range': RangeValues(0.0, 64.0)},
     'Core Clock MHz': {'min': 100.0, 'max': 3000.0, 'range': RangeValues(100.0, 3000.0)},
     'Boost Clock MHz': {'min': 500.0, 'max': 3000.0, 'range': RangeValues(500.0, 3000.0)},
-    // 'Length mm': {'min': 50.0, 'max': 400.0,'range': RangeValues(50.0, 400.0)},
+    'Length mm': {'min': 50.0, 'max': 400.0,'range': RangeValues(50.0, 400.0)},
   };
 
   Map<String, dynamic> checkboxFilters = {
@@ -39,20 +39,31 @@ class GPUFilter{
             &&
         (part.price
             >= rangeFilters['Price \$']['range'].start)
+
             &&
         ( double.parse(part.vram.replaceAll(' GB', ''))
             <= rangeFilters['Memory GB']['range'].end)
             &&
         ( double.parse(part.vram.replaceAll(' GB', ''))
             >= rangeFilters['Memory GB']['range'].start)
-            &&
+
+          &&
+          ( double.parse(part.partAttributeMap['length'].trim().replaceAll(RegExp("mm"), ""))
+              <= rangeFilters['Length mm']['range'].end)
+          &&
+          ( double.parse(part.partAttributeMap['length'].trim().replaceAll(RegExp("mm"), ""))
+              >= rangeFilters['Length mm']['range'].start)
+
+          &&
         ( part.getSpeed(part.base_clock) <= rangeFilters['Core Clock MHz']['range'].end)
           &&
         ( part.getSpeed(part.base_clock) >= rangeFilters['Core Clock MHz']['range'].start)
+
          &&
         ( part.getSpeed(part.boost_clock) <= rangeFilters['Boost Clock MHz']['range'].end)
           &&
         ( part.getSpeed(part.boost_clock) >= rangeFilters['Boost Clock MHz']['range'].start)
+
           &&
         (checkboxFilters['Manufacturers'][part.manufacturerName] == true)
 

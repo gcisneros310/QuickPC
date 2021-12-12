@@ -4,6 +4,10 @@ class Cooler_Part extends Part {
   String coolingType;
   String fanSpeed;
 
+  //double height
+  //String socket
+  //String water
+
   Cooler_Part() : super() {
     this.coolingType = null;
     this.fanSpeed = null;

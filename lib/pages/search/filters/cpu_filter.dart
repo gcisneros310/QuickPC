@@ -17,12 +17,14 @@ class CPUFilter{
 
     'Manufacturers': {"AMD": true, "Intel": true},
 
-    // 'Socket': {"AM1": false, "AM2+": false, "AM3": false, "AM3+": false,
-    //   "AM4": false, "C32": false, "FM1": false, "FM2": false, "FM2+": false,
-    //   "G34": false, "LGA771": false, "LGA775": false, "LGA1150": false,
-    //   "LGA1151": false, "LGA1155": false, "LGA1156": false, "LGA1200": false,
-    //   "LGA1356": false, "LGA1366": false, "LGA2011": false, "LGA2011-3": false,
-    //   "LGA2066": false, "sTR4": false, "sTRX4": false}
+    'Socket': {"AM1": true, "AM2+": true, "AM3": true, "AM3+": true,
+      "AM4": true, "C32": true, "FM1": true, "FM2": true, "FM2+": true,
+      "G34": true, "LGA771": true, "LGA775": true, "LGA1150": true,
+      "LGA1151": true, "LGA1155": true, "LGA1156": true, "LGA1200": true,
+      "LGA1356": true, "LGA1366": true, "LGA2011": true, "LGA2011-3": true,
+      "LGA2066": true, "sTR4": true, "sTRX4": true},
+    //
+    // 'Integrated': {"None": true}
   };
 
   getList(List<Part> list ,var ranges, var checks){
@@ -53,6 +55,10 @@ class CPUFilter{
         ( part.tdp >= rangeFilters['TDP W']['range'].start)
         &&
         (checkboxFilters['Manufacturers'][part.manufacturerName] == true)
+        &&
+        (checkboxFilters['Socket'][part.partAttributeMap['socket']] == true)
+        // &&
+        // (checkboxFilters['Integrated'][part.partAttributeMap['integrated graphics']] == true)
 
     ).toList();
   }

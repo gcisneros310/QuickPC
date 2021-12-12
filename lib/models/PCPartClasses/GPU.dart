@@ -5,6 +5,8 @@ class GPU_Part extends Part {
   String boost_clock;
   String vram;
 
+  // double length
+
 
   GPU_Part() : super() {
     this.price = 0.0;

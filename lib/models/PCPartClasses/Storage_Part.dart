@@ -47,7 +47,18 @@ class Storage_Part extends Part {
       json['images'][0],
       json['capacity'],
       json['type'],
-      json['form']
+      json['form'].replaceAll(" ", "")
     );
   }
+
+  getGB(){
+    if(capacity.contains('TB')){
+      print(int.parse(capacity.replaceAll(RegExp(" TB"), "")) * 1000);
+      return int.parse(capacity.replaceAll(RegExp(" TB"), "")) * 1000;
+    }
+
+    print(int.parse(capacity.replaceAll(RegExp(" GB"), "")));
+    return int.parse(capacity.replaceAll(RegExp(" GB"), ""));
+  }
+
 }

@@ -1,7 +1,11 @@
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
+import 'package:quick_pc/pages/search/filters/case_filter.dart';
+import 'package:quick_pc/pages/search/filters/cooler_filter.dart';
 import 'package:quick_pc/pages/search/filters/gpu_filter.dart';
 import 'package:quick_pc/pages/search/filters/mobo_filter.dart';
+import 'package:quick_pc/pages/search/filters/psu_filter.dart';
 import 'package:quick_pc/pages/search/filters/ram_filter.dart';
+import 'package:quick_pc/pages/search/filters/storage_filter.dart';
 
 import 'cpu_filter.dart';
 
@@ -34,12 +38,23 @@ class Filter {
         break;
 
       case 'storage':
+        rangeFilters = StorageFilter().rangeFilters;
+        checkboxFilters = StorageFilter().checkboxFilters;
         break;
 
       case 'case':
+        rangeFilters = CaseFilter().rangeFilters;
+        checkboxFilters = CaseFilter().checkboxFilters;
         break;
 
       case 'psu':
+        rangeFilters = PSUFilter().rangeFilters;
+        checkboxFilters = PSUFilter().checkboxFilters;
+        break;
+
+      case 'cooler':
+        rangeFilters = CoolerFilter().rangeFilters;
+        checkboxFilters = CoolerFilter().checkboxFilters;
         break;
 
     }
@@ -61,13 +76,16 @@ class Filter {
         return MotherboardFilter().getList(list, rangeFilters, checkboxFilters);
 
       case 'storage':
-        return null;
+        return StorageFilter().getList(list, rangeFilters, checkboxFilters);
 
       case 'case':
-        return null;
+        return CaseFilter().getList(list, rangeFilters, checkboxFilters);
 
       case 'psu':
-        return null;
+        return PSUFilter().getList(list, rangeFilters, checkboxFilters);
+
+      case 'cooler':
+        return CoolerFilter().getList(list, rangeFilters, checkboxFilters);
     }
 
   }

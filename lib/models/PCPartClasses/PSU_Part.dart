@@ -5,9 +5,10 @@ class PSU_Part extends Part {
   String efficiencyRating;
   String modularityType;
 
+  //String form
+
   PSU_Part () : super() {
     this.price = 0.0;
-
     this.wattage = 0;
     this.efficiencyRating = null;
     this.modularityType = null;

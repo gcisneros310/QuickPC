@@ -7,12 +7,12 @@ class RAMFilter{
   Map<String, dynamic> rangeFilters = {
     'Price \$' : {'min': 0.0, 'max': 12000.0, 'range': RangeValues(0.0, 12000.0)},
     'Speed': {'min':300.0, 'max': 6000.0, 'range': RangeValues(300.0, 6000.0)},
-    'Cas Latency': {'min': 1.0, 'max': 40.0, 'range': RangeValues(1.0, 40.0)},
+    //'Cas Latency': {'min': 1.0, 'max': 40.0, 'range': RangeValues(1.0, 40.0)},
+    //'Voltage V': {'min': 1.0, 'max': 2.5, 'range': RangeValues(1.0, 2.5)},
+
   };
 
   Map<String, dynamic> checkboxFilters = {
-
-    // 'Manufacturers': {"AMD": false, "Intel": false},
 
     // 'Type': {"DDR": false, "DDR2": false, "DDR3": false, "DDR4": false,
     //   "DDR5": false},
@@ -44,7 +44,13 @@ class RAMFilter{
         &&
         ( double.parse(part.clockSpeed) >= rangeFilters['Speed']['range'].start)
         // &&
-        // (checkboxFilters['Manufacturers'][part.manufacturerName] == true)
+        // ( double.parse(part.partAttributeMap['latency'])
+        //     <= rangeFilters['Cas Latency']['range'].end)
+        // &&
+        // ( double.parse(part.partAttributeMap['latency'])
+        //     >= rangeFilters['Cas Latency']['range'].start)
+        // &&
+        // (checkboxFilters['Type'][part.] == true)
         &&
         (checkboxFilters['Modules'][part.getModule()] == true)
 

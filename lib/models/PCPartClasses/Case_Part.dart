@@ -5,6 +5,9 @@ class Case_Part extends Part {
   String color;
   String dimensions;
 
+  //String type
+  //String shroud
+
   Case_Part() : super() {
     this.motherboardFormFactor = null;
     this.color = null;
@@ -42,7 +45,7 @@ class Case_Part extends Part {
         price,
       json['productURL'] as String ?? "",
       json['images'][0],
-      json['form'],
+      json['form'].trimLeft(),
       json['type'],
       json['dimensions']
     );
