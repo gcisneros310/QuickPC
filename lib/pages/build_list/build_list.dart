@@ -473,7 +473,6 @@ class _PartListState extends State<PartList> {
                             "You havent chosen a $partTitle!\nChoose a part to view its info");
                       }
                     },
-                    child: Expanded(
                       child: Card(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         elevation: 8.0,
@@ -708,7 +707,7 @@ class _PartListState extends State<PartList> {
                           ),
                         ),
                       ),
-                    ),
+
                   ),
                 );
               }

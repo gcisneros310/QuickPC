@@ -391,6 +391,8 @@ class _Home2State extends State<Home2> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(image: NetworkImage("https://i.imgur.com/z2qL0zq.gif"), fit: BoxFit.cover),
+                      //image: DecorationImage(image: NetworkImage("https://cdn.discordapp.com/attachments/801193403152334938/919417636536868944/small_home_page.gif"), fit: BoxFit.cover),
+
                     ),
                   );
                 },
