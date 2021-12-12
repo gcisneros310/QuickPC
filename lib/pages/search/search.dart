@@ -116,6 +116,8 @@ class _SearchState extends State<Search> {
                       list.searchByName = true;
                       list.name = searchTerm;
 
+
+
                     },
                     icon: searchIcon,
                   )
@@ -140,6 +142,7 @@ class _SearchState extends State<Search> {
 
                   //Search list Tab Contents
                   list = SearchList(partType, fil, compareList, buildObject),
+
 
 
                   //Filter Tab Contents

@@ -1,16 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/pages/account/change_password.dart';
-import 'package:quick_pc/pages/authenticate/loginscreen.dart';
-import 'package:quick_pc/pages/authenticate/registerscreen.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
-import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
 import 'package:quick_pc/pages/report_a_bug/report_a_bug.dart';
 import 'package:quick_pc/pages/terms_of_service/terms_and_policy.dart';
 import 'package:quick_pc/services/auth.dart';
-import 'package:shared_preferences_settings/shared_preferences_settings.dart';
+
 
 class Account extends StatefulWidget {
   @override

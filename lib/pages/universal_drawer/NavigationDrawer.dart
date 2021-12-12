@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/pages/account/account.dart';
+import 'package:quick_pc/pages/account/account2.dart';
 import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/bottom_navigation/bottom_navigation_bar.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
@@ -185,7 +186,7 @@ class NavigationDrawer extends StatelessWidget{
         break;
       case 4:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Account(),
+          builder: (context) => Account2(),
         ));
         break;
       case 5:

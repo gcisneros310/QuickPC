@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
-import 'package:quick_pc/models/cpu.dart';
 
 class PartInfo extends StatefulWidget {
   final CPU_Part cpu;

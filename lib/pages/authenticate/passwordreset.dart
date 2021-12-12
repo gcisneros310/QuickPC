@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/pages/authenticate/registerscreen.dart';
-import 'package:quick_pc/pages/home/home.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:quick_pc/shared/loading.dart';
 

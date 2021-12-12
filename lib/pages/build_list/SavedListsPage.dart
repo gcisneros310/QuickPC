@@ -243,8 +243,6 @@ class _SavedListsPageState extends State<SavedListsPage> {
                             ),
                           ),
                         ),
-
-
                       ),
                     );
                   }

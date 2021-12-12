@@ -3,10 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/Notifications.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
-import 'package:quick_pc/services/realtimeDatabase.dart';
 import 'package:quick_pc/shared/loading.dart';
-
-import 'notifications.dart';
 
 final Color logoColor = Color(0xff66c290);
 
@@ -82,7 +79,6 @@ class _Notifications2State extends State<Notifications2> {
                     return Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
                       child: InkWell(
-                        child: Expanded(
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             elevation: 8.0,
@@ -158,7 +154,6 @@ class _Notifications2State extends State<Notifications2> {
                               ),
                             ),
                           ),
-                        ),
                       ),
                     );
                   }

@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/pages/home/home.dart';
 import 'package:http/http.dart' as http;
 import 'package:quick_pc/pages/report_a_bug/report_a_bug.dart';
 

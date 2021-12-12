@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/pages/part_review/Create_Star.dart';
-import 'package:quick_pc/pages/part_review/star.dart';
 import 'package:quick_pc/pages/part_review/star.dart';
 
 class ReviewPageWidget extends StatefulWidget {
