@@ -9,7 +9,7 @@ import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
 import 'package:quick_pc/services/realtimeDatabase.dart';
 import 'package:quick_pc/shared/loading.dart';
 
-class PopularFields extends StatefulWidget {
+class TrendingFields extends StatefulWidget {
   @override
   _PageNotImplemented createState() => _PageNotImplemented();
 }
@@ -92,7 +92,7 @@ Future getList() async {
   return list;
 }
 
-class _PageNotImplemented extends State<PopularFields> {
+class _PageNotImplemented extends State<TrendingFields> {
   final Color logoColor = Color(0xff66c290);
   final Color greyout = Colors.grey;
   final controllerName = TextEditingController();
@@ -115,8 +115,8 @@ class _PageNotImplemented extends State<PopularFields> {
           getList();
           //print(list[0].partAttributeMap);
           //print(list.length);
-         // int index = 0;
-         /* while(index <= 7 )
+          // int index = 0;
+          /* while(index <= 7 )
             {
               print(list[index].partAttributeMap);
               ++index;
@@ -150,8 +150,8 @@ class _PageNotImplemented extends State<PopularFields> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           image:DecorationImage(
-                              //fit: BoxFit.fill,
-                              image: NetworkImage(cpuList.productImageURL),
+                            //fit: BoxFit.fill,
+                            image: NetworkImage(cpuList.productImageURL),
                           ),
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
                       ),
@@ -187,44 +187,44 @@ class _PageNotImplemented extends State<PopularFields> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getPopCPU(),
-      builder: (context, projectSnap) {
-        if (projectSnap.connectionState == ConnectionState.none &&
-            projectSnap.hasData == null && projectSnap.data == null) {
-          //print('project snapshot data is: ${projectSnap.data}');
-          return Loading();
-        }
-        if(projectSnap.data == null) {
-          print("IF PROJECTSNAP.HASDATA");
-          print(projectSnap.data.runtimeType);
-          return Loading();
-        }
-        return Scaffold(
-          backgroundColor: Colors.grey[300],
-          appBar: AppBar(
-            title: Text("Popular"),
-            titleTextStyle: GoogleFonts.exo2(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
-            backgroundColor: Colors.grey[500],
-            centerTitle: true,
-            // title: Text("Contact Us"),
-            elevation: 0.0,
-          ),
-          body: Container(
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                crossAxisCount: 2,
-              ),
-              children: [
-                for(int i = 0; i<50; ++i)
-                  testWidget(projectSnap.data[i], "cpu"),
-
-              ],
+        future: getPopCPU(),
+        builder: (context, projectSnap) {
+          if (projectSnap.connectionState == ConnectionState.none &&
+              projectSnap.hasData == null && projectSnap.data == null) {
+            //print('project snapshot data is: ${projectSnap.data}');
+            return Loading();
+          }
+          if(projectSnap.data == null) {
+            print("IF PROJECTSNAP.HASDATA");
+            print(projectSnap.data.runtimeType);
+            return Loading();
+          }
+          return Scaffold(
+            backgroundColor: Colors.grey[300],
+            appBar: AppBar(
+              title: Text("Trending"),
+              titleTextStyle: GoogleFonts.exo2(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+              backgroundColor: Colors.grey[500],
+              centerTitle: true,
+              // title: Text("Contact Us"),
+              elevation: 0.0,
             ),
-          ),
-        );
-      }
+            body: Container(
+              child: GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  crossAxisCount: 2,
+                ),
+                children: [
+                  for(int i = 49; i>0; --i)
+                    testWidget(projectSnap.data[i], "cpu"),
+
+                ],
+              ),
+            ),
+          );
+        }
     );
   }
 

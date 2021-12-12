@@ -1,13 +1,10 @@
-
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Case_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
@@ -49,7 +46,7 @@ class _AddCustomPartPageState extends State<AddCustomPartPage> {
       final tempImage = File(image.path);
       setState(() => this.selectedDeviceImage = tempImage);
     } on PlatformException catch (e) {
-      print("SHIT DIDNT WORK");
+      print("Did not work");
       print(e);
     }
 

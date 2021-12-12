@@ -1,14 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/pages/authenticate/loginscreen.dart';
 import 'package:quick_pc/pages/authenticate/my_password.dart';
-import 'package:quick_pc/pages/authenticate/registerscreen.dart';
-import 'package:quick_pc/pages/contact_us/contact_us.dart';
-import 'package:quick_pc/pages/home/home.dart';
-import 'package:quick_pc/pages/report_a_bug/report_a_bug.dart';
 import 'package:quick_pc/services/auth.dart';
-import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -138,11 +132,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                                           FlatButton(
                                             child: Text("Yes, change it"),
                                             textColor: Colors.red,
-                                            onPressed: () {
+                                            onPressed: () async{
                                               String passwordOne = controllerPassword.text;
                                               String passwordTwo = controllerCPassword.text;
                                               if(passwordOne == passwordTwo){
                                                 changePassword(passwordOne, passwordTwo);
+                                                Navigator.pop(context);
+                                                await _auth.signOut();
+                                                Navigator.pop(context);
                                               }
                                               else{
                                                 print("Different Passwords");

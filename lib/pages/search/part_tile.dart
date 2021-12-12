@@ -10,7 +10,6 @@ import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Storage_Part.dart';
 import 'package:quick_pc/pages/build_list/PCPartInfoPage.dart';
-import 'package:quick_pc/pages/part_info/part_info.dart';
 
 class PartTile extends StatefulWidget {
 

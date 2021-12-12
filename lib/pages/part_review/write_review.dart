@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/pages/build_list/build_list.dart';
 import 'package:quick_pc/models/review_data.dart';
 import 'package:quick_pc/pages/part_review/star.dart';
-import 'Create_Star.dart';
 
 class ReviewWidget extends StatefulWidget {
   final String partName;

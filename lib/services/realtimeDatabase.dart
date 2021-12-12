@@ -5,7 +5,6 @@ import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/Cooler_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
 import 'package:quick_pc/models/PCPartClasses/Motherboard_Part.dart';
-import 'package:quick_pc/models/PCPartClasses/Notifications.dart';
 import 'package:quick_pc/models/PCPartClasses/PSU_Part.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/models/PCPartClasses/RAM_Part.dart';

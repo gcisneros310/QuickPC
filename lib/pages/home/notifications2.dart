@@ -3,10 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_pc/models/PCPartClasses/Notifications.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
-import 'package:quick_pc/services/realtimeDatabase.dart';
 import 'package:quick_pc/shared/loading.dart';
-
-import 'notifications.dart';
 
 final Color logoColor = Color(0xff66c290);
 

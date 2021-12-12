@@ -1,11 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quick_pc/pages/authenticate/loginscreen.dart';
-import 'package:quick_pc/pages/authenticate/authenticate.dart';
-import 'package:quick_pc/pages/wrapper.dart';
 
 class ReportABug extends StatefulWidget {
   @override

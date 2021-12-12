@@ -1,19 +1,16 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:quick_pc/models/PCPartClasses/CPU.dart';
 import 'package:quick_pc/models/PCPartClasses/CompletePCBuild.dart';
 import 'package:quick_pc/models/PCPartClasses/GPU.dart';
-import 'package:quick_pc/models/PCPartClasses/Notifications.dart';
 import 'package:quick_pc/models/PCPartClasses/Part.dart';
 import 'package:quick_pc/pages/build_guide/build_guide_intro_page.dart';
 import 'package:quick_pc/pages/build_list/SavedListInfoPage.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
-import 'package:quick_pc/pages/home/notifications.dart';
 import 'package:quick_pc/pages/home/popular_fields.dart';
 import 'package:quick_pc/pages/home/swiperModel.dart';
+import 'package:quick_pc/pages/home/trending_fields.dart';
 import 'package:quick_pc/pages/universal_drawer/NavigationDrawer.dart';
 import 'package:quick_pc/services/auth.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -353,7 +350,7 @@ class _Home2State extends State<Home2> {
                         text: "View All",
                         style: GoogleFonts.exo2(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
                         recognizer: TapGestureRecognizer()..onTap =(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>SavedListInfoPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>TrendingFields()));
                         },
                       ),
                     ],
@@ -596,7 +593,7 @@ class _Home2State extends State<Home2> {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
-                              for(int i = 8; i < 16; ++i)
+                              for(int i = 49; i > 41; --i)
                                 popularPictureRow(projectSnap.data[i].partName, projectSnap.data[i].price, projectSnap.data[i].productImageURL, 3,projectSnap.data[i]),
                               SizedBox(height:100),
                             ],
