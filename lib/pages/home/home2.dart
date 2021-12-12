@@ -390,9 +390,7 @@ class _Home2State extends State<Home2> {
                   return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                          image: AssetImage("assets/amdryzen.jpg"),
-                          fit: BoxFit.cover),
+                      image: DecorationImage(image: NetworkImage("https://i.imgur.com/z2qL0zq.gif"), fit: BoxFit.cover),
                     ),
                   );
                 },
