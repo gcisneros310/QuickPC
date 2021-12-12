@@ -383,7 +383,7 @@ class _Home2State extends State<Home2> {
                     _current = index;
                   });
                 },
-                autoplay: true,
+                autoplay: false,
                 layout: SwiperLayout.DEFAULT,
                 itemCount: swiperModel.length,
                 itemBuilder: (BuildContext context,int index){
