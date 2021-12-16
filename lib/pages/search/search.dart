@@ -11,6 +11,7 @@ import 'package:quick_pc/pages/search/filters/part_filter.dart';
 
 
 class Search extends StatefulWidget {
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -24,11 +25,13 @@ class _SearchState extends State<Search> {
   Icon searchIcon = const Icon(Icons.search, color: Colors.white,
       size: 28);
   CompletePCBuild buildObject;
-  String searchTerm;
+  String searchTerm = "";
   String partType = "";
   bool clearFilter = true;
   Filter fil;
   FilterUI filUI;
+
+  bool searchByName = false;
 
   SearchList list;
 
@@ -75,6 +78,7 @@ class _SearchState extends State<Search> {
                   child: TextFormField(
                     onChanged: (val) {
                       setState(() => searchTerm = val);
+                      searchByName = true;
                     },
                     obscureText: false,
                     decoration: InputDecoration(
@@ -111,10 +115,13 @@ class _SearchState extends State<Search> {
                   IconButton(
                     onPressed: () {
 
-                      //list = fil.filterByName(list, searchTerm);
 
-                      list.searchByName = true;
-                      list.name = searchTerm;
+                      setState(() {
+                        // widget.hint ='hello';
+                        searchByName = true;
+
+                      });
+
 
 
 
@@ -141,7 +148,7 @@ class _SearchState extends State<Search> {
                 children: [
 
                   //Search list Tab Contents
-                  list = SearchList(partType, fil, compareList, buildObject),
+                  list = SearchList(partType, fil, compareList, buildObject, searchTerm, searchByName),
 
 
 
@@ -157,6 +164,7 @@ class _SearchState extends State<Search> {
                           FloatingActionButton.extended(
                             onPressed: (){
                               list.clearFilter = true;
+                              list.searchByName = false;
                               fil = new Filter(partType);
                               },
                             label: const Text('Clear'),
@@ -168,6 +176,7 @@ class _SearchState extends State<Search> {
                           FloatingActionButton.extended(
                             onPressed: (){
                               list.clearFilter = false;
+                              list.searchByName = false;
                               //DefaultTabController.of(context).animateTo(1);
 
                             },

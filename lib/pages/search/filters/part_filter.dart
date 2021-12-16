@@ -92,7 +92,9 @@ class Filter {
 
   filterByName(List<Part> list, String name){
 
-    return list.where((part) => (part.partName.contains(name))).toList();
+    return list.where((part) => (
+        part.partName.toLowerCase().contains(name.toLowerCase())
+    )).toList();
 
   }
 

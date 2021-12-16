@@ -15,7 +15,7 @@ class SearchList extends StatefulWidget {
   bool searchByName = false;
   List<Part> compareList;
   CompletePCBuild buildObject;
-  SearchList(this.partType, this.fil, this.compareList, CompletePCBuild buildObject) {
+  SearchList(this.partType, this.fil, this.compareList, CompletePCBuild buildObject, this.name, this.searchByName) {
     this.buildObject = buildObject;
   }
 
@@ -36,15 +36,14 @@ class _SearchListState extends State<SearchList> {
     }
 
     if (widget.searchByName){
-      final nameList = widget.fil.filterByName(parts, widget.name);
 
-      print(nameList);
+      final nameList = widget.fil.filterByName(parts, widget.name);
 
       return ListView.builder(
 
         itemCount: nameList.length,
         itemBuilder: (context, index){
-          return PartTile(part: nameList[index], partType: widget.partType, compareList: widget.compareList);
+          return PartTile(part: nameList[index], partType: widget.partType, compareList: widget.compareList, buildObject: widget.buildObject);
 
         },
       );
@@ -65,7 +64,7 @@ class _SearchListState extends State<SearchList> {
       // Creating Filtered list
       List filteredParts = widget.fil.getFilteredList(parts, widget.partType);
 
-
+      widget.searchByName = false;
       return ListView.builder(
 
         itemCount: filteredParts.length,
