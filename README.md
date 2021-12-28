@@ -1,6 +1,6 @@
 # Quick PC
 
-Quick PC is a dedicated mobile application/webapp for finding PC Components and making price lists
+Quick PC is a dedicated mobile application/webapp for finding PC Components and making price lists written in Dart using Flutter.
 
 ## Getting Started
 
