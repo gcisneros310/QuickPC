@@ -12,3 +12,7 @@ Quick PC will start up asking the user to login to their already registered acco
 This screen features a guide on how to assemble a PC, a page on what each part of a PC does, performance comparison on certain parts, a search bar for looking up parts, a system builder, and the ability to browse by parts. 
 
 The end goal of Quick PC is to give users an accessible and informative way to build and assemble a computer that fits their needs. The app can act as a gateway to learning about PC components and understanding the functions of each part.
+
+## App Walkthrough
+User is prompted to the splash screen when opening up the application for the first time
+![image](https://user-images.githubusercontent.com/66815273/147521451-e0027db3-f3b9-401a-8795-26e1e765ddc7.png)
