@@ -15,4 +15,23 @@ The end goal of Quick PC is to give users an accessible and informative way to b
 
 ## App Walkthrough
 User is prompted to the splash screen when opening up the application for the first time
-![image](https://user-images.githubusercontent.com/66815273/147521451-e0027db3-f3b9-401a-8795-26e1e765ddc7.png)
+
+<img src="https://user-images.githubusercontent.com/66815273/147521451-e0027db3-f3b9-401a-8795-26e1e765ddc7.png" width="200" height="400">
+
+After clicking the "Get Started" Button, user is directed to the login page. In the login page, users can login using an existing account, reset their password, or create a new account.
+
+<img src="https://user-images.githubusercontent.com/66815273/147521860-74903486-2b09-413c-bba8-22ff6cfc4f58.png" width="200" height="400">
+
+If the user clicks on "Sign Up", they are directed to the sign up page.
+
+<img src="https://user-images.githubusercontent.com/66815273/147522063-70e05748-a654-472f-9917-83dcd9f48dab.png" width="200" height="400">
+
+After logging in to a existing account, user is directed to the home page. In the home page, users are able to access the Notifications, Search Parts, Build PC, Build Guides, Existing Builds, Trending/Popular Products, and the Account Page
+
+<img src="https://user-images.githubusercontent.com/66815273/147522193-77c78f85-11df-4445-a1c4-8a5ee80f8f17.png" width="200" height="400">
+
+
+
+
+
+
