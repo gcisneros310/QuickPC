@@ -46,7 +46,7 @@ class CustomDialog extends StatelessWidget{
                   SizedBox(height: 24.0),
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: FlatButton(
+                    child: TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -247,9 +247,11 @@ class _ContactUs extends State<ContactUs> {
                                           Navigator.pop(context);
                                         },
                                       ),
-                                      FlatButton(
+                                      TextButton(
                                         child: Text("Yes, send it"),
-                                        textColor: Colors.red,
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.red,
+                                        ),
                                         onPressed: () {
                                           sendEmail( name: controllerName.text,
                                               email: controllerEmail.text,

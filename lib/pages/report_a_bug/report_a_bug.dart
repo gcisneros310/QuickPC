@@ -166,9 +166,11 @@ class _ReportABugState extends State<ReportABug> {
                                         Navigator.pop(context);
                                       },
                                     ),
-                                    FlatButton(
+                                    TextButton(
                                       child: Text("Yes, send it"),
-                                      textColor: Colors.red,
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: Colors.red,
+                                      ),
                                       onPressed: () {
                                         print(_chosenValue);
                                         sendEmail(

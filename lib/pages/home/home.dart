@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
         title: Text(title),
         elevation: 0.0,
         actions: <Widget>[
-          FlatButton.icon(
+          TextButton.icon(
             icon: Icon(Icons.person, color: Colors.white),
             label: Text(
               "Logout",

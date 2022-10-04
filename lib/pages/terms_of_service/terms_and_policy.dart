@@ -36,15 +36,18 @@ class PrivacyPolicy extends StatelessWidget {
               },
             ),
           ),
-          FlatButton(
-            padding: EdgeInsets.all(0),
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(radius),
-                bottomRight: Radius.circular(radius),
-              ),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Colors.red,
             ),
+            //padding: EdgeInsets.all(0),
+            //color: Colors.white,
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.only(
+            //     bottomLeft: Radius.circular(radius),
+            //     bottomRight: Radius.circular(radius),
+            //   ),
+            // ),
             onPressed: (){
               Navigator.of(context).pop();
             },

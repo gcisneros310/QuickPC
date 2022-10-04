@@ -129,9 +129,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                                               Navigator.pop(context);
                                             },
                                           ),
-                                          FlatButton(
+                                          TextButton(
                                             child: Text("Yes, change it"),
-                                            textColor: Colors.red,
+                                            style: TextButton.styleFrom(
+                                              foregroundColor: Colors.red,
+                                            ),
                                             onPressed: () async{
                                               String passwordOne = controllerPassword.text;
                                               String passwordTwo = controllerCPassword.text;

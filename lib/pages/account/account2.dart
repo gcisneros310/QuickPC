@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_pc/pages/account/change_password.dart';
 import 'package:quick_pc/pages/contact_us/contact_us.dart';
@@ -6,7 +7,7 @@ import 'package:quick_pc/pages/not_implemented/page_not_implemented.dart';
 import 'package:quick_pc/pages/report_a_bug/report_a_bug.dart';
 import 'package:quick_pc/pages/terms_of_service/terms_and_policy.dart';
 import 'package:quick_pc/services/auth.dart';
-import 'package:settings_ui/settings_ui.dart';
+
 
 class Account2 extends StatefulWidget {
   @override
@@ -78,9 +79,11 @@ class _Account2State extends State<Account2> {
                                           Navigator.pop(context);
                                         },
                                       ),
-                                      FlatButton(
+                                      TextButton(
                                         child: Text("Yes, delete it"),
-                                        textColor: Colors.red,
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.red,
+                                        ),
                                         onPressed: () async{
                                           Navigator.pop(context);
                                           await _auth.deleteAccount();
@@ -249,9 +252,11 @@ class _Account2State extends State<Account2> {
                         Navigator.pop(context);
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text("Yes, delete it"),
-                      textColor: Colors.red,
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.red,
+                      ),
                       onPressed: () async{
                         Navigator.pop(context);
                         await _auth.deleteAccount();

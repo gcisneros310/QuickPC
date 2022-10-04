@@ -150,9 +150,11 @@ class _AccountState extends State<Account> {
                       Navigator.pop(context);
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("Yes, delete it"),
-                    textColor: Colors.red,
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.red,
+                    ),
                     onPressed: () async{
                       Navigator.pop(context);
                       await _auth.deleteAccount();
